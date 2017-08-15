@@ -1,0 +1,13 @@
+{
+  "name": "botbeard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Chapman - Chapman@Apextion.com",
+  "license": "Restricted"
+}
