@@ -9,5 +9,9 @@
   },
   "keywords": [],
   "author": "Chapman - Chapman@Apextion.com",
-  "license": "Restricted"
+  "license": "Restricted",
+  "dependencies": {
+    "mysql": "^2.14.1",
+    "sequelize": "^4.4.10"
+  }
 }
