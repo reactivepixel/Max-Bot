@@ -9,8 +9,8 @@
   },
   "keywords": [],
   "author": "Chapman - Chapman@Apextion.com",
-  "license": "Restricted",
   "dependencies": {
+    "apex-util": "^2.0.3",
     "mysql": "^2.14.1",
     "sequelize": "^4.4.10"
   }
