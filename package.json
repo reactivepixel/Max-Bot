@@ -1,10 +1,10 @@
 {
-  "name": "botbeard",
-  "version": "1.0.0",
+  "name": "max",
+  "version": "1.1.1",
   "description": "",
-  "main": "src/server.js",
+  "main": "bot/client.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node bot/client.js",
     "test": "mocha"
   },
   "keywords": [],
@@ -13,5 +13,8 @@
     "apex-util": "^2.0.3",
     "mysql": "^2.14.1",
     "sequelize": "^4.4.10"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1"
   }
 }
