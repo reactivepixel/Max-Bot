@@ -55,6 +55,27 @@ If all went well, and your **DEBUG_MODE** is set properly you will see a logged 
 
 Hop onto your discord server and find a room with the bot and run the command ```!help``` to see a display of optional commands.
 
+# Style Guide
+
+The AirBnB javascript style guide has been put in place and will be enforced through active and passive linting.
+
+Ensure your local IDE has the ability to add eslint plugins. [Atom](https://atom.io) is recommended.
+
+> [Source](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#eslint-config-airbnb-1)
+
+### Atom Configuration
+
+Install the linter-eslint package for Atom.
+
+```
+apm install linter-eslint
+```
+
+
+## Confirm Linting Works
+
+Removing a semi-colon from any line of Javascript will trigger the linter to automatically flag the edited line.
+
 # Debug Tool Documentation
 
 ## Example of Usage

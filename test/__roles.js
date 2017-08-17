@@ -13,5 +13,5 @@ describe('Roles Testing', () => {
     // Instance the roles
     const target = Object.keys(roles());
     expect(target.length).to.be.above(0);
-  })
+  });
 });

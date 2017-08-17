@@ -9,7 +9,7 @@ const disallowedRoles = ['admin', 'moderator', 'tester'];
 
   noGuildFault = (message) => {
     return message.reply('Commands are Discord Server specific, they will not work in PMs. Sorry :cry:')
-  }
+  };
 
   _roles = (message) => {
     const msg = messageMiddleware(message);
