@@ -15,7 +15,7 @@ const options = {
 
   // Only display warnings if a test is failing
   // Defaults to `true`, always show warnings
-  alwaysWarn: false,
+  alwaysWarn: true,
 
   // Increase the timeout of the test if linting takes to long
   // Defaults to the global mocha `timeout` option
@@ -23,7 +23,7 @@ const options = {
 
   // Increase the time until a test is marked as slow
   // Defaults to the global mocha `slow` option
-  slow: 1000,
+  slow: 2000,
 
   // Consider linting warnings as errors and return failure
   // Defaults to `false`, only notify the warnings
@@ -31,7 +31,7 @@ const options = {
 
   // Specify the mocha context in which to run tests
   // Defaults to `eslint`, but can be any string
-  contextName: 'eslint',
+  contextName: 'AirBnB Style Guide Adhearance - eslint',
 };
 
 // Run the tests
