@@ -4,7 +4,7 @@
   "description": "",
   "main": "bot/client.js",
   "scripts": {
-    "start": "node bot/client.js",
+    "start": "pm2 start ecosystem.config.js --no-daemon",
     "test": "mocha"
   },
   "keywords": [],
