@@ -3,5 +3,6 @@
 node_modules
 .DS_Store
 *.log
-max.config.js
+*.lock
+*.config.js
 package-lock.json

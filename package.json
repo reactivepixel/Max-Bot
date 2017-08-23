@@ -3,8 +3,12 @@
   "version": "1.1.1",
   "description": "",
   "main": "bot/client.js",
+  "engines": {
+    "node": "v8.4.0",
+    "npm": "5.3.0"
+  },
   "scripts": {
-    "start": "node bot/client.js",
+    "start": "pm2 start ecosystem.config.js --no-daemon",
     "test": "mocha"
   },
   "keywords": [],
