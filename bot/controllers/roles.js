@@ -1,7 +1,7 @@
 module.exports = () => {
   const util = require('apex-util');
 
-  const disallowedRoles = ['admin', 'moderator', 'tester'];
+  const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
   const messageMiddleware = (message) => {
     const container = {};
     container.parsed = message.content.split(' ');
@@ -17,7 +17,8 @@ module.exports = () => {
       const roles = [];
       if (!message.guild) return noGuildFault(message);
       message.guild.roles.map((role) => {
-        if (role.name !== '@everyone') {
+	if (!disallowedRoles.includes(role.name.toLowerCase())) {
+        //if (role.name !== '@everyone') {
           return roles.push(role.name);
         }
         return role.name;
