@@ -42,7 +42,7 @@ module.exports = () => {
         return role.name;
       });
 
-      return message.reply('Added you to all Roles. You\'re now drinking from the firehose :sob:');
+      return message.reply('Adding you to all Roles. You\'re going to be drinking from the firehose :sob:');
     }
     return false;
   };
@@ -58,7 +58,7 @@ module.exports = () => {
         return role.name;
       });
 
-      return message.reply('Removed all roles. Back to basics.');
+      return message.reply('Removing all roles. Back to basics.');
     }
     return false;
   };
