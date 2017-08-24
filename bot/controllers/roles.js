@@ -49,7 +49,7 @@ module.exports = () => {
       // TODO: Change catch to pass to util.error... will need created
       message.member.addRole(targetRole).catch(util.log);
       // TODO: Create verbose response toggle?
-      // message.reply(targetRole.name + ' added to ' + message.member.user.username);
+      // message.reply(targetRole.name + ' added.');
       return true;
     }
     return false;
@@ -71,7 +71,7 @@ module.exports = () => {
       // TODO: Handle error to respond with message
       // TODO: Change catch to pass to util.error... will need created
       message.member.removeRole(targetRole).catch(util.log);
-      message.reply(targetRole.name + ' removed from ' + message.member.user.username);
+      message.reply(targetRole.name + ' removed.');
       return true;
     }
     return false;
