@@ -17,8 +17,7 @@ module.exports = () => {
       const roles = [];
       if (!message.guild) return noGuildFault(message);
       message.guild.roles.map((role) => {
-	if (!disallowedRoles.includes(role.name.toLowerCase())) {
-        //if (role.name !== '@everyone') {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
           return roles.push(role.name);
         }
         return role.name;
@@ -49,7 +48,8 @@ module.exports = () => {
       // TODO: Handle error to respond with message
       // TODO: Change catch to pass to util.error... will need created
       message.member.addRole(targetRole).catch(util.log);
-      //message.reply(targetRole.name + ' added to ' + message.member.user.username);
+      // TODO: Create verbose response toggle?
+      // message.reply(targetRole.name + ' added to ' + message.member.user.username);
       return true;
     }
     return false;

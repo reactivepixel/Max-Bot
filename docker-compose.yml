@@ -2,10 +2,7 @@ version: "3"
 services:
   bot:
     build: .
-    env_file:
-      - .env
     volumes:
-      - ./:/usr/src/app
-    working_dir: /usr/src/app
-    user: node
+      - /usr/src/app/node_modules
+    restart: always
     command: npm start

@@ -1,4 +1,16 @@
-FROM node:6
-ADD ./ /usr/src/app
-WORKDIR /usr/src/app
+FROM node:8
+
+MAINTAINER Chapman@Apextion.com
+
+# Replace shell with bash so we can source files
+# RUN rm /bin/sh && ln -sf /bin/bash /bin/sh
+
+WORKDIR /var/app
+COPY package.json .
+
 RUN npm install
+
+# Global Installs
+RUN npm install -g pm2
+
+COPY . .
