@@ -3,4 +3,5 @@
 node_modules
 .DS_Store
 *.log
-ecosystem.config.js
+max.config.js
+package-lock.json
