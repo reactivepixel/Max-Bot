@@ -31,6 +31,38 @@ module.exports = () => {
     return false;
   };
 
+  const _addAllRoles = (message) => {
+    const msg = messageMiddleware(message);
+    if (msg.parsed[0].toLowerCase() === '!addallroles') {
+      if (!message.guild) return noGuildFault(message);
+      message.guild.roles.map((role) => {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
+          return message.member.addRole(role).catch(util.log);
+        }
+        return role.name;
+      });
+
+      return message.reply('Added you to all Roles. You\'re now drinking from the firehose :sob:');
+    }
+    return false;
+  };
+
+  const _removeAllRoles = (message) => {
+    const msg = messageMiddleware(message);
+    if (msg.parsed[0].toLowerCase() === '!removeallroles') {
+      if (!message.guild) return noGuildFault(message);
+      message.guild.roles.map((role) => {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
+          return message.member.removeRole(role).catch(util.log);
+        }
+        return role.name;
+      });
+
+      return message.reply('Removed all roles. Back to basics.');
+    }
+    return false;
+  };
+
   const _addRole = (message) => {
     util.log('passed', message.content);
     const msg = messageMiddleware(message);
@@ -81,5 +113,7 @@ module.exports = () => {
     addRole: _addRole,
     removeRole: _removeRole,
     roles: _roles,
+    addAllRoles: _addAllRoles,
+    removeAllRoles: _removeAllRoles,
   };
 };
