@@ -115,3 +115,7 @@ of this particular output should be. Reference the **Debug Level Chart**
 ## Node Container
 
 [Official Node](https://hub.docker.com/_/node/) Container used.
+
+# Other Information
+
+## [Change Log](changelog.md)
