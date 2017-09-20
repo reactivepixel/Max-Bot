@@ -16,7 +16,7 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 
 If working on the official team, contact your Release Manager for the Dev Bot Token and plug that into the file ```max.config.js```.
 
-Otherwise if you are setting up your own Discord Bot follow the [Bot Token](./optional_installs.md/#optional:-advanced-bot-configuration) directions:
+Otherwise if you are setting up your own Discord Bot follow the [Bot Token](./optional_installs.md/#optional-advanced-bot-configuration) directions:
 
 
 # Running the Bot
@@ -31,7 +31,9 @@ Use docker-compose to start the container with the bot client.
 docker-compose up
 ```
 
-If all went well, and your **DEBUG_MODE** is set properly you will see a logged message of ```Bot Online and Ready!:```
+> Note: Any changes to the codebase will require you to close the Docker container and re 'up'.
+
+If all went well, and your **DEBUG_MODE** is set properly (See the chart below) you will see a logged message of ```Bot Online and Ready!:```
 
 Hop onto your discord server and find a room with the bot and run the command ```!help``` to see a display of optional commands.
 
