@@ -43,6 +43,12 @@ The AirBnB javascript style guide has been put in place and will be enforced thr
 
 Ensure your local IDE has the ability to add eslint plugins. [Atom](https://atom.io) is recommended.
 
+Locally install the style guide dependancies for Atom's IDE
+
+```
+npm install
+```
+
 > [Source](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#eslint-config-airbnb-1)
 
 ### Atom Configuration
