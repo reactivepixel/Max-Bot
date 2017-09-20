@@ -10,13 +10,10 @@ module.exports = {
       },
       env_production: {
         NODE_ENV: 'production',
-      },{
-        name:   "express-sever",
-        script: "./web/server.js",
-        env:{
-
-        }
       },
+    },{
+      name: 'express-server',
+      script: './web/server.js'
     },
   ],
 };
