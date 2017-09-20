@@ -4,5 +4,4 @@ node_modules
 .DS_Store
 *.log
 *.lock
-*.config.js
 package-lock.json
