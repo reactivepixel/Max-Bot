@@ -28,7 +28,7 @@ To run the bot locally ensure that you have followed the installation instructio
 Use docker-compose to start the container with the bot client.
 
 ```
-docker-compose up
+docker-compose up --build
 ```
 
 > Note: Any changes to the codebase will require you to close the Docker container and re 'up'.
@@ -96,7 +96,7 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 ## Node Container
 
-[Official Node](https://hub.docker.com/_/node/) Container used. 
+[Official Node](https://hub.docker.com/_/node/) Container used.
 
 # Other Information
 
