@@ -1,43 +1,23 @@
-# Installation
+# Local Installation
 
-### Prerequisites
+## Prerequisites
+
 * [Git](https://git-scm.com/downloads
 )
 * [Docker (Stable)](https://docs.docker.com/docker-for-mac/install/)
 
-### Clone the Codebase.
+## Clone the Codebase.
 
 ```
 git clone git@github.com:reactivepixel/Max-Bot.git
 ```
 
-### ENV Vars
+## Discord Bot Connection
 
-Create an ```.env``` file with all the environment specific and sensitive information.
+If working on the official team, contact your Release Manager for the Dev Bot Token and plug that into the file ```max.config.js```.
 
-```shell
-TOKEN={DiscordBotToken}
-DEBUG_MODE=3
-NODE_ENV=development
-```
+Otherwise if you are setting up your own Discord Bot follow the [Bot Token](./optional_installs.md/#optional:-advanced-bot-configuration) directions:
 
-### Bot Token
-
-Obtain a [Discord App Bot Token](https://discordapp.com/developers/applications/me) from your registered app (or register a new one) to proceed or contact a Release Manager for Max's Dev Bot token.
-
-Replace the ```{DiscordBotToken}``` within the ```.env``` file with the token provided to you.
-
-### Adding the Bot to a Server
-
-As an authorized user of the bot you will need to add it to a server.
-
-1. Go to the Discord developer pages (login if you haven't).
-1. Go to the application with the bot you want to add to your channel.
-1. Copy the Client/Application ID.
-1. Go to https://discordapp.com/oauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
-1. Select server and click authorize.
-
-> [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
 
 # Running the Bot
 
