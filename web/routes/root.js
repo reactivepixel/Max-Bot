@@ -1,8 +1,9 @@
-module.exports = (express) => {
-	const router = express.Router();
+const path = require('path');
 
-	router.get('/welcome', (req, res, next) => {
-		res.render({awesome: 'awesome'});
-	})
-	return router;
-}
+module.exports = (express) => {
+  const router = express.Router();
+  router.get('/welcome', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views', 'welcome.html'));
+  });
+  return router;
+};
