@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# TODO: does not actually create :(
-# echo "Creating DB if not exist"
-# sequelize db:create --config db/config/config.json
-
 echo "Migrating"
 sequelize db:migrate --config db/config/config.json --migrations-path db/migrations/
 echo "Seeding"
