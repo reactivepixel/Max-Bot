@@ -5,7 +5,8 @@ services:
     volumes:
       - /usr/src/app/node_modules
     restart: always
-    command: db/first_run.sh
+    command: ["./wait-for-it.sh", "mysql:3306", "--", "db/first_run.sh"]
+
   mysql:
     container_name: mariadb
     restart: always
@@ -14,6 +15,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'down_and_dirty_deeds'
       MYSQL_USER: 'max_attack'
       MYSQL_PASS: 'headroom_dead_batteries'
+      MYSQL_DATABASE: 'max'
     volumes:
       - my-datavolume:/var/lib/mysql
     ports:
