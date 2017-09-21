@@ -31,6 +31,12 @@ Use docker-compose to start the container with the bot client.
 docker-compose up --build
 ```
 
+To Stop the bot run the command:
+
+```
+docker-compose stop
+```
+
 > Note: Any changes to the codebase will require you to close the Docker container and re 'up'.
 
 If all went well, and your **DEBUG_MODE** is set properly (See the chart below) you will see a logged message of ```Bot Online and Ready!:```
