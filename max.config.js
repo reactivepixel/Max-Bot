@@ -4,7 +4,7 @@ module.exports = {
       name: 'max',
       script: './bot/client.js',
       env: {
-        TOKEN: 'MzYwMTMwMzc5Njc3Njk2MDAz.DKROUA.qVYAh8THy_mx-39MaQRdnIaxctU',
+        TOKEN: 'xxx',
         DEBUG_MODE: '3',
         NODE_ENV: 'development',
       },
