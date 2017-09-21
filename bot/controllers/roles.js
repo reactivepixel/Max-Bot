@@ -115,18 +115,11 @@ module.exports = () => {
     util.log('passed', message.content);
     const msg = messageMiddleware(message);
 
-    console.log('msg.parsed[0]', msg.parsed[0]); // !verifyFS
-    console.log('msg.parsed[1]', msg.parsed[1]); // Student
-    console.log('msg.parsed[2]', msg.parsed[2]); // email@fullsail.edu        
-
-    // util.log('message.guild---->', message.guild);
-
     if (msg.parsed[0].toLowerCase() === '!verifyfs') {
       // TODO: Reduce Code Duplication
       if (!message.guild) return noGuildFault(message);
       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
       if (targetRole === null) {
-        console.log('targetRole', msg.parsed[1]); // email@fullsail.edu 
         return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
       }
 
@@ -134,7 +127,6 @@ module.exports = () => {
         return message.reply('You are not worthy.');
       }
       if (!validateFullSailEmail(msg.parsed[2])) {
-        console.log('if validateFullSailEmail')
         return message.reply('"' + msg.parsed[2] + '" is not a valid email address. You have to use a fullsail.com or fullsail.edu to validate as a FS');
       }
 
