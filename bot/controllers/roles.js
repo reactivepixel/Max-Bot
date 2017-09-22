@@ -3,7 +3,7 @@ const mail = require('../../lib/nodemailer.js');
 
 module.exports = () => {
   const util = require('apex-util');
-  const validateFullSailEmail = require('../../lib/emailValidation.js');
+  const validFSEmail = require('../../lib/emailValidation.js');
 
   const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
 
@@ -117,62 +117,36 @@ module.exports = () => {
   // VerifyFS role
   const _verifyFs = (message) => {
     util.log('passed', message.content);
-    const uuid = uuidv4();
-    const msg = messageMiddleware(message);
+    // const uuid = uuidv4();
+    const msg = messageMiddleware(message);    
 
-    if (msg.parsed[0].toLowerCase() === '!verifyfs') {
-      // TODO: Reduce Code Duplication
-      if (!message.guild) return noGuildFault(message);
-      const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-      if (targetRole === null) {
-        return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
-      }
-
-      if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-        return message.reply('You are not worthy.');
-      }
-      if (!validateFullSailEmail(msg.parsed[2])) {
+    if (msg.parsed[0].toLowerCase() === '!verifyfs' && msg.parsed[1].toLowerCase() === 'student') {
+      if (!validFSEmail(msg.parsed[2])) {
         return message.reply('"' + msg.parsed[2] + '" is not a valid email address. You have to use a fullsail.com or fullsail.edu to validate as a FS');
       }
 
-      // import model and check against db
       const models = require('../../db/models');
       const userObj = message.guild.members.get(message.guild.ownerID);
       const user = userObj.user;
-      // Find One
-      models.Member.find({
-        where: { uuid },
-      })
-        .then((userExists) => {
-          if (!userExists) {
-            // Since the user does not exist, we must create one
-            models.Member.create({
-              discorduser: user.id,
-              email: msg.parsed[2],
-              uuid,
-              verified: 0,
-            })
-              .then((data) => {
-                const emailData = {
-                  to: data.email,
-                  subject: 'Maxbot Validaiton Email',
-                  text: 'Please validate you email by clicking the link below.',
-                  html: `<h1>Please validate your email</h1><a href="http://localhost/welcome/${uuid}">Validate Your Email</a>`,
-                };
-                mail(emailData);
-              })
-              .catch(util.log());
-          } else {
-            // add UUID to current user
-          }
-        })
-        .catch(util.log);
 
-      // TODO: Handle error to respond with message
-      // TODO: Change catch to pass to util.error... will need created
-      message.member.addRole(targetRole).catch(util.log);
-      // TODO: Create verbose response toggle?
-      // message.reply(targetRole.name + ' added.');
+      const uuid = uuidv4();
+
+
+      models.Member.create({
+        discorduser: user.id,
+        email: msg.parsed[2],
+        uuid,
+        verified: 0,
+      }).then((newUser) => {
+        const emailData = {
+          to: newUser.email,
+          subject: 'Maxbot Validaiton Email',
+          text: 'Please validate you email by clicking the link below.',
+          html: `<h1>Please validate your email</h1><a href="http://localhost/welcome/${uuid}">Validate Your Email</a>`,
+        };
+        mail(emailData);
+      }).catch(util.log);
+
       return true;
     }
     return false;
