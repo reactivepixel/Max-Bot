@@ -3,6 +3,7 @@ module.exports = () => {
   const validateFullSailEmail = require('../../lib/emailValidation.js');
 
   const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+
   const messageMiddleware = (message) => {
     const container = {};
     container.parsed = message.content.split(' ');
@@ -140,39 +141,32 @@ module.exports = () => {
     return false;
   };
 
-  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-  // !addRoles start
-  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-    const _addRoles = (message) => {
+  const _addRoles = (message) => {
+    util.log('passed', message.content);
 
-      util.log('passed', message.content);
+    const msg = messageMiddleware(message);
 
-      const msg = messageMiddleware(message);
-      if (msg.parsed[0].toLowerCase() === '!addroles') {
-        if (!message.guild) return noGuildFault(message);
+    if (msg.parsed[0].toLowerCase() === '!addroles') {
+      if (!message.guild) return noGuildFault(message);
+      const roles = msg.parsed[1].split(',');
+      util.log('Multiple Roles Parsing', roles, 4);
 
+      roles.map((role) => {
+        if (!disallowedRoles.includes(role.toLowerCase())) {
+          const targetRole = message.guild.roles.find('name', role);
+          util.log('Queing API for Role', targetRole, 4);
 
-        // const targetRoles = message.guild.roles.find('name', msg.parsed[1]);
-        // // if role dose not exist
-        // if (targetRoles === null) {
-        //   return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
-        // }
-
-
-        message.guild.roles.map((role) => {
-          if (!disallowedRoles.includes(role.name.toLowerCase())) {
-            return message.member.addRole(role).catch(util.log);
+          if (targetRole === null) {
+            return message.reply('"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
           }
-          return role.name;
-        });
 
-        return message.reply('Adding Roles.');
-      }
-      return false;
-    };
-  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-  // !addRoles end
-  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+          return message.member.addRole(targetRole).catch(util.log);
+        }
+        return role.name;
+      });
+    }
+    return false;
+  };
 
   return {
     addRole: _addRole,
