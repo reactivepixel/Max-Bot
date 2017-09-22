@@ -121,7 +121,6 @@ module.exports = () => {
     const msg = messageMiddleware(message);
 
     if (msg.parsed[0].toLowerCase() === '!verifyfs') {
-      // console.log("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥")
       // TODO: Reduce Code Duplication
       if (!message.guild) return noGuildFault(message);
       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
@@ -136,27 +135,21 @@ module.exports = () => {
         return message.reply('"' + msg.parsed[2] + '" is not a valid email address. You have to use a fullsail.com or fullsail.edu to validate as a FS');
       }
 
-      /// import model and check against db
+      // import model and check against db
       const models = require('../../db/models');
       const userObj = message.guild.members.get(message.guild.ownerID);
-      // console.log("userObj.user.username ❤️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️", userObj.user.username )
       const user = userObj.user;
-
-   
-
-
-
       // Find One
       models.Member.find({
-          where: {uuid}
+        where: { uuid },
       })
-        .then(userExists => {
-          if(!userExists){
+        .then((userExists) => {
+          if (!userExists) {
             // Since the user does not exist, we must create one
             models.Member.create({
               discorduser: user.id,
               email: msg.parsed[2],
-              uuid: uuid,
+              uuid,
               verified: 0,
             })
               .then(data=> {
@@ -172,14 +165,12 @@ module.exports = () => {
                   mail(emailData);
               })
               .catch(console.error);
+
           } else {
             // add UUID to current user
           }
-
         })
-        .catch(console.error);
-
-      
+        .catch(util.log);
 
       // TODO: Handle error to respond with message
       // TODO: Change catch to pass to util.error... will need created
