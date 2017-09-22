@@ -196,7 +196,6 @@ module.exports = () => {
           if (targetRole === null) {
             return message.reply('"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
           }
-
           return message.member.addRole(targetRole).catch(util.log);
         }
         return role.name;

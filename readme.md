@@ -112,6 +112,29 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 # Other Information
 
+## Server routes
+
+There are three routes that can be hit when a email is sent. The email is sent and the link that is in that email is a url with the route `/welcome:code` on the end. The `:code` is the UUID code that was sent to the user. When the email is sent and the UUID code isn't in the database the `/success` page will be hit because the user was verified. If the UUID code is in the database the user will be redirected to the `/error` page.
+
+```
+/welcome/:code 
+/error
+/success
+
+```
+### Test
+To test this you can follow the commands below:
+
+```
+git fetch origin
+git checkout web
+
+npm i
+
+docker-compose down -v && docker-compose up --build
+```
+
+
 ## Send gmail through Node.js 
 
 ### Before beginning
