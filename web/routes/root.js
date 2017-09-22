@@ -1,6 +1,5 @@
 const path = require('path');
 
-
 module.exports = (express) => {
   const router = express.Router();
   router.get('/welcome/:code', (req, res) => {
