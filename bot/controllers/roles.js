@@ -3,6 +3,7 @@ module.exports = () => {
   const validateFullSailEmail = require('../../lib/emailValidation.js');
 
   const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+
   const messageMiddleware = (message) => {
     const container = {};
     container.parsed = message.content.split(' ');
@@ -140,6 +141,33 @@ module.exports = () => {
     return false;
   };
 
+  const _addRoles = (message) => {
+    util.log('passed', message.content);
+
+    const msg = messageMiddleware(message);
+
+    if (msg.parsed[0].toLowerCase() === '!addroles') {
+      if (!message.guild) return noGuildFault(message);
+      const roles = msg.parsed[1].split(',');
+      util.log('Multiple Roles Parsing', roles, 4);
+
+      roles.map((role) => {
+        if (!disallowedRoles.includes(role.toLowerCase())) {
+          const targetRole = message.guild.roles.find('name', role);
+          util.log('Queing API for Role', targetRole, 4);
+
+          if (targetRole === null) {
+            return message.reply('"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
+          }
+
+          return message.member.addRole(targetRole).catch(util.log);
+        }
+        return role.name;
+      });
+    }
+    return false;
+  };
+
   return {
     addRole: _addRole,
     removeRole: _removeRole,
@@ -147,5 +175,6 @@ module.exports = () => {
     addAllRoles: _addAllRoles,
     removeAllRoles: _removeAllRoles,
     verifyFS: _verifyFs,
+    addRoles: _addRoles,
   };
 };
