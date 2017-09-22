@@ -13,7 +13,7 @@ module.exports = {
       },
     }, {
       name: 'express-server',
-      script: './web/server.js',
+      script: './web/server.js  ',
     },
   ],
 };
