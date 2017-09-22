@@ -1,3 +1,5 @@
+const uuidv4 = require('uuid/v4');
+
 module.exports = () => {
   const util = require('apex-util');
   const validateFullSailEmail = require('../../lib/emailValidation.js');
@@ -114,9 +116,11 @@ module.exports = () => {
   // VerifyFS role
   const _verifyFs = (message) => {
     util.log('passed', message.content);
+    const uuid = uuidv4();
     const msg = messageMiddleware(message);
 
     if (msg.parsed[0].toLowerCase() === '!verifyfs') {
+      console.log("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥")
       // TODO: Reduce Code Duplication
       if (!message.guild) return noGuildFault(message);
       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
@@ -130,6 +134,38 @@ module.exports = () => {
       if (!validateFullSailEmail(msg.parsed[2])) {
         return message.reply('"' + msg.parsed[2] + '" is not a valid email address. You have to use a fullsail.com or fullsail.edu to validate as a FS');
       }
+
+      /// import model and check against db
+      const models = require('../../db/models');
+      const userObj = message.guild.members.get(message.guild.ownerID);
+      // console.log("userObj.user.username ❤️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️️❤️️️️️", userObj.user.username )
+      const user = userObj.user;
+
+   
+
+
+
+      // Find One
+      models.Member.find({
+          where: {uuid}
+      })
+        .then(userExists => {
+          if(!userExists){
+            // Since the user does not exist, we must create one
+            models.Member.create({
+              discorduser: user.id,
+              email: msg.parsed[2],
+              uuid: uuid,
+              verified: 0,
+            }).then(data => console.log(data)).catch(console.error);
+          } else {
+            // add UUID to current user
+          }
+
+        })
+        .catch(console.error);
+
+      
 
       // TODO: Handle error to respond with message
       // TODO: Change catch to pass to util.error... will need created
