@@ -62,7 +62,7 @@ npm install
 Install the linter-eslint package for Atom.
 
 ```
-apm install linter-eslint
+npm install linter-eslint
 ```
 
 
@@ -111,5 +111,41 @@ of this particular output should be. Reference the **Debug Level Chart**
 [Official Node](https://hub.docker.com/_/node/) Container used.
 
 # Other Information
+
+## Send gmail through Node.js 
+
+### Before beginning
+You must have experience in Node.js. You will install the dependency Nodemailer. This package is great because it has no dependencies other than Node itself. Theoretically, this package will work for more than gmail.
+
+> **Note:** We will create two objects: transporter and mailoptions: name, html, etc... 
+
+We will then call the sendmail method of the transporter and pass the mailoptions as an argument to the function.
+
+### Step 1
+
+Install the nodemailer dependency into your node server. 
+
+```
+npm install nodemailer -S
+```
+
+### Step 2
+
+Add your account credentials as variables to your environment config. They should look like this.
+
+```
+ACCOUNT_USERNAME: 'XXXXXXX@gmail.com'
+ACCOUNT_PASSWORD: 'XXXXXXX'
+```
+
+### Step 3
+
+Add the nodemailer.js file to your project. Copy the attached gist below.
+
+[Download this Nodemailer Gist](https://gist.github.com/jonathandavidpollock/b8e73974e79f2e3be314ec9f3a3775ef)
+
+### Step 4
+
+Edit the mailoptions variable to your liking. This variable is the email to be sent to the user. There are more options than needed on nodemailer if needed. For example, you can specify the watchText option which is the text that displays on the watch.
 
 ## [Change Log](changelog.md)
