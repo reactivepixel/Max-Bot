@@ -109,11 +109,46 @@ module.exports = () => {
     return false;
   };
 
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+// !addRoles start
+// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  const _addRoles = (message) => {
+
+    util.log('passed', message.content);
+
+    const msg = messageMiddleware(message);
+    if (msg.parsed[0].toLowerCase() === '!addroles') {
+      if (!message.guild) return noGuildFault(message);
+
+
+      // const targetRoles = message.guild.roles.find('name', msg.parsed[1]);
+      // // if role dose not exist
+      // if (targetRoles === null) {
+      //   return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
+      // }
+
+
+      message.guild.roles.map((role) => {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
+          return message.member.addRole(role).catch(util.log);
+        }
+        return role.name;
+      });
+
+      return message.reply('Adding Roles.');
+    }
+    return false;
+  };
+  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // !addRoles end
+  // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
   return {
     addRole: _addRole,
     removeRole: _removeRole,
     roles: _roles,
     addAllRoles: _addAllRoles,
     removeAllRoles: _removeAllRoles,
+    addRoles: _addRoles,
   };
 };
