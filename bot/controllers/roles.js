@@ -1,4 +1,5 @@
 const uuidv4 = require('uuid/v4');
+const mail = require('../../lib/nodemailer.js')
 
 module.exports = () => {
   const util = require('apex-util');
@@ -120,7 +121,7 @@ module.exports = () => {
     const msg = messageMiddleware(message);
 
     if (msg.parsed[0].toLowerCase() === '!verifyfs') {
-      console.log("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥")
+      // console.log("🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥")
       // TODO: Reduce Code Duplication
       if (!message.guild) return noGuildFault(message);
       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
@@ -157,7 +158,20 @@ module.exports = () => {
               email: msg.parsed[2],
               uuid: uuid,
               verified: 0,
-            }).then(data => console.log(data)).catch(console.error);
+            })
+              .then(data=> {
+                  // Create email 
+                  const emailData = {
+                    to: data.email, 
+                    subject: 'Maxbot Validaiton Email',
+                    text:'Please validate you email by clicking the link below.',
+                    html: `<h1>Please validate your email</h1><a href="http://localhost/welcome/${uuid}">Validate Your Email</a>`
+                  }
+
+                  // Send email with mail(data)
+                  mail(emailData);
+              })
+              .catch(console.error);
           } else {
             // add UUID to current user
           }
