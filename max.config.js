@@ -4,7 +4,7 @@ module.exports = {
       name: 'max',
       script: './bot/client.js',
       env: {
-        TOKEN: 'MzYwMTMwMzc0MDQ4OTQwMDQz.DKRFGg.z5u_ivoP1Tn0dpgRrR83Qbc4jZM',
+        TOKEN: 'xxx',
         DEBUG_MODE: '3',
         NODE_ENV: 'development',
       },
@@ -13,7 +13,7 @@ module.exports = {
       },
     }, {
       name: 'express-server',
-      script: './web/server.js  ',
+      script: './web/server.js',
     },
   ],
 };
