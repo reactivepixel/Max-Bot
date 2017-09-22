@@ -28,7 +28,13 @@ To run the bot locally ensure that you have followed the installation instructio
 Use docker-compose to start the container with the bot client.
 
 ```
-docker-compose up
+docker-compose up --build
+```
+
+To Stop the bot run the command:
+
+```
+docker-compose stop
 ```
 
 > Note: Any changes to the codebase will require you to close the Docker container and re 'up'.
@@ -43,6 +49,12 @@ The AirBnB javascript style guide has been put in place and will be enforced thr
 
 Ensure your local IDE has the ability to add eslint plugins. [Atom](https://atom.io) is recommended.
 
+Locally install the style guide dependancies for Atom's IDE
+
+```
+npm install
+```
+
 > [Source](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#eslint-config-airbnb-1)
 
 ### Atom Configuration
@@ -50,7 +62,7 @@ Ensure your local IDE has the ability to add eslint plugins. [Atom](https://atom
 Install the linter-eslint package for Atom.
 
 ```
-apm install linter-eslint
+npm install linter-eslint
 ```
 
 
@@ -96,8 +108,44 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 ## Node Container
 
-[Official Node](https://hub.docker.com/_/node/) Container used. 
+[Official Node](https://hub.docker.com/_/node/) Container used.
 
 # Other Information
+
+## Send gmail through Node.js 
+
+### Before beginning
+You must have experience in Node.js. You will install the dependency Nodemailer. This package is great because it has no dependencies other than Node itself. Theoretically, this package will work for more than gmail.
+
+> **Note:** We will create two objects: transporter and mailoptions: name, html, etc... 
+
+We will then call the sendmail method of the transporter and pass the mailoptions as an argument to the function.
+
+### Step 1
+
+Install the nodemailer dependency into your node server. 
+
+```
+npm install nodemailer -S
+```
+
+### Step 2
+
+Add your account credentials as variables to your environment config. They should look like this.
+
+```
+ACCOUNT_USERNAME: 'XXXXXXX@gmail.com'
+ACCOUNT_PASSWORD: 'XXXXXXX'
+```
+
+### Step 3
+
+Add the nodemailer.js file to your project. Copy the attached gist below.
+
+[Download this Nodemailer Gist](https://gist.github.com/jonathandavidpollock/b8e73974e79f2e3be314ec9f3a3775ef)
+
+### Step 4
+
+Edit the mailoptions variable to your liking. This variable is the email to be sent to the user. There are more options than needed on nodemailer if needed. For example, you can specify the watchText option which is the text that displays on the watch.
 
 ## [Change Log](changelog.md)
