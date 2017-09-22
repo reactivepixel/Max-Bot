@@ -1,6 +1,7 @@
 const path = require('path');
 const models = require('../../db/models');
 
+
 const successRoute = '/success';
 const failRoute = '/error';
 

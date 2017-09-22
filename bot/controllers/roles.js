@@ -1,4 +1,5 @@
 const uuidv4 = require('uuid/v4');
+const mail = require('../../lib/nodemailer.js');
 
 module.exports = () => {
   const util = require('apex-util');
@@ -150,7 +151,17 @@ module.exports = () => {
               email: msg.parsed[2],
               uuid,
               verified: 0,
-            }).then(data => util.log(data)).catch(util.log);
+            })
+              .then((data) => {
+                const emailData = {
+                  to: data.email,
+                  subject: 'Maxbot Validaiton Email',
+                  text: 'Please validate you email by clicking the link below.',
+                  html: `<h1>Please validate your email</h1><a href="http://localhost/welcome/${uuid}">Validate Your Email</a>`,
+                };
+                mail(emailData);
+              })
+              .catch(util.log());
           } else {
             // add UUID to current user
           }
