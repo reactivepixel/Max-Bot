@@ -31,6 +31,8 @@ module.exports = () => {
 };
 ```
 
+> Update ```DiscordBotToken``` with the token you receive from the next step.
+
 ### Bot Token
 
 Obtain a [Discord App Bot Token](https://discordapp.com/developers/applications/me) from your registered app (or register a new one) to proceed or contact a Release Manager for Max's Dev Bot token.
