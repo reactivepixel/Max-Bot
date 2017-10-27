@@ -13,12 +13,22 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 
 ### ENV Vars
 
-Create an ```.env``` file with all the environment specific and sensitive information.
+Create an ```max.config.js``` file with all the environment specific and sensitive information.
 
-```shell
-TOKEN={DiscordBotToken}
-DEBUG_MODE=3
-NODE_ENV=development
+```javascript
+module.exports = () => {
+  apps: [
+    {
+      name: 'max',
+      script: './bot/client.js',
+      env: {
+        TOKEN: DiscordBotToken,
+        DEBUG_MODE: '3',
+        NODE_ENV: 'development',
+      },
+    },
+  ],
+};
 ```
 
 ### Bot Token
