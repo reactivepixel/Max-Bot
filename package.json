@@ -27,5 +27,15 @@
     "eslint-plugin-react": "^7.1.0",
     "mocha": "^3.5.0",
     "mocha-eslint": "^4.1.0"
+  },
+  "peerDependencies": {
+    "bufferutil": "^3.0.0",
+    "erlpack": "discordapp/erlpack",
+    "node-opus": "^0.2.0",
+    "opusscript": "^0.0.4",
+    "sodium": "^2.0.0",
+    "libsodium-wrappers": "^0.7.0",
+    "uws": "^8.14.0",
+    "zlib-sync": "^0.1.0"
   }
 }
