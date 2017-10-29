@@ -21,6 +21,9 @@ client.on('message', (message) => {
 
     // TODO: Improve help message
     if (message.content.toLowerCase() === '!help') {
+      util.log('------------BIG GIANT TEST-------------------------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      util.log(message);
+      util.log('------------BIG GIANT TEST-------------------------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       message.reply('v1.2.3 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself.');
     }
 
@@ -40,7 +43,7 @@ client.on('message', (message) => {
           const methodName = controllerMethodKeys[controllerMethodKey];
           const method = ctrlInstance[methodName];
 
-          util.log('Looping Through Each Method within each Controller', method, 4);
+          // util.log('Looping Through Each Method within each Controller', method, 4);
 
           // Pass the message to each method of each controller
           method(message);
