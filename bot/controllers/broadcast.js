@@ -26,8 +26,9 @@ module.exports = () => {
   };
   const _chooseChannels = (message) => {
     const msg = messageMiddleware(message);
-    const input = msg.parsed[2];
-    const inputChannels = msg.parsed[1].split(',');
+    const inputChannels = msg.parsed[1];
+
+    const input = msg.parsed.slice(1).slice(1).join(',').replace(/,/g, ' ');
     const validChannels = [];
     if (msg.parsed[0].toLowerCase() === '!broadcastchoose') {
       const channels = message.guild.channels.map(channel => channel);
@@ -37,9 +38,9 @@ module.exports = () => {
         }
         return true;
       });
-      const isValid = inputChannels.every(r => validChannels.includes(r));
+      const isValid = inputChannels.split(',').every(r => validChannels.includes(r));
       if (isValid) {
-        inputChannels.forEach((el) => {
+        inputChannels.split(',').forEach((el) => {
           message.guild.channels.find('name', el).send(input);
         });
       } else {
