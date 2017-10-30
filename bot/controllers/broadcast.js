@@ -10,7 +10,7 @@ module.exports = () => {
   // send message for all channels
   const _allChannels = (message) => {
     const msg = messageMiddleware(message);
-    const input = msg.parsed.join(',').replace(/,/g, ' ');
+    const userMessageInput = msg.parsed.join(',').replace(/,/g, ' ');
     if (msg.parsed[0].toLowerCase() === '!broadcastall') {
       const channels = message.guild.channels.map(channel => channel);
       Object.keys(channels).forEach((el) => {
@@ -20,7 +20,7 @@ module.exports = () => {
           const objEmbed = new Discord.RichEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             // remove the first index of the array in that case are the channels
-            .setTitle(`:loudspeaker: ${input.substr(input.indexOf(' ') + 1)}`)
+            .setTitle(`:loudspeaker: ${userMessageInput.substr(userMessageInput.indexOf(' ') + 1)}`)
             .setColor(embedColor);
           channels[el].send(objEmbed);
         }
@@ -34,7 +34,7 @@ module.exports = () => {
     const msg = messageMiddleware(message);
     const inputChannels = msg.parsed[1];
     // delete the 2 first index of the array and replace `,` for blank space
-    const input = msg.parsed.slice(1).slice(1).join(',').replace(/,/g, ' ');
+    const userMessageInput = msg.parsed.slice(1).slice(1).join(',').replace(/,/g, ' ');
     const validChannels = [];
     if (msg.parsed[0].toLowerCase() === '!broadcastselect') {
       const channels = message.guild.channels.map(channel => channel);
@@ -53,7 +53,7 @@ module.exports = () => {
           const objEmbed = new Discord.RichEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             // remove the first index of the array in that case are the channels
-            .setTitle(`:loudspeaker: ${input}`)
+            .setTitle(`:loudspeaker: ${userMessageInput}`)
             .setColor(embedColor);
           message.guild.channels.find('name', el).send(objEmbed);
         });
