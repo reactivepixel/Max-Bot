@@ -1,4 +1,5 @@
 module.exports = () => {
+  const embedColor = [145, 124, 57];
   const Discord = require('discord.js');
   const messageMiddleware = (message) => {
     const container = {};
@@ -20,7 +21,7 @@ module.exports = () => {
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             // remove the first index of the array in that case are the channels
             .setTitle(`:loudspeaker: ${input.substr(input.indexOf(' ') + 1)}`)
-            .setColor([145, 124, 57]);
+            .setColor(embedColor);
           channels[el].send(objEmbed);
         }
         return true;
@@ -53,7 +54,7 @@ module.exports = () => {
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             // remove the first index of the array in that case are the channels
             .setTitle(`:loudspeaker: ${input}`)
-            .setColor([145, 124, 57]);
+            .setColor(embedColor);
           message.guild.channels.find('name', el).send(objEmbed);
         });
       } else {
