@@ -8,38 +8,22 @@ module.exports = () => {
     return msg;
   };
 
+  // Save users selected channels
+  const selectedChannels = [];
+
   const noGuildFault = message => message.reply('Commands are Discord Server specific, they will not work in PMs. Sorry :cry:');
 
   const _channels = (message) => {
     const msg = messageMiddleware(message);
+    // -----------------------------------------------------
     if (msg.parsed[0].toLowerCase() === '!broadcast') {
       const channels = [];
-      // Store each channel in array, then loop through array and send message to each channel.
-
-      // if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-      const args = message.content.slice(message.length).split(/\s+/);
-      const command = args.shift().toLowerCase();
-
-      util.log('----------------------STARTING LOGS--------------------');
-      util.log(message);
-      util.log(args);
-      util.log(command);
-      util.log('----------------------Storing Msg--------------------');
-      // util.log(msg);
-      // util.log('#213134809172672512');
-      util.log('----------------------Array Storing--------------------');
-      // client.channels.get('#213134809172672512').send('My Message');
-      util.log('----------------------ENDING LOGS--------------------');
-      // message.reply('My Message is this test!');
-      message.guild.channels.find('name', 'tabletopcitadel').sendMessage('blabla');
-
-
-      // -----------------------------------------------------
       if (!message.guild) return noGuildFault(message);
       message.guild.channels.map((channel) => {
         if (!disallowedChannel.includes(channel.name.toLowerCase())) {
-          return channels.push(channel.name);
+          if (channel.type === 'text') {
+            return channels.push(channel.name);
+          }
         }
         return channel.name;
       });
@@ -47,12 +31,36 @@ module.exports = () => {
       const formattedChannel = channels.join('\n');
 
       // message.author.send('List of all Armada Channels: \n\n' + formattedChannel);
-      return message.reply('List of all Armada Channels: \n\n' + formattedChannel);
+      return message.reply('List of all Armada Channels: \n\n' + formattedChannel + '\n\n USE: \'!channels\' command to choose which Channels to send message to. \n (seperate each channel with a space).');
       // return message.reply('Check your PMs :wink:');
+    }
+    // -----------------------------------------------------
+    if (msg.parsed[0].toLowerCase() === '!channels') {
+      if (!message.guild) return noGuildFault(message);
+
+      const args = message.content.slice(message.length).split(/\s+/);
+      const command = args.shift().toLowerCase();
+
+      args.forEach((chnl) => {
+        selectedChannels.push(chnl);
+      });
+
+      const formattedChannel = selectedChannels.join('\n');
+
+      return message.reply('List of your selected channels to broadcast to: \n\n' + formattedChannel + '\n\n USE: \'!message\' command followed by your message you want to send to these channels.');
+
+      // -----------------------------------------------------
+    }
+
+    if (msg.parsed[0].toLowerCase() === '!message') {
+      if (!message.guild) return noGuildFault(message);
+
+      selectedChannels.forEach((chnl) => {
+        message.guild.channels.find('name', chnl).sendMessage('blabla');
+      });
     }
     return false;
   };
-
   return {
     channels: _channels,
   };
