@@ -17,12 +17,12 @@ module.exports = () => {
         // filter for text channels
         if (channels[el].type === 'text') {
           // creating an object to send a message
-          const objEmbed = new Discord.RichEmbed()
+          const botMsg = new Discord.RichEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             // remove the first index of the array in that case are the channels
             .setTitle(`:loudspeaker: ${userMessageInput.substr(userMessageInput.indexOf(' ') + 1)}`)
             .setColor(embedColor);
-          channels[el].send(objEmbed);
+          channels[el].send(botMsg);
         }
         return true;
       });
@@ -50,12 +50,12 @@ module.exports = () => {
       if (isValid) {
         inputChannels.split(',').forEach((el) => {
           // message.guild.channels.find('name', el).send(input);
-          const objEmbed = new Discord.RichEmbed()
+          const botMsg = new Discord.RichEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
             // remove the first index of the array in that case are the channels
             .setTitle(`:loudspeaker: ${userMessageInput}`)
             .setColor(embedColor);
-          message.guild.channels.find('name', el).send(objEmbed);
+          message.guild.channels.find('name', el).send(botMsg);
         });
       } else {
         message.reply('you chose invalid channels!');
