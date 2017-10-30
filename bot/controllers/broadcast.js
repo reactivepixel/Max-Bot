@@ -58,7 +58,7 @@ module.exports = () => {
           message.guild.channels.find('name', el).send(objEmbed);
         });
       } else {
-        message.reply('you choose invalid channels');
+        message.reply('you chose invalid channels!');
       }
     }
     return false;
