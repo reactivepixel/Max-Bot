@@ -124,6 +124,18 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 # Container Information
 
+## How to use the bot
+
+Type `!help` to see all the commands available
+
+`!broadcastAll` to send a message for all channels
+
+example:`! broadcastAll hello friends`
+
+`!broadcastChoose` to send a message to specific channels
+
+example: `!broadcastChoose general,dev hello friends`
+
 ## Node Container
 
 [Official Node](https://hub.docker.com/_/node/) Container used.
