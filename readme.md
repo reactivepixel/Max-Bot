@@ -124,21 +124,13 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 # Container Information
 
-## How to use the bot
+## How to use max-bot
 
 ![how-to](https://i.imgflip.com/1yie26.gif)
 
-`!help`
+Type `!help` on Discord
 
-Type `!help` to see all the commands available
-
-`!broadcastAll` to send a message for all channels
-
-example:`!broadcastAll hello my friends this is my message`
-
-`!broadcastChoose` to send a message to specific channels
-
-example: `!broadcastChoose general,dev hello my friends this is my message`
+![Imgur](https://i.imgur.com/SVgnZzA.png)
 
 ## Node Container
 

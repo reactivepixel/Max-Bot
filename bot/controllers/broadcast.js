@@ -37,13 +37,14 @@ module.exports = () => {
     const validChannels = [];
     if (msg.parsed[0].toLowerCase() === '!broadcastselect') {
       const channels = message.guild.channels.map(channel => channel);
+      // loop through channels and push it to an array
       Object.keys(channels).forEach((el) => {
         if (channels[el].type === 'text') {
           validChannels.push(channels[el].name);
         }
         return true;
       });
-      // Verify if the user choose a valid channel
+      // Verify if the user choose a valid channel if yes display the message
       const isValid = inputChannels.split(',').every(r => validChannels.includes(r));
       if (isValid) {
         inputChannels.split(',').forEach((el) => {
