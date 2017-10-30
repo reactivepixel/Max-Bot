@@ -122,9 +122,9 @@ of this particular output should be. Reference the **Debug Level Chart**
 3. Very Detailed and in-depth Output.
 4. Highly Fine Grained Detailed and in-depth Output.
 
-# Container Information
 
-## How to use max-bot
+
+# How to use max-bot
 
 ![how-to](https://i.imgflip.com/1yie26.gif)
 
@@ -132,6 +132,7 @@ Type `!help` on Discord
 
 ![Imgur](https://i.imgur.com/SVgnZzA.png)
 
+# Container Information
 ## Node Container
 
 [Official Node](https://hub.docker.com/_/node/) Container used.
