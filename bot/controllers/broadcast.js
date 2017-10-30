@@ -26,10 +26,9 @@ module.exports = () => {
   };
   const _chooseChannels = (message) => {
     const msg = messageMiddleware(message);
-    // const input = msg.parsed.join(',');
+    const input = msg.parsed[2];
     const inputChannels = msg.parsed[1].split(',');
     const validChannels = [];
-
     if (msg.parsed[0].toLowerCase() === '!broadcastchoose') {
       const channels = message.guild.channels.map(channel => channel);
       Object.keys(channels).forEach((el) => {
@@ -38,10 +37,10 @@ module.exports = () => {
         }
         return true;
       });
-      const isValid = inputChannels.some(r => validChannels.includes(r));
+      const isValid = inputChannels.every(r => validChannels.includes(r));
       if (isValid) {
         inputChannels.forEach((el) => {
-          message.guild.channels.find('name', el).send('testing message');
+          message.guild.channels.find('name', el).send(input);
         });
       } else {
         message.reply('you choose invalid channels');
