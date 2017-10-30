@@ -1,4 +1,5 @@
 module.exports = () => {
+  const Discord = require('discord.js');
   const messageMiddleware = (message) => {
     const container = {};
     container.parsed = message.content.split(' ');
@@ -7,11 +8,16 @@ module.exports = () => {
   };
   const _allChannels = (message) => {
     const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!broadcast-all') {
+    const input = msg.parsed.join(',').replace(/,/g, ' ');
+    if (msg.parsed[0].toLowerCase() === '!broadcastall') {
       const channels = message.guild.channels.map(channel => channel);
       Object.keys(channels).forEach((el) => {
         if (channels[el].type === 'text') {
-          channels[el].send('sending it for every channel');
+          const objEmbed = new Discord.RichEmbed()
+            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            .setTitle(`:loudspeaker: ${input.substr(input.indexOf(' ') + 1)}`)
+            .setColor([145, 124, 57]);
+          channels[el].send(objEmbed);
         }
         return true;
       });
@@ -20,7 +26,7 @@ module.exports = () => {
   };
   const _chooseChannels = (message) => {
     const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!broadcast-choose') {
+    if (msg.parsed[0].toLowerCase() === '!broadcastChoose') {
       const channels = message.guild.channels.map(channel => channel);
       Object.keys(channels).forEach((el) => {
         if (channels[el].type === 'text') {

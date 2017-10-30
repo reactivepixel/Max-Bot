@@ -20,11 +20,7 @@ client.on('message', (message) => {
 
     // TODO: Improve help message
     if (message.content.toLowerCase() === '!help') {
-      message.reply('v1.2.3 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself.');
-    }
-
-    if (message.content.toLowerCase() === '!broadcast') {
-      message.reply('\n\t  \n\t`!broadcast-all` \n\t  To send for all groups \n\n');
+      message.reply('v1.2.3 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself.\n\n`!broadcastAll`\n\t  To send for all groups \n\n');
     }
     // Process message against every controller
     Object.keys(ctrls).forEach((ctrlKey) => {
