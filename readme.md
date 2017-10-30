@@ -126,15 +126,19 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 ## How to use the bot
 
+![](https://media.giphy.com/media/xT9IgHmHcwAy7e29yM/giphy.gif)
+
+`!help`
+
 Type `!help` to see all the commands available
 
 `!broadcastAll` to send a message for all channels
 
-example:`!broadcastAll hello friends`
+example:`!broadcastAll hello my friends this is my message`
 
 `!broadcastChoose` to send a message to specific channels
 
-example: `!broadcastSelect general,dev hello friends`
+example: `!broadcastChoose general,dev hello my friends this is my message`
 
 ## Node Container
 
