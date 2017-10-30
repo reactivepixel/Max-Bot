@@ -1,0 +1,24 @@
+[
+	{
+		"command" : "\n `!roles` \n\t List all Armada Roles \n"
+	},
+	{
+		"command":	"`!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n"
+	},
+	{
+		"command":	"`!removeRole` RoleName \n\t Removes a role from yourself. \n"
+	},
+	{
+		"command":	"`!addAllRoles` \n\t Add all roles to yourself. \n"
+	},
+	{
+		"command":	"`!removeAllRoles` \n\t Remove all roles from yourself.\n"
+	},
+	{
+		"command":	"`!broadcastAll` message \n\t  To send for all groups \n"
+	},
+	{
+		"command":	"`!broadcastSelect` channels separate by `,` message \n\t  To send specific groups \n"
+	}
+]
+
