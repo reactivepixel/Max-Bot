@@ -126,7 +126,7 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 ## How to use the bot
 
-![how-to](https://media.giphy.com/media/xT9IgHmHcwAy7e29yM/giphy.gif)
+![how-to](https://i.imgflip.com/1yie26.gif)
 
 `!help`
 
