@@ -43,6 +43,7 @@ module.exports = () => {
 
       const args = message.content.slice(message.length).split(/\s+/);
       const command = args.shift().toLowerCase();
+      util.log(command);
 
       args.forEach((chnl) => {
         selectedChannels.push(chnl);
@@ -61,6 +62,8 @@ module.exports = () => {
 
       const args = message.content.slice(message.length).split(/\s+/);
       const command = args.shift().toLowerCase();
+      util.log(command);
+
       const messageStr = args.join(' ');
 
       // Dynamic code, issue: array values that get set outside of if block,
