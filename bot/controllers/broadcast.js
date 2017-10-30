@@ -18,6 +18,7 @@ module.exports = () => {
           // creating an object to send a message
           const objEmbed = new Discord.RichEmbed()
             .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            // remove the first index of the array in that case are the channels
             .setTitle(`:loudspeaker: ${input.substr(input.indexOf(' ') + 1)}`)
             .setColor([145, 124, 57]);
           channels[el].send(objEmbed);
@@ -34,7 +35,7 @@ module.exports = () => {
     // delete the 2 first index of the array and replace `,` for blank space
     const input = msg.parsed.slice(1).slice(1).join(',').replace(/,/g, ' ');
     const validChannels = [];
-    if (msg.parsed[0].toLowerCase() === '!broadcastchoose') {
+    if (msg.parsed[0].toLowerCase() === '!broadcastselect') {
       const channels = message.guild.channels.map(channel => channel);
       Object.keys(channels).forEach((el) => {
         if (channels[el].type === 'text') {
@@ -46,7 +47,13 @@ module.exports = () => {
       const isValid = inputChannels.split(',').every(r => validChannels.includes(r));
       if (isValid) {
         inputChannels.split(',').forEach((el) => {
-          message.guild.channels.find('name', el).send(input);
+          // message.guild.channels.find('name', el).send(input);
+          const objEmbed = new Discord.RichEmbed()
+            .setAuthor(message.author.tag, message.author.displayAvatarURL)
+            // remove the first index of the array in that case are the channels
+            .setTitle(`:loudspeaker: ${input}`)
+            .setColor([145, 124, 57]);
+          message.guild.channels.find('name', el).send(objEmbed);
         });
       } else {
         message.reply('you choose invalid channels');

@@ -130,11 +130,11 @@ Type `!help` to see all the commands available
 
 `!broadcastAll` to send a message for all channels
 
-example:`! broadcastAll hello friends`
+example:`!broadcastAll hello friends`
 
 `!broadcastChoose` to send a message to specific channels
 
-example: `!broadcastChoose general,dev hello friends`
+example: `!broadcastSelect general,dev hello friends`
 
 ## Node Container
 
