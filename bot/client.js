@@ -6,6 +6,7 @@ if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.en
 
 const client = new Discord.Client();
 
+
 // Pre Load Controllers
 const ctrls = require('./controllers')();
 
@@ -21,9 +22,6 @@ client.on('message', (message) => {
 
     // TODO: Improve help message
     if (message.content.toLowerCase() === '!help') {
-      util.log('------------BIG GIANT TEST-------------------------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-      util.log(message);
-      util.log('------------BIG GIANT TEST-------------------------------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
       message.reply('v1.2.3 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself.');
     }
 
