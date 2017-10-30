@@ -11,7 +11,7 @@ module.exports = () => {
   const noGuildFault = message => message.reply('Commands are Discord Server specific, they will not work in PMs. Sorry :cry:');
 
   // Save users selected channels and created message.
-  // const selectedChannels = [];
+  const selectedChannels = [];
   // const messageStr = '';
 
   // User gets to see all channels they can select to send message to.
@@ -75,8 +75,8 @@ module.exports = () => {
       // message.guild.channels.find('name', 'tabletopcitadel').sendMessage(messageStr);
 
       // Test code, sends message to all channels hard coded into array.
-      const selectedChannels = ['general', 'tabletopcitadel', 'lol'];
-      selectedChannels.forEach((chnl) => {
+      const selectedChannelsHard = ['general', 'tabletopcitadel', 'lol'];
+      selectedChannelsHard.forEach((chnl) => {
         message.guild.channels.find('name', chnl).sendMessage(messageStr);
       });
     }
