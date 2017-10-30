@@ -16,6 +16,9 @@
 	},
 	{
 		"command":	"`!broadcastAll` message \n\t  To send for all groups \n"
+	},
+	{
+		"command":	"`!broadcastChoose` channels message \n\t  To send specific groups \n"
 	}
 ]
 

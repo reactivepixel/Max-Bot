@@ -26,14 +26,26 @@ module.exports = () => {
   };
   const _chooseChannels = (message) => {
     const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!broadcastChoose') {
+    // const input = msg.parsed.join(',');
+    const inputChannels = msg.parsed[1].split(',');
+    const validChannels = [];
+
+    if (msg.parsed[0].toLowerCase() === '!broadcastchoose') {
       const channels = message.guild.channels.map(channel => channel);
       Object.keys(channels).forEach((el) => {
         if (channels[el].type === 'text') {
-          channels[2].send('sending message for a specific channel');
+          validChannels.push(channels[el].name);
         }
         return true;
       });
+      const isValid = inputChannels.some(r => validChannels.includes(r));
+      if (isValid) {
+        inputChannels.forEach((el) => {
+          message.guild.channels.find('name', el).send('testing message');
+        });
+      } else {
+        message.reply('you choose invalid channels');
+      }
     }
     return false;
   };
