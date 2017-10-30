@@ -24,15 +24,7 @@ client.on('message', (message) => {
     }
 
     if (message.content.toLowerCase() === '!broadcast') {
-      message.channel.send(`Hi ${message.author.username} for each groups would you like to broadcast?`);
-
-      const channels = message.guild.channels.map(channel => channel);
-
-      Object.keys(channels).forEach((el) => {
-        if (channels[el].type === 'text') {
-          channels[el].send('sending it for every channel');
-        }
-      });
+      message.reply('\n\t  \n\t`!broadcast-all` \n\t  To send for all groups \n\n');
     }
     // Process message against every controller
     Object.keys(ctrls).forEach((ctrlKey) => {
