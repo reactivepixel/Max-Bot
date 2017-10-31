@@ -41,7 +41,7 @@ client.on('message', (message) => {
           const methodName = controllerMethodKeys[controllerMethodKey];
           const method = ctrlInstance[methodName];
 
-          util.log('Looping Through Each Method within each Controller', method, 4);
+          // util.log('Looping Through Each Method within each Controller', method, 4);
 
           // Pass the message to each method of each controller
           method(message);
