@@ -19,13 +19,6 @@ client.on('message', (message) => {
   if (message.content.charAt(0) === '!') {
     util.log('!Cmd Message Received', message.content, 0);
 
-
-    // TODO: Improve help message
-    if (message.content.toLowerCase() === '!help') {
-      message.reply('v1.2.3 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself.');
-    }
-
-
     // Process message against every controller
     Object.keys(ctrls).forEach((ctrlKey) => {
       if (ctrlKey) {
