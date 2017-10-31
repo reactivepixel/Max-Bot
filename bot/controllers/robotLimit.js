@@ -6,7 +6,7 @@ module.exports = () => {
     const msg = Object.assign(message, container);
     return msg;
   };
-
+  // Silly secret command.
   const _commands = (message) => {
     const msg = messageMiddleware(message);
     if (msg.content.toLowerCase() === '!limitless') {

@@ -13,17 +13,20 @@ module.exports = () => {
     const msg = messageMiddleware(message);
     if (msg.parsed[0].toLowerCase() === '!broadcastall') {
       if (!message.guild) return noGuildFault(message);
+      // Seperate the user input by spaces; command shifts over to rid of command.
       const args = msg.content.slice(msg.length).split(/\s+/);
       const command = args.shift().toLowerCase();
       util.log(command);
       const messageStr = args.join(' ');
       const channels = [];
+      // Go through all channels and check that it's a text channel if true push to array.
       message.guild.channels.map((channel) => {
         if (channel.type === 'text') {
           channels.push(channel.name);
         }
         return channel.name;
       });
+      // For each text channel send message.
       channels.forEach((chnl) => {
         message.guild.channels.find('name', chnl).sendMessage(messageStr);
       });

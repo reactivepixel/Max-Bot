@@ -6,7 +6,8 @@ module.exports = () => {
     const msg = Object.assign(message, container);
     return msg;
   };
-
+  // Menu displayed with all bot command.
+  // Continuous updating need when more commands are added.
   const _commands = (message) => {
     const msg = messageMiddleware(message);
     if (msg.content.toLowerCase() === '!help') {
