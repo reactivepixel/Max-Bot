@@ -1,6 +1,6 @@
 module.exports = () => {
   const util = require('apex-util');
-  const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+  const Discord = require('discord.js');
 
   const messageMiddleware = (message) => {
     const container = {};
@@ -32,12 +32,19 @@ module.exports = () => {
       const selectedChannels = [...inputStr];
       selectedChannels.shift();
       selectedChannels.pop();
+      // Build embed for nicer/more visible display
+      const embed = new Discord.RichEmbed()
+        .setTitle(':mega: Announcement')
+        .setAuthor(message.author.tag, message.author.displayAvatarURL)
+        .setColor('#87b1cc')
+        .setDescription(`${shoutStr}`)
+        .setTimestamp();
       // If selected channel exists, broadcast message
       // Otherwise, notify user of error
       for (let i = 0; i < selectedChannels.length; i += 1) {
         const channel = message.guild.channels.find('name', selectedChannels[i]);
         if (channel && channel.type === 'text') {
-          channel.send(`:mega: ${shoutStr}`);
+          channel.send(embed);
         } else {
           message.reply(`better check your channel names--I can't find a text channel called \`${selectedChannels[i]}\`.`);
         }
@@ -57,10 +64,17 @@ module.exports = () => {
       // Drop command from front of message
       shoutMsg.splice(0, 1);
       const shoutStr = shoutMsg.join(' ');
+      // Build embed for nicer/more visible display
+      const embed = new Discord.RichEmbed()
+        .setTitle(':mega: Announcement')
+        .setAuthor(message.author.tag, message.author.displayAvatarURL)
+        .setColor('#87b1cc')
+        .setDescription(`${shoutStr}`)
+        .setTimestamp();
       // Loop through channels and broadcast if channel type is text
       Object.keys(allChannels).forEach((ch) => {
         if (allChannels[ch].type === 'text') {
-          allChannels[ch].send(`:mega: ${shoutStr}`);
+          allChannels[ch].send(embed);
         }
       });
     }
