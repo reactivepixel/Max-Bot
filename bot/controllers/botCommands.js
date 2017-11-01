@@ -21,7 +21,7 @@ module.exports = () => {
         description: 'The power of this Bot is **!limitless** Within the limits below:',
         fields: [{
           name: '!broadCast',
-          value: 'USE: < !broadcast > command to send a message to selected channels.\n_Example: (!broadcast channel1++channel2++channel3 Hello channels this is my message!_) \n(seperate channels with  \' ++ \'  and message starts after the space between channels message.)',
+          value: 'USE: < !broadcast > command to send a message to selected channels.\n_Example: (!broadcast channel1&+channel2&+channel3 Hello channels this is my message!_) \n(seperate channels with  \' &+ \'  and message starts after the space between channels message.)',
         },
         {
           name: '!broadCastAll',

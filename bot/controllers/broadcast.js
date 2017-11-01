@@ -50,7 +50,7 @@ module.exports = () => {
       // Get Message.
       const input = msg.parsed.slice(1).slice(1).join(' ');
       // Send message to channels.
-      chnls.split('++').forEach((chnl) => {
+      chnls.split('&+').forEach((chnl) => {
         message.guild.channels.find('name', chnl).sendMessage(input);
       });
     }
