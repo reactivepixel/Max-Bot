@@ -4,7 +4,7 @@ module.exports = {
       name: 'max',
       script: './bot/client.js',
       env: {
-        TOKEN: 'MzYwNTA5MzIxMTU2NjI0Mzg0.DKaVIA.G9v7pDftQ1hy82zvzqH8n1oF6VM',
+        TOKEN: 'MzcyNzk5OTE4ODQ4NjA2MjEx.DNpaIg.ElvYLoQgDfYUC1cOBHa2OuFAG1U',
         DEBUG_MODE: '3',
         NODE_ENV: 'development',
         ACCOUNT_USERNAME: 'fsmaxbot@gmail.com',
