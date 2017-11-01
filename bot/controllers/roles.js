@@ -118,7 +118,7 @@ module.exports = () => {
   const _verifyFs = (message) => {
     util.log('passed', message.content);
     // const uuid = uuidv4();
-    const msg = messageMiddleware(message);    
+    const msg = messageMiddleware(message);
 
     if (msg.parsed[0].toLowerCase() === '!verifyfs' && msg.parsed[1].toLowerCase() === 'student') {
       if (!validFSEmail(msg.parsed[2])) {
