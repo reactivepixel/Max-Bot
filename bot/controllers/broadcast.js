@@ -12,37 +12,57 @@ module.exports = () => {
   const noGuildFault = message => message.reply('Commands are Discord Server specific, they will not work in PMs. Sorry :cry:');
 
   const _shout = (message) => {
-    const allChannels = message.guild.channels.map(channel => channel);
+    // Raw input from user
+    let inputStr;
+    // User's message to broadcast
+    let shoutStr;
+    // Flag to indicate beginning of message
+    const msgFlag = '--m';
     const msg = messageMiddleware(message);
     if (msg.parsed[0].toLowerCase() === '!shout') {
-      return message.reply('Hey there buckaroo');
+      inputStr = message.content.slice(message.length).split(/\s+/);
+      // Check that the user flagged the message appropriately
+      if (!inputStr.includes(msgFlag)) {
+        message.reply(`please make sure you flag the beginning of your message with \`${msgFlag}\`, otherwise I don't know what you're trying to tell people.`);
+      }
+      // Create message to broadcast by joining everything after `msgFlag`
+      shoutStr = inputStr.splice(msg.parsed.indexOf(msgFlag) + 1);
+      shoutStr = shoutStr.join(' ');
+      // The rest of `inputStr` becomes the channel selection
+      const selectedChannels = [...inputStr];
+      selectedChannels.shift();
+      selectedChannels.pop();
+      // If selected channel exists, broadcast message
+      // Otherwise, notify user of error
+      for (let i = 0; i < selectedChannels.length; i += 1) {
+        const channel = message.guild.channels.find('name', selectedChannels[i]);
+        if (channel && channel.type === 'text') {
+          channel.send(`:mega: ${shoutStr}`);
+        } else {
+          message.reply(`better check your channel names--I can't find a text channel called \`${selectedChannels[i]}\`.`);
+        }
+      }
     }
     return false;
   };
 
   const _shoutAll = (message) => {
     let shoutMsg;
+    // Get all channels on server
     const allChannels = message.guild.channels.map(channel => channel);
     const msg = messageMiddleware(message);
     if (msg.parsed[0].toLowerCase() === '!shoutall') {
       if (!message.guild) return noGuildFault(message);
       shoutMsg = message.content.slice(message.length).split(/\s+/);
+      // Drop command from front of message
       shoutMsg.splice(0, 1);
       const shoutStr = shoutMsg.join(' ');
-      Object.keys(allChannels).forEach((i) => {
-        if (allChannels[i].type === 'text') {
-          allChannels[i].send(`:mega: ${shoutStr}`);
+      // Loop through channels and broadcast if channel type is text
+      Object.keys(allChannels).forEach((ch) => {
+        if (allChannels[ch].type === 'text') {
+          allChannels[ch].send(`:mega: ${shoutStr}`);
         }
       });
-    }
-    return false;
-  };
-
-  const _selectChannels = (message) => {
-    const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!selectchannels') {
-      if (!message.guild) return noGuildFault(message);
-      return message.reply('This is your selectChannels command');
     }
     return false;
   };
@@ -50,6 +70,5 @@ module.exports = () => {
   return {
     shout: _shout,
     shoutAll: _shoutAll,
-    selectChannels: _selectChannels,
   };
 };
