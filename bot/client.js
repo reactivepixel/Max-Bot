@@ -41,7 +41,6 @@ client.on('message', (message) => {
           ctrlResponses.push(method(message));
         });
       }
-
     });
 
     // TODO: Improve help message

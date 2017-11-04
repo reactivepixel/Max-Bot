@@ -1,136 +1,8 @@
 module.exports = () => {
   const util = require('apex-util');
-//
-//
-//
-//   const noGuildFault = message => message.reply('Commands are Discord Server specific, they will not work in PMs. Sorry :cry:');
-//
-//   const _roles = (message) => {
-//     const info = { cmd: '!roles', desc: 'List all Armada Roles', showWithHelp: true };
-//     const msg = messageMiddleware(message);
-//     if (msg.parsed[0].toLowerCase() === info.cmd) {
-//       const roles = [];
-//       if (!message.guild) return noGuildFault(message);
-//       message.guild.roles.map((role) => {
-//         if (!disallowedRoles.includes(role.name.toLowerCase())) {
-//           return roles.push(role.name);
-//         }
-//         return role.name;
-//       });
-//
-//       const formattedRole = roles.join('\n');
-//
-//       message.author.send('List of all Armada Roles: \n\n' + formattedRole);
-//       return message.reply('Check your PMs :wink:');
-//     } else if (msg.parsed[0].toLowerCase() === '!help') {
-//
-//     }
-//     return false;
-//   };
-//
-//
-//   // const _roles = (message) => {
-//   //   const info = { cmd: '!roles', desc: 'List all Armada Roles', showWithHelp: true };
-//
-//
-//
-//
-//
-//
-//   const _addAllRoles = (message) => {
-//     const msg = messageMiddleware(message);
-//     if (msg.parsed[0].toLowerCase() === '!addallroles') {
-//       if (!message.guild) return noGuildFault(message);
-//       message.guild.roles.map((role) => {
-//         if (!disallowedRoles.includes(role.name.toLowerCase())) {
-//           return message.member.addRole(role).catch(util.log);
-//         }
-//         return role.name;
-//       });
-//
-//       return message.reply('Adding you to all Roles. You\'re going to be drinking from the firehose :sob:');
-//     }
-//     return false;
-//   };
-//
-//   const _removeAllRoles = (message) => {
-//     const msg = messageMiddleware(message);
-//     if (msg.parsed[0].toLowerCase() === '!removeallroles') {
-//       if (!message.guild) return noGuildFault(message);
-//       message.guild.roles.map((role) => {
-//         if (!disallowedRoles.includes(role.name.toLowerCase())) {
-//           return message.member.removeRole(role).catch(util.log);
-//         }
-//         return role.name;
-//       });
-//
-//       return message.reply('Removing all roles. Back to basics.');
-//     }
-//     return false;
-//   };
-//
-//   const _addRole = (message) => {
-//     util.log('passed', message.content);
-//     const msg = messageMiddleware(message);
-//     if (msg.parsed[0].toLowerCase() === '!addrole') {
-//       // TODO: Reduce Code Duplication
-//       if (!message.guild) return noGuildFault(message);
-//       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-//       if (targetRole === null) {
-//         return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
-//       }
-//       if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-//         return message.reply('You are not worthy.');
-//       }
-//
-//       // TODO: Handle error to respond with message
-//       // TODO: Change catch to pass to util.error... will need created
-//       message.member.addRole(targetRole).catch(util.log);
-//       // TODO: Create verbose response toggle?
-//       // message.reply(targetRole.name + ' added.');
-//       return true;
-//     }
-//     return false;
-//   };
-//
-//   const _removeRole = (message) => {
-//     const msg = messageMiddleware(message);
-//     if (msg.parsed[0].toLowerCase() === '!removerole') {
-//       // TODO: Reduce Code Duplication
-//       if (!message.guild) return noGuildFault(message);
-//       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-//       if (targetRole === null) {
-//         return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
-//       }
-//       if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-//         return message.reply('You have not the power or the will to control this power.');
-//       }
-//
-//       // TODO: Handle error to respond with message
-//       // TODO: Change catch to pass to util.error... will need created
-//       message.member.removeRole(targetRole).catch(util.log);
-//       message.reply(targetRole.name + ' removed.');
-//       return true;
-//     }
-//     return false;
-//   };
-//
-//   return {
-//     addRole: _addRole,
-//     removeRole: _removeRole,
-//     roles: _roles,
-//     addAllRoles: _addAllRoles,
-//     removeAllRoles: _removeAllRoles,
-//   };
-// };
-// //
-// //
-// //
-// //
-// //``
 
-
-  const run = (message) => {
+  const _run = (message) => {
+    const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
     const ctrls = [
       {
         cmd: '!roles',
@@ -143,7 +15,7 @@ module.exports = () => {
         regexSplitCharacter: null,
         allowInDM: false,
         resType: 'dm',
-        action: (message, ctrl, msg) => {
+        action: (message) => {
           const roles = [];
           message.guild.roles.map((role) => {
             if (!disallowedRoles.includes(role.name.toLowerCase())) {
@@ -152,13 +24,13 @@ module.exports = () => {
             return role.name;
           });
           return 'List of all Armada Roles: \n\n' + roles.join('\n');
-        }
+        },
       },
       {
         cmd: '!addRole',
         example: '!addRole <role_name>',
         title: 'Add Role',
-        desc: 'Add a single role to yourself.',
+        desc: 'Add a single role to yourself. Role is case-sensitive.',
         showWithHelp: true,
         posTargetUser: null,
         posSecondaryCmd: null,
@@ -167,7 +39,6 @@ module.exports = () => {
         resType: 'dm',
         action: (message, ctrl, msg) => {
           const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-          util.log('=================================================', targetRole, 2);
           if (targetRole === null) {
             util.log('No role matched', msg.parsed[1], 2);
             return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
@@ -177,19 +48,88 @@ module.exports = () => {
           } else {
             util.log('Adding Role to user', targetRole.name, 2);
             message.member.addRole(targetRole).catch(util.log);
-            return "Rgr that.";
+            return 'Added the role "' + targetRole.name + '".';
+          }
+        },
+      },
+      {
+        cmd: '!removeRole',
+        example: '!removeRole <role_name>',
+        title: 'Remove a single role',
+        desc: 'Remove a single game role from yourself. Role is case-sensitive.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message, ctrl, msg) => {
+          const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+          if (targetRole === null) {
+            util.log('No role matched', msg.parsed[1], 2);
+            return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+          }
+          if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+            util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
+            return 'You have not the power or the will to control this power.';
           }
 
-          return false;
-        }
+          util.log('Removing role from user', targetRole.name, 2);
+          message.member.removeRole(targetRole).catch(util.log);
+          return targetRole.name + ' removed.';
+        },
+      },
+      {
+        cmd: '!addAllRoles',
+        example: '!addAllRoles',
+        title: 'Add All Roles',
+        desc: 'Add every game role to yourself.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message) => {
+          message.guild.roles.map((role) => {
+            if (!disallowedRoles.includes(role.name.toLowerCase())) {
+              return message.member.addRole(role).catch(util.log);
+            }
+            return role.name;
+          });
+
+          return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
+        },
+      },
+      {
+        cmd: '!removeAllRoles',
+        example: '!removeAllRoles',
+        title: 'Remove All Roles',
+        desc: 'Remove every game role from yourself.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message) => {
+          message.guild.roles.map((role) => {
+            if (!disallowedRoles.includes(role.name.toLowerCase())) {
+              return message.member.removeRole(role).catch(util.log);
+            }
+            return role.name;
+          });
+
+          return 'Removing all roles. Back to basics.';
+        },
       },
     ];
 
     const onSuccess = (message, res, ctrl) => {
-      if(res !== null){
+      if (res !== null) {
         if (ctrl.resType === 'reply') {
-          return message.reply('I Broke... Beep...Boop...Beep');
-        } else if (ctrl.resType === 'dm'){
+          return message.reply(res);
+        } else if (ctrl.resType === 'dm') {
           return message.author.send(res);
         }
       }
@@ -197,12 +137,7 @@ module.exports = () => {
       return false;
     };
 
-    const onError = (message, res, ctrl) => {
-      return message.reply('I Broke... Beep...Boop...Beep');
-    };
-
-    const res = { help: [] };
-    const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+    const onError = message => message.reply('I Broke... Beep...Boop...Beep');
 
     const messageMiddleware = (message) => {
       const container = {};
@@ -220,7 +155,7 @@ module.exports = () => {
 
         // Ensure the communication is happening on a server
         if (!ctrl.alllowInDM) {
-          if (!message.guild) return noGuildFault(message);
+          if (!message.guild) return onError(message, 'Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
         }
 
         // Do Stuff
@@ -230,24 +165,12 @@ module.exports = () => {
         } else {
           onError(message, res, ctrl);
         }
-
       }
+      return ctrl;
     });
-  }
+  };
 
- return {
-   run: run,
- }
-}
-
-// v1.2.3 Discovered Commands:
-// ``
-// List all Armada Roles
-// `!addRole` RoleName
-// Adds yourself to a role and the related text/voice rooms.
-// `!removeRole` RoleName
-// Removes a role from yourself.
-// `!addAllRoles`
-// Add all roles to yourself.
-// `!removeAllRoles`
-// Remove all roles from yourself.
+  return {
+    run: _run,
+  };
+};
