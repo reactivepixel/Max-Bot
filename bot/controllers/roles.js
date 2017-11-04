@@ -52,6 +52,38 @@ module.exports = () => {
           }
         },
       },
+
+      {
+        cmd: '!addRoles',
+        example: '!addRoles <role_name>,<role_name>,<role_name>',
+        title: 'Add Multiple Specific Roles',
+        desc: 'Add multiple specific roles to yourself. Roles are case-sensitive.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message, ctrl, msg) => {
+          const roles = msg.parsed[1].split(',');
+          util.log('Multiple Roles Parsing', roles, 4);
+
+          roles.map((role) => {
+            if (!disallowedRoles.includes(role.toLowerCase())) {
+              const targetRole = message.guild.roles.find('name', role);
+              util.log('Asking API for Role', targetRole, 4);
+
+              if (targetRole === null) {
+                return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+              }
+              return message.member.addRole(targetRole).catch(util.log);
+            }
+            return role.name;
+          });
+
+          return 'All set!';
+        },
+      },
       {
         cmd: '!removeRole',
         example: '!removeRole <role_name>',
@@ -154,7 +186,7 @@ module.exports = () => {
         util.log('!!! Matched Ctrl to Cmd !!!', ctrl.cmd, 2);
 
         // Ensure the communication is happening on a server
-        if (!ctrl.alllowInDM) {
+        if (!ctrl.allowInDM) {
           if (!message.guild) return onError(message, 'Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
         }
 
