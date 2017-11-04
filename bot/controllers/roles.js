@@ -36,7 +36,7 @@ module.exports = () => {
         posSecondaryCmd: null,
         regexSplitCharacter: null,
         allowInDM: false,
-        resType: 'dm',
+        resType: 'reply',
         action: (message, ctrl, msg) => {
           const targetRole = message.guild.roles.find('name', msg.parsed[1]);
           if (targetRole === null) {
