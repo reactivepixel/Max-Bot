@@ -16,8 +16,6 @@
   "dependencies": {
     "apex-util": "^2.0.3",
     "discord.js": "^11.1.0",
-    "mysql": "^2.14.1",
-    "sequelize": "^4.4.10",
     "chai": "^4.1.1",
     "eslint": "^4.3.1",
     "eslint-config-airbnb": "^15.1.0",
