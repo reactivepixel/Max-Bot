@@ -1,119 +1,208 @@
 module.exports = () => {
   const util = require('apex-util');
 
-  const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
-  const messageMiddleware = (message) => {
-    const container = {};
-    container.parsed = message.content.split(' ');
-    const msg = Object.assign(message, container);
-    return msg;
-  };
+  const _run = (message) => {
+    const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+    const ctrls = [
+      {
+        cmd: '!roles',
+        example: '!roles',
+        title: 'List All Roles',
+        desc: 'List all Armada Roles',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'dm',
+        action: (message) => {
+          const roles = [];
+          message.guild.roles.map((role) => {
+            if (!disallowedRoles.includes(role.name.toLowerCase())) {
+              return roles.push(role.name);
+            }
+            return role.name;
+          });
+          return 'List of all Armada Roles: \n\n' + roles.join('\n');
+        },
+      },
+      {
+        cmd: '!addRole',
+        example: '!addRole <role_name>',
+        title: 'Add Role',
+        desc: 'Add a single role to yourself. Role is case-sensitive.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message, ctrl, msg) => {
+          const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+          if (targetRole === null) {
+            util.log('No role matched', msg.parsed[1], 2);
+            return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+          } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+            util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
+            return 'You are not worthy of the role ' + msg.parsed[1] + '.';
+          } else {
+            util.log('Adding Role to user', targetRole.name, 2);
+            message.member.addRole(targetRole).catch(util.log);
+            return 'Added the role "' + targetRole.name + '".';
+          }
+        },
+      },
 
-  const noGuildFault = message => message.reply('Commands are Discord Server specific, they will not work in PMs. Sorry :cry:');
+      {
+        cmd: '!addRoles',
+        example: '!addRoles <role_name>,<role_name>,<role_name>',
+        title: 'Add Multiple Specific Roles',
+        desc: 'Add multiple specific roles to yourself. Roles are case-sensitive.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message, ctrl, msg) => {
+          const roles = msg.parsed[1].split(',');
+          util.log('Multiple Roles Parsing', roles, 4);
 
-  const _roles = (message) => {
-    const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!roles') {
-      const roles = [];
-      if (!message.guild) return noGuildFault(message);
-      message.guild.roles.map((role) => {
-        if (!disallowedRoles.includes(role.name.toLowerCase())) {
-          return roles.push(role.name);
+          roles.map((role) => {
+            if (!disallowedRoles.includes(role.toLowerCase())) {
+              const targetRole = message.guild.roles.find('name', role);
+              util.log('Asking API for Role', targetRole, 4);
+
+              if (targetRole === null) {
+                return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+              }
+              return message.member.addRole(targetRole).catch(util.log);
+            }
+            return role.name;
+          });
+
+          return 'All set!';
+        },
+      },
+      {
+        cmd: '!removeRole',
+        example: '!removeRole <role_name>',
+        title: 'Remove a single role',
+        desc: 'Remove a single game role from yourself. Role is case-sensitive.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message, ctrl, msg) => {
+          const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+          if (targetRole === null) {
+            util.log('No role matched', msg.parsed[1], 2);
+            return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+          }
+          if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+            util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
+            return 'You have not the power or the will to control this power.';
+          }
+
+          util.log('Removing role from user', targetRole.name, 2);
+          message.member.removeRole(targetRole).catch(util.log);
+          return targetRole.name + ' removed.';
+        },
+      },
+      {
+        cmd: '!addAllRoles',
+        example: '!addAllRoles',
+        title: 'Add All Roles',
+        desc: 'Add every game role to yourself.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message) => {
+          message.guild.roles.map((role) => {
+            if (!disallowedRoles.includes(role.name.toLowerCase())) {
+              return message.member.addRole(role).catch(util.log);
+            }
+            return role.name;
+          });
+
+          return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
+        },
+      },
+      {
+        cmd: '!removeAllRoles',
+        example: '!removeAllRoles',
+        title: 'Remove All Roles',
+        desc: 'Remove every game role from yourself.',
+        showWithHelp: true,
+        posTargetUser: null,
+        posSecondaryCmd: null,
+        regexSplitCharacter: null,
+        allowInDM: false,
+        resType: 'reply',
+        action: (message) => {
+          message.guild.roles.map((role) => {
+            if (!disallowedRoles.includes(role.name.toLowerCase())) {
+              return message.member.removeRole(role).catch(util.log);
+            }
+            return role.name;
+          });
+
+          return 'Removing all roles. Back to basics.';
+        },
+      },
+    ];
+
+    const onSuccess = (message, res, ctrl) => {
+      if (res !== null) {
+        if (ctrl.resType === 'reply') {
+          return message.reply(res);
+        } else if (ctrl.resType === 'dm') {
+          return message.author.send(res);
         }
-        return role.name;
-      });
+      }
+      // Fail Safe
+      return false;
+    };
 
-      const formattedRole = roles.join('\n');
+    const onError = message => message.reply('I Broke... Beep...Boop...Beep');
 
-      message.author.send('List of all Armada Roles: \n\n' + formattedRole);
-      return message.reply('Check your PMs :wink:');
-    }
-    return false;
-  };
+    const messageMiddleware = (message) => {
+      const container = {};
+      container.parsed = message.content.split(' ');
+      const msg = Object.assign(message, container);
+      return msg;
+    };
 
-  const _addAllRoles = (message) => {
-    const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!addallroles') {
-      if (!message.guild) return noGuildFault(message);
-      message.guild.roles.map((role) => {
-        if (!disallowedRoles.includes(role.name.toLowerCase())) {
-          return message.member.addRole(role).catch(util.log);
+    ctrls.map((ctrl) => {
+      util.log('Running through controller', ctrl.cmd, 2);
+
+      const msg = messageMiddleware(message);
+      if (msg.parsed[0].toLowerCase() === ctrl.cmd.toLowerCase()) {
+        util.log('!!! Matched Ctrl to Cmd !!!', ctrl.cmd, 2);
+
+        // Ensure the communication is happening on a server
+        if (!ctrl.allowInDM) {
+          if (!message.guild) return onError(message, 'Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
         }
-        return role.name;
-      });
 
-      return message.reply('Adding you to all Roles. You\'re going to be drinking from the firehose :sob:');
-    }
-    return false;
-  };
-
-  const _removeAllRoles = (message) => {
-    const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!removeallroles') {
-      if (!message.guild) return noGuildFault(message);
-      message.guild.roles.map((role) => {
-        if (!disallowedRoles.includes(role.name.toLowerCase())) {
-          return message.member.removeRole(role).catch(util.log);
+        // Do Stuff
+        const res = ctrl.action(message, ctrl, msg);
+        if (res) {
+          onSuccess(message, res, ctrl);
+        } else {
+          onError(message, res, ctrl);
         }
-        return role.name;
-      });
-
-      return message.reply('Removing all roles. Back to basics.');
-    }
-    return false;
-  };
-
-  const _addRole = (message) => {
-    util.log('passed', message.content);
-    const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!addrole') {
-      // TODO: Reduce Code Duplication
-      if (!message.guild) return noGuildFault(message);
-      const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-      if (targetRole === null) {
-        return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
       }
-      if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-        return message.reply('You are not worthy.');
-      }
-
-      // TODO: Handle error to respond with message
-      // TODO: Change catch to pass to util.error... will need created
-      message.member.addRole(targetRole).catch(util.log);
-      // TODO: Create verbose response toggle?
-      // message.reply(targetRole.name + ' added.');
-      return true;
-    }
-    return false;
-  };
-
-  const _removeRole = (message) => {
-    const msg = messageMiddleware(message);
-    if (msg.parsed[0].toLowerCase() === '!removerole') {
-      // TODO: Reduce Code Duplication
-      if (!message.guild) return noGuildFault(message);
-      const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-      if (targetRole === null) {
-        return message.reply('"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
-      }
-      if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-        return message.reply('You have not the power or the will to control this power.');
-      }
-
-      // TODO: Handle error to respond with message
-      // TODO: Change catch to pass to util.error... will need created
-      message.member.removeRole(targetRole).catch(util.log);
-      message.reply(targetRole.name + ' removed.');
-      return true;
-    }
-    return false;
+      return ctrl;
+    });
   };
 
   return {
-    addRole: _addRole,
-    removeRole: _removeRole,
-    roles: _roles,
-    addAllRoles: _addAllRoles,
-    removeAllRoles: _removeAllRoles,
+    run: _run,
   };
 };
