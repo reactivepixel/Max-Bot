@@ -1,5 +1,10 @@
+const uuidv4 = require('uuid/v4');
+const mail = require('../../lib/nodemailer.js');
+
 module.exports = () => {
   const util = require('apex-util');
+  const validFSEmail = require('../../lib/emailValidation.js');
+
 
   const _run = (message) => {
     const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
@@ -202,7 +207,72 @@ module.exports = () => {
     });
   };
 
+  // VerifyFS role
+  const _verifyFs = (message) => {
+    util.log('passed', message.content);
+    // const uuid = uuidv4();
+    const msg = messageMiddleware(message);    
+
+    if (msg.parsed[0].toLowerCase() === '!verifyfs' && msg.parsed[1].toLowerCase() === 'student') {
+      if (!validFSEmail(msg.parsed[2])) {
+        return message.reply('"' + msg.parsed[2] + '" is not a valid email address. You have to use a fullsail.com or fullsail.edu to validate as a FS');
+      }
+
+      const models = require('../../db/models');
+      const userObj = message.guild.members.get(message.guild.ownerID);
+      const user = userObj.user;
+
+      const uuid = uuidv4();
+
+
+      models.Member.create({
+        discorduser: user.id,
+        email: msg.parsed[2],
+        uuid,
+        verified: 0,
+      }).then((newUser) => {
+        const emailData = {
+          to: newUser.email,
+          subject: 'Maxbot Validaiton Email',
+          text: 'Please validate you email by clicking the link below.',
+          html: `<h1>Please validate your email</h1><a href="http://localhost/welcome/${uuid}">Validate Your Email</a>`,
+        };
+        mail(emailData);
+      }).catch(util.log);
+
+      return true;
+    }
+    return false;
+  };
+
+  const _addRoles = (message) => {
+    util.log('passed', message.content);
+
+    const msg = messageMiddleware(message);
+
+    if (msg.parsed[0].toLowerCase() === '!addroles') {
+      if (!message.guild) return noGuildFault(message);
+      const roles = msg.parsed[1].split(',');
+      util.log('Multiple Roles Parsing', roles, 4);
+
+      roles.map((role) => {
+        if (!disallowedRoles.includes(role.toLowerCase())) {
+          const targetRole = message.guild.roles.find('name', role);
+          util.log('Queing API for Role', targetRole, 4);
+
+          if (targetRole === null) {
+            return message.reply('"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)');
+          }
+          return message.member.addRole(targetRole).catch(util.log);
+        }
+        return role.name;
+      });
+    }
+    return false;
+  };
+
   return {
+
     run: _run,
   };
 };
