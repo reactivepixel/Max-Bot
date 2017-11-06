@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const models = require('../db/models');
 
 // If Production server default Debug mode to Production Setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
