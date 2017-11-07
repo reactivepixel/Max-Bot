@@ -14,8 +14,9 @@ module.exports = () => {
       allowInDM: true,
       resType: 'dm',
       action: (message, ctrl, msg) => {
-        const email = msg.parsed[1];
-        // TODO: Client-side email validation (*@fullsail.edu || *@student.fullsail.edu)
+        const validDomains = ['student.fullsail.edu', 'fullsail.edu'];
+        const email = msg.parsed[1].toLowerCase();
+        const emailDomain = email.split('@').pop();
         // Method to generate random numeric verification code
         // Modified to fit style guide from this SO answer:
         // https://stackoverflow.com/a/39774334
@@ -33,28 +34,32 @@ module.exports = () => {
         };
         // We can set `codeLength` to whatever length we want the verif code to be.
         // Recommend ngt 8 digits.
-        const codeLength = 6;
-        const code = generateCode(codeLength);
-        // TODO: Set `time` prop to 600000 (10min)
-        const collector = message.channel.createMessageCollector(
-          m => m.content.includes(code),
-          // 15000ms only for testing!!!
-          { time: 15000 });
-        collector.on('collect', (m) => {
-          util.log('Collected', m.content, 3);
-          // TODO: Database integration/email verif process
-          message.reply(`Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`);
-        });
-        collector.on('end', (collected) => {
-          util.log('Items', collected.size, 3);
-          if (collected.size === 0) {
-            // TODO: ping admin team on verification fail
-            message.reply('Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.');
-          }
-        });
-        // TODO: Email generated code to supplied email address `email` (remove util.log?)
-        util.log('Code', code, 3);
-        return `Hi there, ${message.author.username}, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
+        if (validDomains.includes(emailDomain)) {
+          const codeLength = 6;
+          const code = generateCode(codeLength);
+          // TODO: Set `time` prop to 600000 (10min)
+          const collector = message.channel.createMessageCollector(
+            m => m.content.includes(code),
+            // 15000ms only for testing!!!
+            { time: 15000 });
+          collector.on('collect', (m) => {
+            util.log('Collected', m.content, 3);
+            // TODO: Database integration/email verif process
+            message.reply(`Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`);
+          });
+          collector.on('end', (collected) => {
+            util.log('Items', collected.size, 3);
+            if (collected.size === 0) {
+              // TODO: ping admin team on verification fail
+              message.reply('Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.');
+            }
+          });
+          // TODO: Email generated code to supplied email address `email` (remove util.log?)
+          util.log('Code', code, 3);
+          return `Hi there, ${message.author.username}, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
+        } else {
+          return `Sorry, ${message.author.username}, I can only verify Full Sail University email addresses.`;
+        }
       },
     }];
 
