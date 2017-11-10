@@ -48,7 +48,7 @@ As an authorized user of the bot you will need to add it to a server.
 1. Go to the Discord developer pages (login if you haven't).
 1. Go to the application with the bot you want to add to your channel.
 1. Copy the Client/Application ID.
-1. Go to https://discordapp.com/oauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
+1. Go to https://discordapp.com/aboutoauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
 1. Select server and click authorize.
 
 > [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
@@ -128,7 +128,7 @@ of this particular output should be. Reference the **Debug Level Chart**
 # Database
 ### how to connect using `SEQUEL PRO`
 
-You can find more information into the config file `db/config/config.json`
+You can find more information about the config file `db/config/config.json`
 
 ![](https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png)
 # Container Information
