@@ -19,17 +19,16 @@ module.exports = () => {
   const _broadcast = (message) => {
     const msg = messageMiddleware(message);
     if (msg.parsed[0].toLowerCase() === '!broadcast') {
-      // pass channel you want to push the message to after !broadcast as msg.parsed[1]
-      // msg.parsed[2-?] will hold the message content
       const channelName = msg.parsed[1];
-
+      // removes bang command & channels
+      // grabs mesage to be sent
       const broadcastMsg = msg.parsed.slice(1).slice(1).join(' ');
       util.log('!!!!Message Content!!!!', broadcastMsg, 3);
-
-      return message.guild.channels.find('name', channelName).sendMessage('ayo');
-
-      // return message.reply(msg.parsed[1]);
-      // return message.reply('banana');
+      // allows multiple channel broadcast
+      // seperates on |
+      channelName.split('|').forEach((channel) => {
+        message.guild.channels.find('name', channel).sendMessage(broadcastMsg);
+      });
     }
     return false;
   };
