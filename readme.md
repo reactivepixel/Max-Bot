@@ -124,6 +124,13 @@ of this particular output should be. Reference the **Debug Level Chart**
 3. Very Detailed and in-depth Output.
 4. Highly Fine Grained Detailed and in-depth Output.
 
+
+# Database
+### how to connect using `SEQUEL PRO`
+
+You can find more information into the config file `db/config/config.json`
+
+![](https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png)
 # Container Information
 
 ## Node Container
