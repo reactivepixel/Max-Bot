@@ -17,7 +17,7 @@ module.exports = () => {
         resType: 'dm',
         action: (message) => {
           const roles = [];
-          console.log('help!', message);
+          util.log('help!', message);
           message.guild.roles.map((role) => {
             if (!disallowedRoles.includes(role.name.toLowerCase())) {
               return roles.push(role.name);
