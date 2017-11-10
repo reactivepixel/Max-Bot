@@ -1,10 +1,8 @@
-const models = require('../../db/models');
-const uuidv4 = require('uuid/v4');
-const util = require('apex-util');
-const nodemailer = require('nodemailer');
-require('dotenv').config();
-
 module.exports = () => {
+  const util = require('apex-util');
+  const nodemailer = require('nodemailer');
+  require('dotenv').config();
+
   const _run = (message) => {
     const ctrls = [{
       cmd: '!verify',
@@ -15,8 +13,8 @@ module.exports = () => {
       posTargetUser: null,
       posSecondaryCmd: null,
       regexSplitCharacter: null,
-      allowInDM: false,
-      resType: 'reply',
+      allowInDM: true,
+      resType: 'dm',
       action: (message, ctrl, msg) => {
         const validDomains = ['student.fullsail.edu', 'fullsail.edu'];
         const email = msg.parsed[1].toLowerCase();
@@ -34,7 +32,6 @@ module.exports = () => {
           max = 10000000;
           min = max / 10;
           const number = Math.floor(Math.random() * (max - (min + 1))) + min;
-          util.log(number);
           return ('' + number).substring(add);
         };
         // We can set `codeLength` to whatever length we want the verif code to be.
@@ -46,30 +43,19 @@ module.exports = () => {
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
             // 15000ms only for testing!!!
-            { time: 150000 });
+            { time: 15000 });
           collector.on('collect', (m) => {
+            const verifyUser = `Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`;
             util.log('Collected', m.content, 3);
-            models.Member.findOne({ where: { email } }).then((data) => {
-              if (data === null) {
-                // no existing record found
-                models.Member.create({
-                  discorduser: m.author.username,
-                  email,
-                  uuid: uuidv4(),
-                  verified: 1,
-                }).then(util.log).catch(util.error);
-                message.reply('Thanks! I\'ll get to work adding you the servers right away!');
-              } else {
-                // existing record found
-                message.reply('this user is already in our system!');
-              }
-            });
+            // TODO: Database integration/email verif process
+            message.reply(verifyUser);
           });
           collector.on('end', (collected) => {
+            const verificationTimeout = 'Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.';
             util.log('Items', collected.size, 3);
             if (collected.size === 0) {
               // TODO: ping admin team on verification fail
-              message.reply('Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.');
+              message.reply(verificationTimeout);
             }
           });
           // Set up Nodemailer to send emails through gmail
@@ -91,8 +77,9 @@ module.exports = () => {
           // Call sendMail on sendVerifyCode
           // Pass mailOptions & callback function
           sendVerifyCode.sendMail(mailOptions, (err, info) => {
+            const errorMsg = 'Oops, looks like the email can not be sent. Its not you, its me.. Please contact a moderator and let them know I have failed.';
             if (err) {
-              message.reply('Oops, looks like the email can not be sent. Its not you, its me.. Please contact a moderator and let them know I have failed.');
+              message.reply(errorMsg);
               util.log('Email not sent', err, 3);
             } else {
               util.log('Email details', info, 3);
@@ -100,9 +87,9 @@ module.exports = () => {
           });
 
           util.log('Code', code, 3);
-          return `Hi there, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
+          return `Hi there, ${message.author.username}, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
         } else {
-          return 'Sorry, I can only verify Full Sail University email addresses.';
+          return `Sorry, ${message.author.username}, I can only verify Full Sail University email addresses.`;
         }
       },
     }];
