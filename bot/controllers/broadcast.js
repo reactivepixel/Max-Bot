@@ -36,8 +36,24 @@ module.exports = () => {
   const _broadcastAll = (message) => {
     const msg = messageMiddleware(message);
     if (msg.parsed[0].toLowerCase() === '!broadcastall') {
+      // grab all channels
       const channels = message.guild.channels.map(channel => channel);
-      util.log('!!!!!!channels', channels, 3);
+      const broadcastMsg = msg.parsed.slice(1).join(' ');
+      const channelList = [];
+
+      // loop through channels
+      // push text channels to channelList
+      Object.keys(channels).forEach((channel) => {
+        if (channels[channel].type === 'text') {
+          channelList.push(channels[channel].name);
+        }
+      });
+      // loop through channelList
+      // send message to channels listed
+      channelList.forEach((channel) => {
+        util.log('!!!!!inside forEach!!!!!!', channel, 3);
+        message.guild.channels.find('name', channel).sendMessage(broadcastMsg);
+      });
     }
     return false;
   };
