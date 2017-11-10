@@ -5,6 +5,6 @@ node_modules
 *.log
 *.lock
 *.config.js
-db/config/config.js
+db/config/config.json
 package-lock.json
 *.bk
