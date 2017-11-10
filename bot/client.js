@@ -6,6 +6,7 @@ if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.en
 
 const client = new Discord.Client();
 
+
 // Pre Load Controllers
 const ctrls = require('./controllers')();
 
@@ -17,8 +18,6 @@ client.on('message', (message) => {
   // Check for ! Prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('!Cmd Message Received', message.content, 0);
-
-    const ctrlResponses = [];
 
     // Process message against every controller
     Object.keys(ctrls).forEach((ctrlKey) => {
