@@ -23,6 +23,9 @@ module.exports = () => {
       // msg.parsed[2-?] will hold the message content
       const channelName = msg.parsed[1];
 
+      const broadcastMsg = msg.parsed.slice(1).slice(1).join(' ');
+      util.log('!!!!Message Content!!!!', broadcastMsg, 3);
+
       return message.guild.channels.find('name', channelName).sendMessage('ayo');
 
       // return message.reply(msg.parsed[1]);
