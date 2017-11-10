@@ -27,7 +27,9 @@
     "gulp": "^3.9.1",
     "mocha": "^3.5.0",
     "mocha-eslint": "^4.1.0",
+    "nodemailer": "^4.3.1",
     "mysql2": "^1.4.2",
-    "sequelize": "^4.22.5"
+    "sequelize": "^4.22.5",
+    "uuid": "^3.1.0"
   }
 }

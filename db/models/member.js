@@ -1,16 +1,18 @@
-'use strict';
+
+
 module.exports = (sequelize, DataTypes) => {
-  var Member = sequelize.define('Member', {
+  const Member = sequelize.define('Member', {
     discorduser: DataTypes.STRING,
     email: DataTypes.STRING,
     uuid: DataTypes.STRING,
-    verified: DataTypes.BOOLEAN
+    verified: DataTypes.BOOLEAN,
   }, {
     classMethods: {
-      associate: function(models) {
+      associate: (models) => {
         // associations can be defined here
-      }
-    }
+        console.log(models);
+      },
+    },
   });
   return Member;
 };

@@ -13,6 +13,7 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 
 ### ENV Vars
 
+
 Create an ```.env``` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
 ```
@@ -28,6 +29,7 @@ BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
 BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
+
 ```
 
 > Update ```DiscordBotToken``` with the token you receive from the next step.
@@ -48,7 +50,7 @@ As an authorized user of the bot you will need to add it to a server.
 1. Go to the Discord developer pages (login if you haven't).
 1. Go to the application with the bot you want to add to your channel.
 1. Copy the Client/Application ID.
-1. Go to https://discordapp.com/oauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
+1. Go to https://discordapp.com/aboutoauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
 1. Select server and click authorize.
 
 > [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
@@ -124,6 +126,13 @@ of this particular output should be. Reference the **Debug Level Chart**
 3. Very Detailed and in-depth Output.
 4. Highly Fine Grained Detailed and in-depth Output.
 
+
+# Database
+### how to connect using `SEQUEL PRO`
+
+You can find more information about the config file `db/config/config.json`
+
+![](https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png)
 # Container Information
 
 ## Node Container
