@@ -13,40 +13,25 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 
 ### ENV Vars
 
-Create an ```max.config.js``` file with all the Bot Token.
-
-```javascript
-module.exports = () => {
-  apps: [
-    {
-      name: 'max',
-      script: './bot/client.js',
-      env: {
-        TOKEN: DiscordBotToken,
-        DEBUG_MODE: '3',
-        NODE_ENV: 'development',
-      },
-    },
-  ],
-};
-```
-
-> Update ```DiscordBotToken``` with the token you receive from the next step.
-
 Create an ```.env``` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
 ```
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
 MYSQL_PASS=xxx
-MYSQL_DATABASE=xxx
+MYSQL_DATABASE=max
+DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
+NODE_ENV=development
 DB_PORT_HOST=3306
 DB_PORT_GUEST=3306
 BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
+BOT_PORT_HOST=80
+BOT_PORT_GUEST=3000
 ```
 
-> Modify the ```db/config/config.json``` file to corrispond to your ```.env``` file.
+> Update ```DiscordBotToken``` with the token you receive from the next step.
+
 
 
 
