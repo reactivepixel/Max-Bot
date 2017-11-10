@@ -10,7 +10,7 @@ const client = new Discord.Client();
 const ctrls = require('./controllers')();
 
 client.on('ready', () => {
-  util.log('======Bot Online and Ready!', 0);
+  util.log('Bot Online and Ready!', 0);
 });
 
 client.on('message', (message) => {
