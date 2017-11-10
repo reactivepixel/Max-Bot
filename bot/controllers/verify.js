@@ -1,5 +1,7 @@
 module.exports = () => {
   const util = require('apex-util');
+  const nodemailer = require('nodemailer');
+  require('dotenv').config();
 
   const _run = (message) => {
     const ctrls = [{
@@ -27,7 +29,6 @@ module.exports = () => {
           if (n > max) {
             return generateCode(max) + generateCode(n - max);
           }
-          // max = 10 ** (n + add);
           max = 10000000;
           min = max / 10;
           const number = Math.floor(Math.random() * (max - (min + 1))) + min;
@@ -55,7 +56,33 @@ module.exports = () => {
               message.reply('Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.');
             }
           });
-          // TODO: Email generated code to supplied email address `email` (remove util.log?)
+          // Set up Nodemailer to send emails through gmail
+          const sendVerifyCode = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.EMAIL_USERNAME,
+              pass: process.env.EMAIL_PASS,
+            },
+          });
+          // Nodemailer email recipient & message
+          // TODO: Build email template
+          const mailOptions = {
+            from: 'discord.maxbot@gmail.com',
+            to: email,
+            subject: 'Armada Verification Code',
+            html: `<p>Verification Code: ${code}</p>`,
+          };
+          // Call sendMail on sendVerifyCode
+          // Pass mailOptions & callback function
+          sendVerifyCode.sendMail(mailOptions, (err, info) => {
+            if (err) {
+              message.reply('Oops, looks like the email can not be sent. Its not you, its me.. Please contact a moderator and let them know I have failed.');
+              util.log('Email not sent', err, 3);
+            } else {
+              util.log('Email details', info, 3);
+            }
+          });
+
           util.log('Code', code, 3);
           return `Hi there, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
         } else {
