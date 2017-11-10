@@ -2,7 +2,6 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const util = require('apex-util');
 const nodemailer = require('nodemailer');
-require('dotenv').config();
 
 module.exports = () => {
   const _run = (message) => {
