@@ -27,7 +27,8 @@ module.exports = () => {
           if (n > max) {
             return generateCode(max) + generateCode(n - max);
           }
-          max = 10 ** (n + add);
+          // max = 10 ** (n + add);
+          max = 10000000;
           min = max / 10;
           const number = Math.floor(Math.random() * (max - (min + 1))) + min;
           return ('' + number).substring(add);
