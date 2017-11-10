@@ -25,6 +25,8 @@ module.exports = () => {
         TOKEN: DiscordBotToken,
         DEBUG_MODE: '3',
         NODE_ENV: 'development',
+        EMAIL_USERNAME: 'example@gmail.com',
+        EMAIL_PASS: 'password',
       },
     },
   ],
