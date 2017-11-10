@@ -5,7 +5,6 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 module.exports = () => {
-
   const _run = (message) => {
     const ctrls = [{
       cmd: '!verify',
@@ -47,13 +46,12 @@ module.exports = () => {
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
             // 15000ms only for testing!!!
-            { time: 15000 });
+            { time: 150000 });
           collector.on('collect', (m) => {
             util.log('Collected', m.content, 3);
-
             models.Member.create({
               discorduser: m.author.username,
-              email: 'fasfasaf@apextion.com',
+              email,
               uuid: uuidv4(),
               verified: 1,
             }).then(util.log).catch(util.error);
