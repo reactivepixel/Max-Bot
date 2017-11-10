@@ -49,15 +49,21 @@ module.exports = () => {
             { time: 150000 });
           collector.on('collect', (m) => {
             util.log('Collected', m.content, 3);
-            models.Member.create({
-              discorduser: m.author.username,
-              email,
-              uuid: uuidv4(),
-              verified: 1,
-            }).then(util.log).catch(util.error);
-
-            // TODO: Database integration/email verif process
-            message.reply('Thanks! I\'ll get to work adding you the servers right away!');
+            models.Member.findOne({ where: { email } }).then((data) => {
+              if (data === null) {
+                // no existing record found
+                models.Member.create({
+                  discorduser: m.author.username,
+                  email,
+                  uuid: uuidv4(),
+                  verified: 1,
+                }).then(util.log).catch(util.error);
+                message.reply('Thanks! I\'ll get to work adding you the servers right away!');
+              } else {
+                // existing record found
+                message.reply('this user is already in our system!');
+              }
+            });
           });
           collector.on('end', (collected) => {
             util.log('Items', collected.size, 3);
