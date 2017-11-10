@@ -6,7 +6,7 @@ services:
       - /usr/src/app/node_modules
     restart: always
     ports:
-      - "80:3000"
+      - "$BOT_PORT_HOST:$BOT_PORT_GUEST"
     command: ["./wait-for-it.sh", "mysql:3306", "--", "db/first_run.sh"]
 
   mysql:
@@ -14,13 +14,13 @@ services:
     restart: always
     image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: 'down_and_dirty_deeds'
-      MYSQL_USER: 'max_attack'
-      MYSQL_PASS: 'headroom_dead_batteries'
-      MYSQL_DATABASE: 'max'
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASS: $MYSQL_PASS
+      MYSQL_DATABASE: $MYSQL_DATABASE
     volumes:
       - my-datavolume:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "$DB_PORT_HOST:$DB_PORT_GUEST"
 volumes:
   my-datavolume:
