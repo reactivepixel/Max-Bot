@@ -33,8 +33,18 @@ module.exports = () => {
     return false;
   };
 
+  const _broadcastAll = (message) => {
+    const msg = messageMiddleware(message);
+    if (msg.parsed[0].toLowerCase() === '!broadcastall') {
+      const channels = message.guild.channels.map(channel => channel);
+      util.log('!!!!!!channels', channels, 3);
+    }
+    return false;
+  };
+
 
   return {
     broadcast: _broadcast,
+    brodcastAll: _broadcastAll,
   };
 };
