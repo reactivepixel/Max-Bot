@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Generating Sequelize config from .env file"
+gulp db
+echo "Generating PM2 config from .env file"
+gulp pm2
 echo "Migrating"
 sequelize db:migrate --config db/config/config.json --migrations-path db/migrations/
 echo "Seeding"

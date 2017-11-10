@@ -14,3 +14,19 @@ gulp.task('db', () => {
   };
   fs.writeFileSync('./db/config/config.json', JSON.stringify(config));
 });
+
+gulp.task('pm2', () => {
+  require('dotenv').config();
+  const config = {
+    apps: [{
+      name: 'max',
+      script: './bot/client.js',
+      env: {
+        TOKEN: process.env.DISCORD_BOT_TOKEN,
+        DEBUG_MODE: '3',
+        NODE_ENV: process.env.NODE_ENV,
+      },
+    }],
+  };
+  fs.writeFileSync('./max.config.js', 'module.exports = ' + JSON.stringify(config));
+});
