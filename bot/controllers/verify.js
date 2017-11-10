@@ -3,6 +3,22 @@ const uuidv4 = require('uuid/v4');
 const util = require('apex-util');
 const nodemailer = require('nodemailer');
 
+// Method to generate random numeric verification code
+// Modified to fit style guide from this SO answer:
+// https://stackoverflow.com/a/39774334
+const generateCode = (n) => {
+  const add = 1;
+  let max = 12 - add;
+  let min = 0;
+  if (n > max) {
+    return generateCode(max) + generateCode(n - max);
+  }
+  max = 10000000;
+  min = max / 10;
+  const number = Math.floor(Math.random() * (max - (min + 1))) + min;
+  return ('' + number).substring(add);
+};
+
 module.exports = () => {
   const _run = (message) => {
     const ctrls = [{
@@ -20,22 +36,7 @@ module.exports = () => {
         const validDomains = ['student.fullsail.edu', 'fullsail.edu'];
         const email = msg.parsed[1].toLowerCase();
         const emailDomain = email.split('@').pop();
-        // Method to generate random numeric verification code
-        // Modified to fit style guide from this SO answer:
-        // https://stackoverflow.com/a/39774334
-        const generateCode = (n) => {
-          const add = 1;
-          let max = 12 - add;
-          let min = 0;
-          if (n > max) {
-            return generateCode(max) + generateCode(n - max);
-          }
-          max = 10000000;
-          min = max / 10;
-          const number = Math.floor(Math.random() * (max - (min + 1))) + min;
-          util.log(number);
-          return ('' + number).substring(add);
-        };
+
         // We can set `codeLength` to whatever length we want the verif code to be.
         // Recommend ngt 8 digits.
         if (validDomains.includes(emailDomain)) {
