@@ -10,7 +10,7 @@ function codeGen() {
   return newCode;
 }
 
-// where the code will be stored we have to send this to the user to verify.
+// where the code will be stored we have to send this to the user to verifys.
 const secret = codeGen();
 util.log('this is the code: ' + secret);
 
