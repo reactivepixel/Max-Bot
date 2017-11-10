@@ -1,4 +1,5 @@
-FROM node:8.4
+
+FROM node:8.8.1
 
 MAINTAINER Chapman@Apextion.com
 
@@ -11,6 +12,6 @@ COPY package.json .
 RUN npm install
 
 # Global Installs
-RUN npm install -g pm2
+RUN npm install -g pm2 sequelize-cli
 
 COPY . .

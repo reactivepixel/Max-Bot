@@ -4,8 +4,8 @@
   "description": "",
   "main": "bot/client.js",
   "engines": {
-    "node": "v8.4.0",
-    "npm": "5.3.0"
+    "node": "v8.8.1",
+    "npm": "5.5.1"
   },
   "scripts": {
     "start": "pm2 start max.config.js --no-daemon",
@@ -17,6 +17,7 @@
     "apex-util": "^2.0.3",
     "chai": "^4.1.1",
     "discord.js": "^11.1.0",
+
     "eslint": "^4.3.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-config-airbnb-standard": "^1.4.1",
@@ -27,7 +28,9 @@
     "fs": "0.0.1-security",
     "mocha": "^3.5.0",
     "mocha-eslint": "^4.1.0",
+
     "mysql": "^2.14.1",
     "sequelize": "^4.4.10"
+
   }
 }
