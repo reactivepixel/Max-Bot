@@ -1,3 +1,6 @@
+const models = require('../../db/models');
+const uuidv4 = require('uuid/v4');
+
 module.exports = () => {
   const util = require('apex-util');
 
@@ -31,6 +34,7 @@ module.exports = () => {
           max = 10000000;
           min = max / 10;
           const number = Math.floor(Math.random() * (max - (min + 1))) + min;
+          util.log(number);
           return ('' + number).substring(add);
         };
         // We can set `codeLength` to whatever length we want the verif code to be.
@@ -45,6 +49,14 @@ module.exports = () => {
             { time: 15000 });
           collector.on('collect', (m) => {
             util.log('Collected', m.content, 3);
+
+            models.Member.create({
+              discorduser: m.author.username,
+              email: 'fasfasaf@apextion.com',
+              uuid: uuidv4(),
+              verified: 1,
+            }).then(util.log).catch(util.error);
+
             // TODO: Database integration/email verif process
             message.reply('Thanks! I\'ll get to work adding you the servers right away!');
           });
