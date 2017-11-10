@@ -13,8 +13,8 @@ module.exports = () => {
       posTargetUser: null,
       posSecondaryCmd: null,
       regexSplitCharacter: null,
-      allowInDM: true,
-      resType: 'dm',
+      allowInDM: false,
+      resType: 'reply',
       action: (message, ctrl, msg) => {
         const validDomains = ['student.fullsail.edu', 'fullsail.edu'];
         const email = msg.parsed[1].toLowerCase();
@@ -47,7 +47,7 @@ module.exports = () => {
           collector.on('collect', (m) => {
             util.log('Collected', m.content, 3);
             // TODO: Database integration/email verif process
-            message.reply(`Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`);
+            message.reply('Thanks! I\'ll get to work adding you the servers right away!');
           });
           collector.on('end', (collected) => {
             util.log('Items', collected.size, 3);
@@ -84,9 +84,9 @@ module.exports = () => {
           });
 
           util.log('Code', code, 3);
-          return `Hi there, ${message.author.username}, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
+          return `Hi there, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
         } else {
-          return `Sorry, ${message.author.username}, I can only verify Full Sail University email addresses.`;
+          return 'Sorry, I can only verify Full Sail University email addresses.';
         }
       },
     }];

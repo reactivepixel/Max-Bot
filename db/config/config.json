@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "down_and_dirty_deeds",
+    "database": "max",
+    "host": "mysql",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "max_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "max_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
