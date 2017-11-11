@@ -30,8 +30,8 @@ module.exports = () => {
       posTargetUser: null,
       posSecondaryCmd: null,
       regexSplitCharacter: null,
-      allowInDM: true,
-      resType: 'dm',
+      allowInDM: false,
+      resType: 'reply',
       action: (message, ctrl, msg) => {
         const validDomains = ['student.fullsail.edu', 'fullsail.edu'];
         const email = msg.parsed[1].toLowerCase();
@@ -45,12 +45,26 @@ module.exports = () => {
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
             // 15000ms only for testing!!!
-            { time: 15000 });
+            { time: 150000 });
           collector.on('collect', (m) => {
             const verifyUser = `Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`;
+            const userAlredyOnSystem = `the user ${message.author.username} is already in our system!`;
+            models.Member.findOne({ where: { email } }).then((data) => {
+              if (data === null) {
+                // no existing record found
+                models.Member.create({
+                  discorduser: m.author.username,
+                  email,
+                  uuid: uuidv4(),
+                  verified: 1,
+                }).then(util.log).catch(util.error);
+                message.reply(verifyUser);
+              } else {
+                // existing record found
+                message.reply(userAlredyOnSystem);
+              }
+            });
             util.log('Collected', m.content, 3);
-            // TODO: Database integration/email verif process
-            message.reply(verifyUser);
           });
           collector.on('end', (collected) => {
             const verificationTimeout = 'Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.';
