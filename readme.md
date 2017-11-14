@@ -1,3 +1,8 @@
+# Max Bot
+## The Official Bot of the Full Sail Armada
+
+Interested in learning how to use Max? See the [Usage documentation here](usage.md).
+
 # Installation
 
 ### Prerequisites
