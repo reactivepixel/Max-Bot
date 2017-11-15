@@ -41,6 +41,7 @@ module.exports = () => {
         if (validDomains.includes(emailDomain)) {
           const codeLength = 6;
           const code = generateCode(codeLength);
+          console.log('code', code);
           // TODO: Set `time` prop to 600000 (10min)
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
@@ -53,7 +54,7 @@ module.exports = () => {
               if (data === null) {
                 // no existing record found
                 models.Member.create({
-                  discorduser: m.author.username,
+                  discorduser: m.author.id,
                   email,
                   uuid: uuidv4(),
                   verified: 1,
