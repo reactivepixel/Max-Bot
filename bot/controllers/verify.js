@@ -41,7 +41,7 @@ module.exports = () => {
         if (validDomains.includes(emailDomain)) {
           const codeLength = 6;
           const code = generateCode(codeLength);
-          console.log('code', code);
+          util.log('code', code);
           // TODO: Set `time` prop to 600000 (10min)
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
@@ -58,7 +58,16 @@ module.exports = () => {
                   email,
                   uuid: uuidv4(),
                   verified: 1,
-                }).then(util.log).catch(util.error);
+                });
+                // maping guild roles to find the crew role id
+                const guild = message.guild.roles.map(channel => channel);
+                Object.keys(guild).forEach((el) => {
+                  if (guild[el].name === 'crew') {
+                    m.member.addRole(guild[el].id);
+                  } else {
+                    util.log('the moredator has to create the crew role');
+                  }
+                });
                 message.reply(verifyUser);
               } else {
                 // existing record found
