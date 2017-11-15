@@ -88,7 +88,7 @@ module.exports = () => {
             from: 'discord.maxbot@gmail.com',
             to: email,
             subject: 'Armada Verification Code',
-            html: `<p>Verification Code: ${code}</p>`,
+            html: `<table><tr><td><p>Copy and paste this code into Discord after !verify</p></td></tr><tr><td><p>Verification Code: ${code}</p></td></tr></table>`,
           };
           // Call sendMail on sendVerifyCode
           // Pass mailOptions & callback function
