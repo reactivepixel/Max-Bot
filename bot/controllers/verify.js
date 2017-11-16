@@ -54,7 +54,7 @@ module.exports = () => {
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
             // 15000ms only for testing!!!
-            { time: 150000 });
+            { time: 600000 });
           collector.on('collect', (m) => {
             const verifyUser = `Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`;
             const userAlredyOnSystem = `the user ${message.author.username} is already in our system!`;
