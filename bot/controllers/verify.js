@@ -49,7 +49,7 @@ module.exports = () => {
         if (validDomains.includes(emailDomain)) {
           const codeLength = 6;
           const code = generateCode(codeLength);
-          util.log('code', code);
+          util.log('code', code, 3);
           // TODO: Set `time` prop to 600000 (10min)
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
@@ -68,7 +68,7 @@ module.exports = () => {
                   uuid: uuidv4(),
                   verified: 1,
                 });
-                // maping guild roles to find the crew role id
+                // mapping guild roles to find the crew role id
                 const guild = message.guild.roles.map(channel => channel);
                 Object.keys(guild).forEach((el) => {
                   if (guild[el].name === 'crew') {
