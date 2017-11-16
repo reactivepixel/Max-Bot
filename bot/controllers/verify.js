@@ -7,13 +7,21 @@ const nodemailer = require('nodemailer');
 // Modified to fit style guide from this SO answer:
 // https://stackoverflow.com/a/39774334
 const generateCode = (n) => {
+  // Workaround method for Math.pow() and ** operator
+  const pow = (base, exp) => {
+    let result = 1;
+    for (let i = 0; i < exp; i += 1) {
+      result *= base;
+    }
+    return result;
+  };
   const add = 1;
   let max = 12 - add;
   let min = 0;
   if (n > max) {
     return generateCode(max) + generateCode(n - max);
   }
-  max = 10000000;
+  max = pow(10, n + add);
   min = max / 10;
   const number = Math.floor(Math.random() * (max - (min + 1))) + min;
   return ('' + number).substring(add);
@@ -41,23 +49,35 @@ module.exports = () => {
         if (validDomains.includes(emailDomain)) {
           const codeLength = 6;
           const code = generateCode(codeLength);
+          util.log('code', code, 3);
           // TODO: Set `time` prop to 600000 (10min)
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
             // 15000ms only for testing!!!
-            { time: 150000 });
+            { time: 600000 });
           collector.on('collect', (m) => {
             const verifyUser = `Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`;
             const userAlredyOnSystem = `the user ${message.author.username} is already in our system!`;
+            const moderatorMsg = 'A moderator is needed to create the crew role.';
             models.Member.findOne({ where: { email } }).then((data) => {
               if (data === null) {
                 // no existing record found
                 models.Member.create({
-                  discorduser: m.author.username,
+                  discorduser: m.author.id,
                   email,
                   uuid: uuidv4(),
                   verified: 1,
-                }).then(util.log).catch(util.error);
+                });
+                // mapping guild roles to find the crew role id
+                const guild = message.guild.roles.map(channel => channel);
+                Object.keys(guild).forEach((el) => {
+                  if (guild[el].name === 'crew') {
+                    m.member.addRole(guild[el].id);
+                  } else {
+                    message.reply(moderatorMsg);
+                    util.log('Moderator Needed', el, 3);
+                  }
+                });
                 message.reply(verifyUser);
               } else {
                 // existing record found
@@ -88,7 +108,7 @@ module.exports = () => {
             from: 'discord.maxbot@gmail.com',
             to: email,
             subject: 'Armada Verification Code',
-            html: `<p>Verification Code: ${code}</p>`,
+            html: `<table><tr><td><p>Copy and paste this into Discord!</p></td></tr><tr><td><p>Verification Code: ${code}</p></td></tr></table>`,
           };
           // Call sendMail on sendVerifyCode
           // Pass mailOptions & callback function
