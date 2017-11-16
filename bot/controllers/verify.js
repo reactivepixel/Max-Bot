@@ -58,6 +58,7 @@ module.exports = () => {
           collector.on('collect', (m) => {
             const verifyUser = `Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`;
             const userAlredyOnSystem = `the user ${message.author.username} is already in our system!`;
+            const moderatorMsg = 'A moderator is needed to create the crew role.';
             models.Member.findOne({ where: { email } }).then((data) => {
               if (data === null) {
                 // no existing record found
@@ -73,7 +74,8 @@ module.exports = () => {
                   if (guild[el].name === 'crew') {
                     m.member.addRole(guild[el].id);
                   } else {
-                    util.log('the moredator has to create the crew role');
+                    message.reply(moderatorMsg);
+                    util.log('Moderator Needed', el, 3);
                   }
                 });
                 message.reply(verifyUser);

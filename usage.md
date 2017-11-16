@@ -58,15 +58,3 @@ Removes all roles from the user. _Tabula rasa_, baby.
 ## Administrative commands
 
 Max also includes a couple of special commands just for Officers and above for making announcements to multiple channels.
-
-### !shout
-
-Example: `!shout <channel_name> <channel_name> <channel_name> --m <message>`
-
-Sends a richly-formatted message to the selected text channels. Channel names _are_ case-sensitive and should be separated with spaces, not commas. Note the `--m` flag before the message—this tells Max you're done listing channels.
-
-### !shoutAll
-
-Example: `!shoutAll <message>`
-
-Sends a richly-formatted message to _all_ text channels. You can see why we only let Officers use this one.
