@@ -41,7 +41,7 @@ module.exports = () => {
       allowInDM: false,
       resType: 'reply',
       action: (message, ctrl, msg) => {
-        const validDomains = ['student.fullsail.edu', 'fullsail.edu'];
+        const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
         const email = msg.parsed[1].toLowerCase();
         const emailDomain = email.split('@').pop();
         // We can set `codeLength` to whatever length we want the verif code to be.
@@ -105,7 +105,7 @@ module.exports = () => {
           // Nodemailer email recipient & message
           // TODO: Build email template
           const mailOptions = {
-            from: 'discord.maxbot@gmail.com',
+            from: 'max-bot@apextion.com',
             to: email,
             subject: 'Armada Verification Code',
             html: `<table><tr><td><p>Copy and paste this into Discord!</p></td></tr><tr><td><p>Verification Code: ${code}</p></td></tr></table>`,
@@ -113,7 +113,7 @@ module.exports = () => {
           // Call sendMail on sendVerifyCode
           // Pass mailOptions & callback function
           sendVerifyCode.sendMail(mailOptions, (err, info) => {
-            const errorMsg = 'Oops, looks like the email can not be sent. Its not you, its me.. Please contact a moderator and let them know I have failed.';
+            const errorMsg = 'Oops, looks like the email can not be sent. Its not you, it\'s me. Please contact a moderator and let them know I have failed.';
             if (err) {
               message.reply(errorMsg);
               util.log('Email not sent', err, 3);

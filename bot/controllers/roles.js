@@ -2,7 +2,7 @@ module.exports = () => {
   const util = require('apex-util');
 
   const _run = (message) => {
-    const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+    const disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'tester', 'crew', 'fleet officer', '@everyone'];
     const ctrls = [
       {
         cmd: '!roles',
