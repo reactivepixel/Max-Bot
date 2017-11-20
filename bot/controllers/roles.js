@@ -2,7 +2,7 @@ module.exports = () => {
   const util = require('apex-util');
 
   const _run = (message) => {
-    const disallowedRoles = ['admin', 'moderator', 'tester', 'crew', 'fleet officer', '@everyone'];
+    const disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'tester', 'crew', 'fleet officer', '@everyone'];
     const ctrls = [
       {
         cmd: '!roles',
@@ -17,6 +17,7 @@ module.exports = () => {
         resType: 'dm',
         action: (message) => {
           const roles = [];
+          util.log('help!', message);
           message.guild.roles.map((role) => {
             if (!disallowedRoles.includes(role.name.toLowerCase())) {
               return roles.push(role.name);

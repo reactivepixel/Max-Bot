@@ -11,6 +11,6 @@ COPY package.json .
 RUN npm install
 
 # Global Installs
-RUN npm install -g pm2 sequelize-cli
+RUN npm install -g pm2 sequelize-cli gulp-cli
 
 COPY . .
