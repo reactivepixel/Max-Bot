@@ -24,6 +24,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "gulp": "^3.9.1",
     "mocha": "^3.5.0",
     "mocha-eslint": "^4.1.0",
     "nodemailer": "^4.3.1",
