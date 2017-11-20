@@ -6,3 +6,4 @@ node_modules
 *.lock
 *.config.js
 package-lock.json
+*.bk
