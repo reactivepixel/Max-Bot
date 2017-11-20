@@ -1,3 +1,8 @@
+# Max Bot
+## The Official Bot of the Full Sail Armada
+
+Interested in learning how to use Max? See the [Usage documentation here](usage.md).
+
 # Installation
 
 ### Prerequisites
@@ -39,7 +44,7 @@ module.exports = () => {
 
 Obtain a [Discord App Bot Token](https://discordapp.com/developers/applications/me) from your registered app (or register a new one) to proceed or contact a Release Manager for Max's Dev Bot token.
 
-Replace the ```{DiscordBotToken}``` within the ```.env``` file with the token provided to you.
+Replace the ```{DiscordBotToken}``` within the ```max.config.js``` file with the token provided to you.
 
 ### Adding the Bot to a Server
 
@@ -125,12 +130,22 @@ of this particular output should be. Reference the **Debug Level Chart**
 4. Highly Fine Grained Detailed and in-depth Output.
 
 
-# Database
-### how to connect using `SEQUEL PRO`
+# Modules & integrations
+
+## Database
+### How to connect using Sequel Pro
 
 You can find more information about the config file `db/config/config.json`
 
 ![](https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png)
+
+## Nodemailer
+Max uses [Nodemailer](https://nodemailer.com/about/) to send verification emails to users joining the Armada server. Install Nodemailer with
+
+```
+npm install nodemailer --save
+```
+
 # Container Information
 
 ## Node Container
