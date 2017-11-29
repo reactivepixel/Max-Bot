@@ -45,7 +45,7 @@ client.on('message', (message) => {
 
     // TODO: Improve help message
     if (message.content.toLowerCase() === '!help') {
-      message.reply('v1.3.0 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself.');
+      message.reply('v1.3.2 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself. \n\n `!verify emailAddress@student.fullsail.com` \n\t Self verify that you are a Full Sail Student / Alumni via your Full Sail email account.');
     }
   }
 });
