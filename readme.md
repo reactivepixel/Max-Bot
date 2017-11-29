@@ -34,7 +34,8 @@ BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
 BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
-
+EMAIL_USERNAME=xxx
+EMAIL_PASS=xxx
 ```
 
 > Update ```DiscordBotToken``` with the token you receive from the next step.
@@ -59,6 +60,14 @@ As an authorized user of the bot you will need to add it to a server.
 1. Select server and click authorize.
 
 > [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
+
+### Configure Email Functionality
+Max uses [Nodemailer](https://nodemailer.com/about/) to send verification emails to users joining the Armada server. to work proper locally please follow these steps to create a new gmail account to locally test with:
+
+1. Create a new gmail.com account
+2. Once logged in with this account enable [less secure application access](https://myaccount.google.com/u/1/lesssecureapps?pageId=none&pli=1).
+3. fill in the ```EMAIL_USERNAME``` & ```EMAIL_PASS``` values on the ```.env``` file with this new gmail account's info.
+
 
 # Running the Bot
 
@@ -141,12 +150,6 @@ You can find more information about the config file `db/config/config.json`
 
 ![](https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png)
 
-## Nodemailer
-Max uses [Nodemailer](https://nodemailer.com/about/) to send verification emails to users joining the Armada server. Install Nodemailer with
-
-```
-npm install nodemailer --save
-```
 
 # Container Information
 
