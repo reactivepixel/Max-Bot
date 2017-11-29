@@ -118,7 +118,7 @@ module.exports = () => {
           util.log('Code', code, 3);
           return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
         } else {
-          return `Sorry, ${message.author.username}, I can only verify Full Sail University email addresses.`;
+          return 'Sorry, I can only verify Full Sail University email addresses.';
         }
       },
     }];
