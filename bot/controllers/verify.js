@@ -41,7 +41,9 @@ module.exports = () => {
       allowInDM: false,
       resType: 'reply',
       action: (message, ctrl, msg) => {
+        const targetVerifiedRoleName = 'Crew';
         const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
+        const timeoutInMiliseconds = 600000;
         const email = msg.parsed[1].toLowerCase();
         const emailDomain = email.split('@').pop();
         // We can set `codeLength` to whatever length we want the verif code to be.
@@ -53,14 +55,12 @@ module.exports = () => {
           // TODO: Set `time` prop to 600000 (10min)
           const collector = message.channel.createMessageCollector(
             m => m.content.includes(code),
-            // 15000ms only for testing!!!
-            { time: 600000 });
+            { time: timeoutInMiliseconds });
           collector.on('collect', (m) => {
-            const verifyUser = `Thanks, ${message.author.username}! I'll get to work adding you the servers right away!`;
-            const userAlredyOnSystem = `the user ${message.author.username} is already in our system!`;
-            const moderatorMsg = 'A moderator is needed to create the crew role.';
-            models.Member.findOne({ where: { email } }).then((data) => {
-              if (data === null) {
+            const verifyUser = 'Welcome aboard, Crewmate!';
+            const userAlredyOnSystem = 'This email has already been verified to a discord user.';
+            models.Member.findOne({ where: { email } }).then((matchedUserData) => {
+              if (matchedUserData === null) {
                 // no existing record found
                 models.Member.create({
                   discorduser: m.author.id,
@@ -69,15 +69,8 @@ module.exports = () => {
                   verified: 1,
                 });
                 // mapping guild roles to find the crew role id
-                const guild = message.guild.roles.map(channel => channel);
-                Object.keys(guild).forEach((el) => {
-                  if (guild[el].name === 'crew') {
-                    m.member.addRole(guild[el].id);
-                  } else {
-                    message.reply(moderatorMsg);
-                    util.log('Moderator Needed', el, 3);
-                  }
-                });
+                const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
+                message.member.addRole(targetRole).catch(util.log);
                 message.reply(verifyUser);
               } else {
                 // existing record found
@@ -87,7 +80,7 @@ module.exports = () => {
             util.log('Collected', m.content, 3);
           });
           collector.on('end', (collected) => {
-            const verificationTimeout = 'Uh-oh, it looks like you weren\'t able to get the right verification code back to me in time. I\'ve contacted the Armada admins so we can get this straightened out right away.';
+            const verificationTimeout = `!verify timeout. Clap ${collected.author.username} in irons!  Let's see how well they dance on the plank!`;
             util.log('Items', collected.size, 3);
             if (collected.size === 0) {
               // TODO: ping admin team on verification fail
@@ -105,15 +98,15 @@ module.exports = () => {
           // Nodemailer email recipient & message
           // TODO: Build email template
           const mailOptions = {
-            from: 'max-bot@apextion.com',
+            from: process.env.EMAIL_USERNAME,
             to: email,
             subject: 'Armada Verification Code',
-            html: `<table><tr><td><p>Copy and paste this into Discord!</p></td></tr><tr><td><p>Verification Code: ${code}</p></td></tr></table>`,
+            html: `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`,
           };
           // Call sendMail on sendVerifyCode
           // Pass mailOptions & callback function
           sendVerifyCode.sendMail(mailOptions, (err, info) => {
-            const errorMsg = 'Oops, looks like the email can not be sent. Its not you, it\'s me. Please contact a moderator and let them know I have failed.';
+            const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
             if (err) {
               message.reply(errorMsg);
               util.log('Email not sent', err, 3);
@@ -123,7 +116,7 @@ module.exports = () => {
           });
 
           util.log('Code', code, 3);
-          return `Hi there, ${message.author.username}, it looks like you're trying to verify your email address!\n\nBeep boop... generating verification code... beep boop\n\nI've emailed a ${codeLength}-digit number to _${email}_. Respond back with that number within 10 minutes and I'll automagically verify your email address so you can represent the glorious Full Sail Armada!`;
+          return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
         } else {
           return `Sorry, ${message.author.username}, I can only verify Full Sail University email addresses.`;
         }
