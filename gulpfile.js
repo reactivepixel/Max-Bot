@@ -24,6 +24,8 @@ gulp.task('pm2', () => {
       env: {
         TOKEN: process.env.DISCORD_BOT_TOKEN,
         DEBUG_MODE: '3',
+        EMAIL_USERNAME: process.env.EMAIL_USERNAME,
+        EMAIL_PASS: process.env.EMAIL_PASS,
         NODE_ENV: process.env.NODE_ENV,
       },
     }],
