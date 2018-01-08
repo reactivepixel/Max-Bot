@@ -19,7 +19,7 @@ module.exports = () => {
           util.log('Multiple Channels Parsing', chnls, 4);
 
           chnls.map((chnl) => {
-            const targetChnl = message.guild.roles.find('name', chnl);
+            const targetChnl = message.guild.channels.find('name', chnl);
             util.log('Asking API for Channel', targetChnl, 4);
 
             if (targetChnl === null) {
@@ -28,7 +28,7 @@ module.exports = () => {
             return chnl.name;
           });
 
-          return 'All set!';
+          return 'Your message was sent!';
         },
       },
     ];
