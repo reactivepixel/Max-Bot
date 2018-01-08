@@ -25,7 +25,8 @@ module.exports = () => {
             if (targetChnl === null) {
               return '"' + chnl + '" is not a known channel. Check text channels on the left to see what channels are available (They are case-sensitive)';
             }
-            return chnl.name;
+            const msgs = msg.parsed;
+            return targetChnl.send(msgs.toString());
           });
 
           return 'Your message was sent!';
