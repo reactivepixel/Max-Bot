@@ -19,14 +19,11 @@ module.exports = () => {
           util.log('Multiple Channels Parsing', chnls, 4);
 
           chnls.map((chnl) => {
-            if (!disallowedRoles.includes(chnl.toLowerCase())) {
-              const targetChnl = message.guild.roles.find('name', chnl);
-              util.log('Asking API for Role', targetChnl, 4);
+            const targetChnl = message.guild.roles.find('name', chnl);
+            util.log('Asking API for Channel', targetChnl, 4);
 
-              if (targetChnl === null) {
-                return '"' + chnl + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-              }
-              return message.member.addRole(targetChnl).catch(util.log);
+            if (targetChnl === null) {
+              return '"' + chnl + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
             }
             return chnl.name;
           });
