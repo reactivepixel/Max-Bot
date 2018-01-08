@@ -16,7 +16,6 @@ module.exports = () => {
         resType: 'dm',
         action: (message) => {
           const channels = [];
-          util.log('help!', message);
           message.guild.channels.map(channel => channels.push(channel.name));
           return 'List of all Armada Channels: \n\n' + channels.join('\n');
         },
@@ -43,9 +42,14 @@ module.exports = () => {
             if (targetChannel === null) {
               return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)';
             }
+
+            // Set parsed value to 2 for message.
             let msgParsedIndex = 2;
             let preparedMessage = '';
+
+            // Loop through/join user message by space until end.
             while (msgParsedIndex < msg.parsed.length) {
+              // Add spaces after first word
               if (msgParsedIndex !== 2) {
                 preparedMessage += ' ';
               }
