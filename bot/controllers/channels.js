@@ -4,8 +4,8 @@ module.exports = () => {
   const _run = (message) => {
     const ctrls = [
       {
-        cmd: '!test',
-        example: '!test <channel_name>,<channel_name>,<channel_name>',
+        cmd: '!chnl',
+        example: '!chnl <channel_name>,<channel_name>,<message>',
         title: 'Msg Multiple Specific Channels',
         desc: 'Msg multiple specific channels. Channels are case-sensitive.',
         showWithHelp: true,
@@ -15,23 +15,20 @@ module.exports = () => {
         allowInDM: false,
         resType: 'reply',
         action: (message, ctrl, msg) => {
+          const chnls = msg.parsed[1].split(',');
+          util.log('Multiple Channels Parsing', chnls, 4);
 
-          const targetChannel = message.guild.channels.find('name', 'channel_name').sendMessage('testmsg');
+          chnls.map((chnl) => {
+            if (!disallowedRoles.includes(chnl.toLowerCase())) {
+              const targetChnl = message.guild.roles.find('name', chnl);
+              util.log('Asking API for Role', targetChnl, 4);
 
-          const roles = msg.parsed[1].split(',');
-          util.log('Multiple Roles Parsing', roles, 4);
-
-          roles.map((role) => {
-            if (!disallowedRoles.includes(role.toLowerCase())) {
-              const targetRole = message.guild.roles.find('name', role);
-              util.log('Asking API for Role', targetRole, 4);
-
-              if (targetRole === null) {
-                return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+              if (targetChnl === null) {
+                return '"' + chnl + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
               }
-              return message.member.addRole(targetRole).catch(util.log);
+              return message.member.addRole(targetChnl).catch(util.log);
             }
-            return role.name;
+            return chnl.name;
           });
 
           return 'All set!';
