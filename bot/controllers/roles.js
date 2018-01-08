@@ -156,40 +156,6 @@ module.exports = () => {
           return 'Removing all roles. Back to basics.';
         },
       },
-      {
-        cmd: '!test',
-        example: '!test <channel_name>,<channel_name>,<channel_name>',
-        title: 'Msg Multiple Specific Channels',
-        desc: 'Msg multiple specific channels. Channels are case-sensitive.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message, ctrl, msg) => {
-
-          const targetChannel = message.guild.channels.find('name', 'channel_name').sendMessage('testmsg');
-
-          const roles = msg.parsed[1].split(',');
-          util.log('Multiple Roles Parsing', roles, 4);
-
-          roles.map((role) => {
-            if (!disallowedRoles.includes(role.toLowerCase())) {
-              const targetRole = message.guild.roles.find('name', role);
-              util.log('Asking API for Role', targetRole, 4);
-
-              if (targetRole === null) {
-                return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-              }
-              return message.member.addRole(targetRole).catch(util.log);
-            }
-            return role.name;
-          });
-
-          return 'All set!';
-        },
-      },
     ];
 
     const onSuccess = (message, res, ctrl) => {
