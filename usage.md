@@ -54,6 +54,17 @@ Example: `!removeAllRoles`
 
 Removes all roles from the user. _Tabula rasa_, baby.
 
+### !channels
+
+Example: `!channels`
+
+Sends a DM to the user with a list of all available Armada channels.
+
+### !announce
+
+Example: `!announce <channel_name>,<channel_name>,<channel_name>`
+
+Broadcasts to multiple specified channels all at once. Role names _are_ case-sensitive.
 
 ## Administrative commands
 
