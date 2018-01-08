@@ -23,7 +23,7 @@ module.exports = () => {
             util.log('Asking API for Channel', targetChnl, 4);
 
             if (targetChnl === null) {
-              return '"' + chnl + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+              return '"' + chnl + '" is not a known channel. Check text channels on the left to see what channels are available (They are case-sensitive)';
             }
             return chnl.name;
           });
