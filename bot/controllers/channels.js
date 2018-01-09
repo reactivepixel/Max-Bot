@@ -16,7 +16,6 @@ module.exports = () => {
         resType: 'dm',
         action: (message) => {
           const channels = [];
-          util.log('help!', message);
           message.guild.channels.map((channel) => {
             return channel.name;
           });
