@@ -4,7 +4,7 @@ module.exports = () => {
   const _run = (message) => {
     const ctrls = [
       {
-        cmd: '!chnl',
+        cmd: '!channel',
         example: '!chnl <channel_name>,<channel_name>,<message>',
         title: 'Msg Multiple Specific Channels',
         desc: 'Msg multiple specific channels. Channels are case-sensitive.',
