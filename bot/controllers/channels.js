@@ -17,6 +17,7 @@ module.exports = () => {
         action: (message) => {
           const channels = [];
           message.guild.channels.map((channel) => {
+            util.log(channel.name);
             return channel.name;
           });
           return 'List of all Armada Channels: \n\n' + channels.join('\n');
