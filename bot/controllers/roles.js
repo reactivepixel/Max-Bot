@@ -1,59 +1,55 @@
 module.exports = () => {
   const util = require('apex-util');
 
+  // Base Command class, cleans up classes.
+  class BaseCommand {
+    constructor(cmd, example, title, desc, resType = 'reply', showWithHelp = true, allowInDM = false) {
+      this.cmd = cmd;
+      this.example = example;
+      this.title = title;
+      this.desc = desc;
+      this.showWithHelp = showWithHelp;
+      this.allowInDM = allowInDM;
+      this.resType = resType;
+      this.action = message => message;
+    }
+  }
+
   const _run = (message) => {
     const disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
-    const ctrls = [
-      {
-        cmd: '!roles',
-        example: '!roles',
-        title: 'List All Roles',
-        desc: 'List all Armada Roles',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'dm',
-        action: (message) => {
-          const roles = [];
-          util.log('help!', message);
-          message.guild.roles.map((role) => {
-            if (!disallowedRoles.includes(role.name.toLowerCase())) {
-              return roles.push(role.name);
-            }
-            return role.name;
-          });
-          return 'List of all Armada Roles: \n\n' + roles.join('\n');
-        },
-      },
-      {
-        cmd: '!addRole',
-        example: '!addRole <role_name>',
-        title: 'Add Role',
-        desc: 'Add a single role to yourself. Role is case-sensitive.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message, ctrl, msg) => {
-          const targetRole = message.guild.roles.find('name', msg.parsed[1]);
-          if (targetRole === null) {
-            util.log('No role matched', msg.parsed[1], 2);
-            return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-          } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-            util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-            return 'You are not worthy of the role ' + msg.parsed[1] + '.';
-          } else {
-            util.log('Adding Role to user', targetRole.name, 2);
-            message.member.addRole(targetRole).catch(util.log);
-            return 'Added the role "' + targetRole.name + '".';
-          }
-        },
-      },
 
+    const rolesCommand = new BaseCommand('!roles', '!roles', 'List All Roles', 'List all Armada Roles', 'dm');
+    rolesCommand.action = (message) => {
+      const roles = [];
+      util.log('help!', message);
+      message.guild.roles.map((role) => {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
+          return roles.push(role.name);
+        }
+        return role.name;
+      });
+      return 'List of all Armada Roles: \n\n' + roles.join('\n');
+    };
+
+    const addRoleCommand = new BaseCommand('!addRole', '!addRole <role_name>', 'Add Role', 'Add a single role to yourself. Role is case-sensitive.');
+    addRoleCommand.action = (message, ctrl, msg) => {
+      const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+      if (targetRole === null) {
+        util.log('No role matched', msg.parsed[1], 2);
+        return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+        util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
+        return 'You are not worthy of the role ' + msg.parsed[1] + '.';
+      } else {
+        util.log('Adding Role to user', targetRole.name, 2);
+        message.member.addRole(targetRole).catch(util.log);
+        return 'Added the role "' + targetRole.name + '".';
+      }
+    };
+
+    const ctrls = [
+      rolesCommand,
+      addRoleCommand,
       {
         cmd: '!addRoles',
         example: '!addRoles <role_name>,<role_name>,<role_name>',
