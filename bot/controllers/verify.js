@@ -4,7 +4,6 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-const controllerUtils = require('../controllerUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -21,13 +20,12 @@ class VerifyController extends BaseController {
     const timeoutInMiliseconds = 600000;
     const email = msg.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
-
     // We can set `codeLength` to whatever length we want the verif code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
 
-      // Create instance of ControllerUtils
+      // Create instance of controllerUtils
       const contUtils = new controllerUtils();
       // code to equal value generated
       const code = contUtils.generateCode(codeLength);
