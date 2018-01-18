@@ -4,33 +4,11 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
+const controllerUtils = require('../controllerUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
     super(message);
-    // Method to generate random numeric verification code
-    // Modified to fit style guide from this SO answer:
-    // https://stackoverflow.com/a/39774334
-    this.generateCode = (n) => {
-      // Workaround method for Math.pow() and ** operator
-      const pow = (base, exp) => {
-        let result = 1;
-        for (let i = 0; i < exp; i += 1) {
-          result *= base;
-        }
-        return result;
-      };
-      const add = 1;
-      let max = 12 - add;
-      let min = 0;
-      if (n > max) {
-        return this.generateCode(max) + this.generateCode(n - max);
-      }
-      max = pow(10, n + add);
-      min = max / 10;
-      const number = Math.floor(Math.random() * (max - (min + 1))) + min;
-      return ('' + number).substring(add);
-    };
     this.ctrls = [
       new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction),
     ];
@@ -43,11 +21,17 @@ class VerifyController extends BaseController {
     const timeoutInMiliseconds = 600000;
     const email = msg.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
+
     // We can set `codeLength` to whatever length we want the verif code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
-      const code = this.generateCode(codeLength);
+
+      // Create instance of ControllerUtils
+      const contUtils = new controllerUtils();
+      // code to equal value generated
+      const code = contUtils.generateCode(codeLength);
+
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
       const collector = message.channel.createMessageCollector(
