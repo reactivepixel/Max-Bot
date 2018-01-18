@@ -1,25 +1,11 @@
 module.exports = () => {
   const util = require('apex-util');
-
-  // Base Command class, cleans up classes.
-  class BaseCommand {
-    constructor(cmd, example, title, desc, resType = 'reply', showWithHelp = true, allowInDM = false) {
-      this.cmd = cmd;
-      this.example = example;
-      this.title = title;
-      this.desc = desc;
-      this.showWithHelp = showWithHelp;
-      this.allowInDM = allowInDM;
-      this.resType = resType;
-      this.action = message => message;
-    }
-  }
+  const Command = require('../baseCommand.js');
 
   const _run = (message) => {
     const disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
 
-    const rolesCommand = new BaseCommand('!roles', '!roles', 'List All Roles', 'List all Armada Roles', 'dm');
-    rolesCommand.action = (message) => {
+    const rolesAction = (message) => {
       const roles = [];
       util.log('help!', message);
       message.guild.roles.map((role) => {
@@ -31,8 +17,7 @@ module.exports = () => {
       return 'List of all Armada Roles: \n\n' + roles.join('\n');
     };
 
-    const addRoleCommand = new BaseCommand('!addRole', '!addRole <role_name>', 'Add Role', 'Add a single role to yourself. Role is case-sensitive.');
-    addRoleCommand.action = (message, ctrl, msg) => {
+    const addRoleAction = (message, ctrl, msg) => {
       const targetRole = message.guild.roles.find('name', msg.parsed[1]);
       if (targetRole === null) {
         util.log('No role matched', msg.parsed[1], 2);
@@ -47,111 +32,71 @@ module.exports = () => {
       }
     };
 
-    const ctrls = [
-      rolesCommand,
-      addRoleCommand,
-      {
-        cmd: '!addRoles',
-        example: '!addRoles <role_name>,<role_name>,<role_name>',
-        title: 'Add Multiple Specific Roles',
-        desc: 'Add multiple specific roles to yourself. Roles are case-sensitive.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message, ctrl, msg) => {
-          const roles = msg.parsed[1].split(',');
-          util.log('Multiple Roles Parsing', roles, 4);
+    const addRolesAction = (message, ctrl, msg) => {
+      const roles = msg.parsed[1].split(',');
+      util.log('Multiple Roles Parsing', roles, 4);
 
-          roles.map((role) => {
-            if (!disallowedRoles.includes(role.toLowerCase())) {
-              const targetRole = message.guild.roles.find('name', role);
-              util.log('Asking API for Role', targetRole, 4);
+      roles.map((role) => {
+        if (!disallowedRoles.includes(role.toLowerCase())) {
+          const targetRole = message.guild.roles.find('name', role);
+          util.log('Asking API for Role', targetRole, 4);
 
-              if (targetRole === null) {
-                return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-              }
-              return message.member.addRole(targetRole).catch(util.log);
-            }
-            return role.name;
-          });
-
-          return 'All set!';
-        },
-      },
-      {
-        cmd: '!removeRole',
-        example: '!removeRole <role_name>',
-        title: 'Remove a single role',
-        desc: 'Remove a single game role from yourself. Role is case-sensitive.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message, ctrl, msg) => {
-          const targetRole = message.guild.roles.find('name', msg.parsed[1]);
           if (targetRole === null) {
-            util.log('No role matched', msg.parsed[1], 2);
-            return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+            return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
           }
-          if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
-            util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-            return 'You have not the power or the will to control this power.';
-          }
+          return message.member.addRole(targetRole).catch(util.log);
+        }
+        return role.name;
+      });
 
-          util.log('Removing role from user', targetRole.name, 2);
-          message.member.removeRole(targetRole).catch(util.log);
-          return targetRole.name + ' removed.';
-        },
-      },
-      {
-        cmd: '!addAllRoles',
-        example: '!addAllRoles',
-        title: 'Add All Roles',
-        desc: 'Add every game role to yourself.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message) => {
-          message.guild.roles.map((role) => {
-            if (!disallowedRoles.includes(role.name.toLowerCase())) {
-              return message.member.addRole(role).catch(util.log);
-            }
-            return role.name;
-          });
+      return 'All set!';
+    };
 
-          return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
-        },
-      },
-      {
-        cmd: '!removeAllRoles',
-        example: '!removeAllRoles',
-        title: 'Remove All Roles',
-        desc: 'Remove every game role from yourself.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message) => {
-          message.guild.roles.map((role) => {
-            if (!disallowedRoles.includes(role.name.toLowerCase())) {
-              return message.member.removeRole(role).catch(util.log);
-            }
-            return role.name;
-          });
+    const removeRoleAction = (message, ctrl, msg) => {
+      const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+      if (targetRole === null) {
+        util.log('No role matched', msg.parsed[1], 2);
+        return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      }
+      if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+        util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
+        return 'You have not the power or the will to control this power.';
+      }
 
-          return 'Removing all roles. Back to basics.';
-        },
-      },
+      util.log('Removing role from user', targetRole.name, 2);
+      message.member.removeRole(targetRole).catch(util.log);
+      return targetRole.name + ' removed.';
+    };
+
+    const addAllRolesAction = (message) => {
+      message.guild.roles.map((role) => {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
+          return message.member.addRole(role).catch(util.log);
+        }
+        return role.name;
+      });
+
+      return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
+    };
+
+    const removeAllRolesAction = (message) => {
+      message.guild.roles.map((role) => {
+        if (!disallowedRoles.includes(role.name.toLowerCase())) {
+          return message.member.removeRole(role).catch(util.log);
+        }
+        return role.name;
+      });
+
+      return 'Removing all roles. Back to basics.';
+    };
+
+    const ctrls = [
+      new Command('!roles', '!roles', 'List All Roles', 'List all Armada Roles', rolesAction, 'dm'),
+      new Command('!addRole', '!addRole <role_name>', 'Add Role', 'Add a single role to yourself. Role is case-sensitive.', addRoleAction),
+      new Command('!addRoles', '!addRoles <role_name>,<role_name>,<role_name>', 'Add Multiple Specific Roles', 'Add a single role to yourself. Role is case-sensitive.', addRolesAction),
+      new Command('!removeRole', '!removeRole <role_name>', 'Remove a single role', 'Remove a single game role from yourself. Role is case-sensitive.', removeRoleAction),
+      new Command('!addAllRoles', '!addAllRoles', 'Add All Roles', 'Add every game role to yourself.', addAllRolesAction),
+      new Command('!removeAllRoles', '!removeAllRoles', 'Remove All Roles', 'Remove every game role from yourself.', removeAllRolesAction),
     ];
 
     const onSuccess = (message, res, ctrl) => {
