@@ -18,32 +18,13 @@ client.on('message', (message) => {
   if (message.content.charAt(0) === '!') {
     util.log('!Cmd Message Received', message.content, 0);
 
-    const ctrlResponses = [];
-
     // Process message against every controller
     Object.keys(ctrls).forEach((ctrlKey) => {
       if (ctrlKey) {
         // initialize the controller
 
         const ctrlInstance = new ctrls[ctrlKey](message);
-
-        /*
-        // Determine the method names of each controller
-        const controllerMethodKeys = Object.keys(ctrlInstance);
-        util.log('Methods found in controller', controllerMethodKeys, 3);
-
-        // For each method on each controller
-        Object.keys(controllerMethodKeys).forEach((controllerMethodKey) => {
-          const methodName = controllerMethodKeys[controllerMethodKey];
-          const method = ctrlInstance[methodName];
-
-          util.log('Looping Through Each Method within each Controller', method, 4);
-
-          // Pass the message to each method of each controller
-          ctrlResponses.push(method(message));
-        });
-
-        */
+        util.log('Controller Instance', ctrlInstance, 5);
       }
     });
 
