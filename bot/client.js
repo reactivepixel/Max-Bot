@@ -24,8 +24,10 @@ client.on('message', (message) => {
     Object.keys(ctrls).forEach((ctrlKey) => {
       if (ctrlKey) {
         // initialize the controller
-        const ctrlInstance = ctrls[ctrlKey]();
 
+        const ctrlInstance = new ctrls[ctrlKey](message);
+
+        /*
         // Determine the method names of each controller
         const controllerMethodKeys = Object.keys(ctrlInstance);
         util.log('Methods found in controller', controllerMethodKeys, 3);
@@ -40,6 +42,8 @@ client.on('message', (message) => {
           // Pass the message to each method of each controller
           ctrlResponses.push(method(message));
         });
+
+        */
       }
     });
 
