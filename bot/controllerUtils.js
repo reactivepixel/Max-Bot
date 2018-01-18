@@ -1,4 +1,5 @@
 class controllerUtils {
+  // Controller Utility class
   constructor() {
     // Method to generate random numeric verification code
     // Modified to fit style guide from this SO answer:
