@@ -8,7 +8,7 @@ class ChannelController extends BaseController {
     const controller = this;
     this.commands = [
       new Command('!channels', '!channels', 'List All Channels', 'List all available Channels', this.channelsAction.bind(controller), 'dm'),
-      new Command('!announce', '!announce <channel_name>, <message>', 'Announce to other channels', 'Broadcast to multiple channels. Channels are case-sensitive.', this.announceAction.bind(controller)),
+      new Command('!announce', '!announce <channel_name>, <message>', 'Announce to other channels', 'Broadcast to multiple channels. Channels are case-sensitive.', this.announceAction.bind(controller), 'reply', false),
     ];
   }
 
