@@ -35,7 +35,10 @@ client.on('message', (message) => {
       if (message.content.toLowerCase() === '!help') {
         Object.keys(controllerInstance.commands).forEach((commandKey) => {
           const commandInstance = controllerInstance.commands[commandKey];
-          helpString += `\n\n \`${commandInstance.example}\` \n\t ${commandInstance.description}`;
+          // Check if command should be shown in help menu
+          if (commandInstance.showWithHelp) {
+            helpString += `\n\n \`${commandInstance.example}\` \n\t ${commandInstance.description}`;
+          }
         });
       }
     });
