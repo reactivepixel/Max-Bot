@@ -4,7 +4,7 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-const controllerUtils = require('../controllerUtils.js');
+const { generateCode } = require('../controllerUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -39,11 +39,8 @@ class VerifyController extends BaseController {
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
-
-      // Create instance of ControllerUtils
-      const contUtils = new controllerUtils();
       // code to equal value generated
-      const code = contUtils.generateCode(codeLength);
+      const code = generateCode(codeLength);
 
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
