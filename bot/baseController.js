@@ -20,9 +20,9 @@ class BaseController {
   onSuccess(commandResponse, command) {
     if (commandResponse !== null) {
       // Determine how to respond to message
-      if (command.resType === 'reply') {
+      if (command.responseType === 'reply') {
         return this.message.reply(commandResponse);
-      } else if (command.resType === 'dm') {
+      } else if (command.responseType === 'dm') {
         return this.message.author.send(commandResponse);
       }
     }

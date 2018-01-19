@@ -8,13 +8,25 @@ const controllerUtils = require('../controllerUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
+    // Call BaseController constructor
     super(message);
+
+    // Aliasing 'this' as controller to allow for binding in actions
     const controller = this;
+
+    // Array of all commands, see baseCommand.js for prototype
     this.commands = [
-      new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction.bind(controller)),
+      new Command(
+        '!verify',
+        '!verify <email_address>',
+        'Verify Email Address',
+        'Verify user\'s email address',
+        this.verifyAction.bind(controller),
+      ),
     ];
   }
 
+  // Verifies Full Sail email addresses
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';

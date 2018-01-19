@@ -4,19 +4,67 @@ const util = require('apex-util');
 
 class RoleController extends BaseController {
   constructor(message) {
+    // Call BaseController constructor
     super(message);
+
+    // Aliasing 'this' as controller to allow for binding in actions
     const controller = this;
+
+    // Array of all commands, see baseCommand.js for prototype
     this.commands = [
-      new Command('!roles', '!roles', 'List All Roles', 'List all Armada Roles', this.rolesAction.bind(controller), 'dm'),
-      new Command('!addRole', '!addRole <role_name>', 'Add Role', 'Add a single role to yourself. Role is case-sensitive.', this.addRoleAction.bind(controller)),
-      new Command('!addRoles', '!addRoles <role_name>,<role_name>,<role_name>', 'Add Multiple Specific Roles', 'Add a single role to yourself. Role is case-sensitive.', this.addRolesAction.bind(controller)),
-      new Command('!removeRole', '!removeRole <role_name>', 'Remove a single role', 'Remove a single game role from yourself. Role is case-sensitive.', this.removeRoleAction.bind(controller)),
-      new Command('!addAllRoles', '!addAllRoles', 'Add All Roles', 'Add every game role to yourself.', this.addAllRolesAction.bind(controller)),
-      new Command('!removeAllRoles', '!removeAllRoles', 'Remove All Roles', 'Remove every game role from yourself.', this.removeAllRolesAction.bind(controller)),
+      new Command(
+        '!roles',
+        '!roles',
+        'List All Roles',
+        'List all Armada Roles', this.rolesAction.bind(controller),
+        'dm',
+      ),
+      new Command(
+        '!addRole',
+        '!addRole <role_name>',
+        'Add Role',
+        'Add a single role to yourself. Role is case-sensitive.',
+        this.addRoleAction.bind(controller),
+      ),
+      new Command(
+        '!addRoles',
+        '!addRoles <role_name>,<role_name>,<role_name>',
+        'Add Multiple Specific Roles',
+        'Add a single role to yourself. Role is case-sensitive.',
+        this.addRolesAction.bind(controller),
+      ),
+      new Command(
+        '!removeRole',
+        '!removeRole <role_name>',
+        'Remove a single role',
+        'Remove a single game role from yourself. Role is case-sensitive.',
+        this.removeRoleAction.bind(controller),
+      ),
+      new Command(
+        '!addAllRoles',
+        '!addAllRoles',
+        'Add All Roles',
+        'Add every game role to yourself.',
+        this.addAllRolesAction.bind(controller),
+      ),
+      new Command(
+        '!removeAllRoles',
+        '!removeAllRoles',
+        'Remove All Roles',
+        'Remove every game role from yourself.',
+        this.removeAllRolesAction.bind(controller),
+      ),
     ];
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
+
+    // User roles commands cannot change
+    this.disallowedRoles = [
+      'admin', 'armada officers', 'armada officer',
+      'moderator', 'privateers', 'privateer',
+      'tester', 'crew', 'fleet officer', '@everyone',
+    ];
   }
 
+  // Lists all roles
   rolesAction() {
     const { message, disallowedRoles } = this;
     const roles = [];
@@ -29,6 +77,7 @@ class RoleController extends BaseController {
     return 'List of all Armada Roles: \n\n' + roles.join('\n');
   }
 
+  // Adds a role to the user
   addRoleAction() {
     const { message, disallowedRoles } = this;
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
@@ -45,6 +94,7 @@ class RoleController extends BaseController {
     }
   }
 
+  // Adds multiple roles to the user
   addRolesAction() {
     const { message, disallowedRoles } = this;
     const roles = message.parsed[1].split(',');
@@ -66,6 +116,7 @@ class RoleController extends BaseController {
     return 'All set!';
   }
 
+  // Removes role from user
   removeRoleAction() {
     const { message, disallowedRoles } = this;
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
@@ -83,6 +134,7 @@ class RoleController extends BaseController {
     return targetRole.name + ' removed.';
   }
 
+  // Adds all roles to user
   addAllRolesAction() {
     const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
@@ -95,6 +147,7 @@ class RoleController extends BaseController {
     return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
   }
 
+  // Removes all roles from user
   removeAllRolesAction() {
     const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
