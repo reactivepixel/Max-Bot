@@ -20,7 +20,7 @@ class VerifyController extends BaseController {
         '!verify',
         '!verify <email_address>',
         'Verify Email Address',
-        'Verify user\'s email address',
+        'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
         this.verifyAction.bind(controller),
       ),
     ];

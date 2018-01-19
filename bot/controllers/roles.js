@@ -16,7 +16,8 @@ class RoleController extends BaseController {
         '!roles',
         '!roles',
         'List All Roles',
-        'List all Armada Roles', this.rolesAction.bind(controller),
+        'List all available Armada roles.',
+        this.rolesAction.bind(controller),
         'dm',
       ),
       new Command(
@@ -28,16 +29,16 @@ class RoleController extends BaseController {
       ),
       new Command(
         '!addRoles',
-        '!addRoles <role_name>,<role_name>,<role_name>',
-        'Add Multiple Specific Roles',
-        'Add a single role to yourself. Role is case-sensitive.',
+        '!addRoles <role_name>,[role_name]',
+        'Add Multiple Roles',
+        'Add multiple roles to yourself. Rolea are case-sensitive.',
         this.addRolesAction.bind(controller),
       ),
       new Command(
         '!removeRole',
         '!removeRole <role_name>',
-        'Remove a single role',
-        'Remove a single game role from yourself. Role is case-sensitive.',
+        'Remove Role',
+        'Remove a single role from yourself. Role is case-sensitive.',
         this.removeRoleAction.bind(controller),
       ),
       new Command(

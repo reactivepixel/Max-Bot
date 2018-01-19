@@ -22,7 +22,7 @@ client.on('message', (message) => {
     util.log('Command message received', message.content, 0);
 
     // Build basic help string
-    let helpString = 'v1.3.2 Discovered Commands:';
+    let helpString = 'v1.3.2 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {
@@ -39,7 +39,7 @@ client.on('message', (message) => {
           // Check if command should be shown in help menu
           if (commandInstance.showWithHelp) {
             if (commandInstance.adminOnly && isAdmin(message.member)) {
-              helpString += `\n\n \`${commandInstance.example}\` - Admin Only \n\t ${commandInstance.description}`;
+              helpString += `\n\n \`${commandInstance.example}\` **- Admin Only** \n\t ${commandInstance.description}`;
             } else if (commandInstance.adminOnly && !isAdmin(message.member)) {
               helpString += '';
             } else {
