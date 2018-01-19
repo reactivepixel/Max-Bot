@@ -9,17 +9,18 @@ const controllerUtils = require('../controllerUtils.js');
 class VerifyController extends BaseController {
   constructor(message) {
     super(message);
-    this.ctrls = [
-      new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction),
+    const controller = this;
+    this.commands = [
+      new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction.bind(controller)),
     ];
-    this.run();
   }
 
-  verifyAction(message, msg) {
+  verifyAction() {
+    const { message } = this;
     const targetVerifiedRoleName = 'Crew';
     const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
-    const email = msg.parsed[1].toLowerCase();
+    const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
 
     // We can set `codeLength` to whatever length we want the verif code to be.

@@ -2,13 +2,13 @@ const fs = require('fs');
 const util = require('apex-util');
 
 module.exports = () => {
-  const ctrls = [];
+  const controllers = [];
   const targetPath = './bot/controllers';
-  const exts = ['js'];
+  const validExtensions = ['js'];
 
-  // const file = 'roles.js';
+  // Auto-load controller files
   fs.readdirSync(targetPath).forEach((file) => {
-    // Skip Self Recursive Loading
+    // Skip self-recursive loading
     if (file === 'index.js') return false;
 
     // Split File name on "."
@@ -18,14 +18,13 @@ module.exports = () => {
     const currentExt = splitFile[splitFile.length - 1];
 
     // Check if extension is on approved array
-    if (exts.includes(currentExt)) {
-      ctrls.push(require(`./${file}`));
-      // import/no-dynamic-require
+    if (validExtensions.includes(currentExt)) {
+      // Add controller to list
+      controllers.push(require(`./${file}`));
     }
-
     return true;
   });
 
-  util.log('Return Controllers loaded within the target path of ' + targetPath, ctrls, 3);
-  return ctrls;
+  util.log('Controllers found within target path' + targetPath, controllers, 3);
+  return controllers;
 };
