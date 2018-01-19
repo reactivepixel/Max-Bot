@@ -98,7 +98,7 @@ Ensure your local IDE has the ability to add eslint plugins. [Atom](https://atom
 Install the linter-eslint package for Atom.
 
 ```
-apm install linter-eslint
+npm install linter-eslint
 ```
 
 
