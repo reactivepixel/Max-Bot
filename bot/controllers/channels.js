@@ -29,6 +29,7 @@ class ChannelController extends BaseController {
 
     channels.map((channel) => {
         const targetChannel = message.guild.channels.find('name', channel);
+        const sender = message.author.username;
         util.log('Asking API for Channel', targetChannel, 4);
 
         if (targetChannel === null) {
@@ -48,7 +49,7 @@ class ChannelController extends BaseController {
           preparedMessage += message.parsed[msgParsedIndex];
           msgParsedIndex += 1;
         }
-        return targetChannel.send(preparedMessage);
+        return targetChannel.send(sender + " has an announcment: ```" + preparedMessage + "```");
       });
 
     return 'Broadcast sent!';
