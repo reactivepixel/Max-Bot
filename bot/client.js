@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
+const { isAdmin } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -37,7 +38,13 @@ client.on('message', (message) => {
           const commandInstance = controllerInstance.commands[commandKey];
           // Check if command should be shown in help menu
           if (commandInstance.showWithHelp) {
-            helpString += `\n\n \`${commandInstance.example}\` \n\t ${commandInstance.description}`;
+            if (commandInstance.adminOnly && isAdmin(message.member)) {
+              helpString += `\n\n \`${commandInstance.example}\` - Admin Only \n\t ${commandInstance.description}`;
+            } else if (commandInstance.adminOnly && !isAdmin(message.member)) {
+              helpString += '';
+            } else {
+              helpString += `\n\n \`${commandInstance.example}\` \n\t ${commandInstance.description}`;
+            }
           }
         });
       }

@@ -2,7 +2,7 @@ class BaseCommand {
   constructor(
     command, example, title,
     description, action, responseType = 'reply',
-    showWithHelp = true, allowInDM = false, adminOnly = false,
+    adminOnly = false, showWithHelp = true, allowInDM = false,
   ) {
     this.command = command;
     this.example = example;

@@ -22,8 +22,6 @@ class ChannelController extends BaseController {
         'Broadcast to multiple channels. Channels are case-sensitive.',
         this.announceAction.bind(controller),
         'reply',
-        false,
-        false,
         true,
       ),
     ];

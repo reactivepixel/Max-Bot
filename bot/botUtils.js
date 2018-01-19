@@ -18,3 +18,15 @@ exports.generateCode = (n) => {
   const number = Math.floor(Math.random() * (max - (min + 1))) + min;
   return ('' + number).substring(add);
 };
+
+// Checks if person is an admin user, use GuildMember object
+exports.isAdmin = (member) => {
+  const adminRoles = [
+    'admin', 'armada officers', 'armada officer',
+    'moderator', 'tester', 'fleet officer',
+  ];
+  if (adminRoles.some(role => member.roles.find('name', role))) {
+    return true;
+  }
+  return false;
+};

@@ -1,14 +1,11 @@
 const util = require('apex-util');
+const { isAdmin } = require('./botUtils.js');
 
 class BaseController {
   constructor(message) {
     // Add middleware to saved message
     this.message = BaseController.messageMiddleware(message);
     this.commands = [];
-    this.adminRoles = [
-      'admin', 'armada officers', 'armada officer',
-      'moderator', 'tester', 'fleet officer',
-    ];
   }
 
   // Add extra information to message object
@@ -53,8 +50,8 @@ class BaseController {
         }
 
         // If non-admin enters admin command
-        if (this.commands[key].adminOnly && !this.adminRoles.some(role => this.message.member.roles.find('name', role))) {
-          return this.onError('Hey there, you don\'t have permissions to run this command.');
+        if (this.commands[key].adminOnly && !isAdmin(this.message.member)) {
+          return this.onError('You don\'t have permissions to run this command.');
         }
 
         // Execute command's action
