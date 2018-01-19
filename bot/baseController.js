@@ -5,6 +5,10 @@ class BaseController {
     // Add middleware to saved message
     this.message = BaseController.messageMiddleware(message);
     this.commands = [];
+    this.adminRoles = [
+      'admin', 'armada officers', 'armada officer',
+      'moderator', 'tester', 'fleet officer',
+    ];
   }
 
   // Add extra information to message object
@@ -46,6 +50,11 @@ class BaseController {
         // If user messages the bot a channel-only command
         if (!this.commands[key].allowInDM && !this.message.guild) {
           return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
+        }
+
+        // If non-admin enters admin command
+        if (this.commands[key].adminOnly && !this.adminRoles.some(role => this.message.member.roles.find('name', role))) {
+          return this.onError('Hey there, you don\'t have permissions to run this command.');
         }
 
         // Execute command's action
