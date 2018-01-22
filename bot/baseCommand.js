@@ -1,7 +1,7 @@
 class BaseCommand {
   constructor(
-    command, example, title,
-    description, action, responseType = 'reply',
+    command, example, title, description,
+    action, reaction, responseType = null,
     adminOnly = false, showWithHelp = true, allowInDM = false,
   ) {
     this.command = command;
@@ -13,6 +13,7 @@ class BaseCommand {
     this.adminOnly = adminOnly;
     this.responseType = responseType;
     this.action = action;
+    this.reaction = reaction;
   }
 }
 module.exports = BaseCommand;

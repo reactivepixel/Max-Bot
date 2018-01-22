@@ -57,4 +57,23 @@ client.on('message', (message) => {
   }
 });
 
+// Listen for reactions
+client.on('messageReactionAdd', (messageReaction) => {
+  // Get message from messageReaction
+  const message = messageReaction.message;
+  // Check for ! prefix on message to ensure it is a command
+  if (message.content.charAt(0) === '!') {
+    util.log('Command message received', message.content, 0);
+
+    // Process message against every controller
+    Object.keys(controllers).forEach((key) => {
+      // Instantiate the controller
+      const controllerInstance = new controllers[key](message);
+      util.log('Controller instance', controllerInstance, 5);
+      // Runs commands after constructor is called
+      controllerInstance.react();
+    });
+  }
+});
+
 client.login(process.env.TOKEN);

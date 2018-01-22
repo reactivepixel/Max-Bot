@@ -13,6 +13,7 @@ class ChannelController extends BaseController {
         'List All Channels',
         'List all available Armada channels.',
         this.channelsAction.bind(controller),
+        null,
         'dm',
       ),
       new Command(
@@ -21,10 +22,21 @@ class ChannelController extends BaseController {
         'Announce To Channels',
         'Broadcast to multiple channels. Channels are case-sensitive.',
         this.announceAction.bind(controller),
+        null,
         'reply',
         true,
       ),
+      new Command(
+        '!nominateChannel',
+        '!nominateChannel <channel_name>',
+        'Nominate Channel',
+        'Nominate a game to create as a channel. Channel name cannot contain spaces.',
+        this.nominateChannelAction.bind(controller),
+        this.nominateChannelReaction.bind(controller),
+      ),
     ];
+    // Set a threshold votes must attain to pass
+    this.voteThreshold = 2;
   }
 
   channelsAction() {
@@ -65,6 +77,38 @@ class ChannelController extends BaseController {
     });
 
     return 'Broadcast sent!';
+  }
+
+  nominateChannelAction() {
+    const { message, voteThreshold } = this;
+    // Channel name
+    const channelName = message.parsed[1];
+    const targetChannel = message.guild.channels.find('name', channelName);
+    // Make sure channel doesn't exist
+    if (!targetChannel) {
+      // Add first reaction
+      message.react('👍');
+      message.reply(`Channel nominated, ${voteThreshold} thumbs ups needed to add it. The first one's on me!`);
+    } else {
+      // Channel exists, hide vote
+      message.reply('That channel already exists.');
+      message.delete();
+    }
+    return 'Channel Nomination.';
+  }
+
+  nominateChannelReaction() {
+    const { message, voteThreshold } = this;
+    // Channel name
+    const channelName = message.parsed[1];
+    // Gets count of reactions
+    const reactionCount = message.reactions.find(reaction => reaction.emoji.name === '👍').count;
+    // Check if reactions meet threshold
+    if (reactionCount === voteThreshold) {
+      message.guild.createChannel(channelName);
+      message.reply(`Congrats! Your ${channelName} channel was voted on and created!`);
+      message.delete();
+    }
   }
 }
 
