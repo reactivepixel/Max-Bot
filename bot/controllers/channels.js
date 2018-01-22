@@ -81,7 +81,7 @@ class ChannelController extends BaseController {
     const jokes = [
       'My girlfriend told me to stop plyaing Pokemon as it was childish.\n\nI started thrashing about and roared "You don\'t have enough badges to control me!"',
       'What is the national sport of Minecraft?\n\nBoxing.',
-      'What do you get if you tape a stick of dynamite to a hedgehog?\n\nA Sonic boom',
+      'What do you get if you tape a stick of dynamite to a hedgehog?\n\nA Sonic boom.',
       'My girlfriend just left me because of my overwhelming obsession with Assassin\'s Creed.\n\nI tried to explain I can\'t Altair the past.',
       'What does a gorilla wear to the beach?\n\nDonkey Thong.',
       'What\'s Samus\' favorite food?\n\nMetroid Prime Rib.',
