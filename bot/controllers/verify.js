@@ -4,17 +4,29 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-const controllerUtils = require('../controllerUtils.js');
+const { generateCode } = require('../botUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
+    // Call BaseController constructor
     super(message);
+
+    // Aliasing 'this' as controller to allow for binding in actions
     const controller = this;
+
+    // Array of all commands, see baseCommand.js for prototype
     this.commands = [
-      new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction.bind(controller)),
+      new Command(
+        '!verify',
+        '!verify <email_address>',
+        'Verify Email Address',
+        'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
+        this.verifyAction.bind(controller),
+      ),
     ];
   }
 
+  // Verifies Full Sail email addresses
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';
@@ -27,11 +39,8 @@ class VerifyController extends BaseController {
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
-
-      // Create instance of ControllerUtils
-      const contUtils = new controllerUtils();
       // code to equal value generated
-      const code = contUtils.generateCode(codeLength);
+      const code = generateCode(codeLength);
 
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)

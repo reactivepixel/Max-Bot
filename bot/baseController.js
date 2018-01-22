@@ -1,4 +1,5 @@
 const util = require('apex-util');
+const { isAdmin } = require('./botUtils.js');
 
 class BaseController {
   constructor(message) {
@@ -20,9 +21,9 @@ class BaseController {
   onSuccess(commandResponse, command) {
     if (commandResponse !== null) {
       // Determine how to respond to message
-      if (command.resType === 'reply') {
+      if (command.responseType === 'reply') {
         return this.message.reply(commandResponse);
-      } else if (command.resType === 'dm') {
+      } else if (command.responseType === 'dm') {
         return this.message.author.send(commandResponse);
       }
     }
@@ -46,6 +47,11 @@ class BaseController {
         // If user messages the bot a channel-only command
         if (!this.commands[key].allowInDM && !this.message.guild) {
           return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
+        }
+
+        // If non-admin enters admin command
+        if (this.commands[key].adminOnly && !isAdmin(this.message.member)) {
+          return this.onError('You don\'t have permissions to run this command.');
         }
 
         // Execute command's action

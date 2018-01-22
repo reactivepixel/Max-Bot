@@ -1,109 +1,100 @@
-module.exports = () => {
-  const util = require('apex-util');
+const BaseController = require('../baseController.js');
+const Command = require('../baseCommand.js');
+const util = require('apex-util');
 
-  const _run = (message) => {
-    const ctrls = [
-      {
-        cmd: '!channels',
-        example: '!channels',
-        title: 'List All Channels',
-        desc: 'List all Armada Channels',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'dm',
-        action: (message) => {
-          const channels = [];
-          message.guild.channels.map((channel) => {
-            util.log(channel.name);
-            return channel.name;
-          });
-          return 'List of all Armada Channels: \n\n' + channels.join('\n');
-        },
-      },
-      {
-        cmd: '!notifyTheOthers',
-        example: '!notifyTheOthers <channel_name>, <message>',
-        title: 'Add a message to another channel',
-        desc: 'Type the command, the channel name, and then the message you would like to send.',
-        showWithHelp: true,
-        posTargetUser: null,
-        posSecondaryCmd: null,
-        regexSplitCharacter: null,
-        allowInDM: false,
-        resType: 'reply',
-        action: (message, ctrl, msg) => {
-          const channels = msg.parsed[1].split(',');
-          channels.map((channel) => {
-            const targetChannel = message.guild.channels.find('name', channel);
-
-            if (targetChannel === null) {
-              return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)';
-            }
-            let fullComment = '';
-            // Hey, there's a chance comments can have only one word!
-            if (msg.parsed.length > 3) {
-              // Add each word to the fullComment variable and send it all together
-              // Since the first two in the array are not needed, slice them out
-              msg.parsed.slice(2).forEach((string) => {
-                fullComment += string + ' ';
-              });
-            }
-            return targetChannel.send(fullComment);
-          });
-          return 'The Others have been notified. Godspeed, dear message.';
-        },
-      },
+class ChannelController extends BaseController {
+  constructor(message) {
+    super(message);
+    const controller = this;
+    this.commands = [
+      new Command(
+        '!channels',
+        '!channels',
+        'List All Channels',
+        'List all available Armada channels.',
+        this.channelsAction.bind(controller),
+        'dm',
+      ),
+      new Command(
+        '!announce',
+        '!announce <channel_name>, <message>',
+        'Announce To Channels',
+        'Broadcast to multiple channels. Channels are case-sensitive.',
+        this.announceAction.bind(controller),
+        'reply',
+        true,
+      ),
+      new Command(
+        '!humorMe',
+        '!humorMe',
+        'Hear a Joke',
+        'Have max-bot message you a random gaming joke.',
+        this.humorAction.bind(controller),
+        'dm',
+      ),
     ];
+  }
 
-    const onSuccess = (message, res, ctrl) => {
-      if (res !== null) {
-        if (ctrl.resType === 'reply') {
-          return message.reply(res);
-        } else if (ctrl.resType === 'dm') {
-          return message.author.send(res);
-        }
+  channelsAction() {
+    const { message } = this;
+    const channels = [];
+    message.guild.channels.map(channel => channels.push(channel.name));
+    return 'List of all Armada Channels: \n\n' + channels.join('\n');
+  }
+
+  announceAction() {
+    const { message } = this;
+    const channels = message.parsed[1].split(',');
+    util.log('Multiple Channels Parsing', channels, 4);
+
+    channels.map((channel) => {
+      const targetChannel = message.guild.channels.find('name', channel);
+      const sender = message.author.username;
+      util.log('Asking API for Channel', targetChannel, 4);
+
+      if (targetChannel === null) {
+        return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)';
       }
-      // Fail Safe
-      return false;
-    };
 
-    const onError = message => message.reply('I Broke... Beep...Boop...Beep');
+      // Set parsed value to 2 for message.
+      let msgParsedIndex = 2;
+      let preparedMessage = '';
 
-    const messageMiddleware = (message) => {
-      const container = {};
-      container.parsed = message.content.split(' ');
-      const msg = Object.assign(message, container);
-      return msg;
-    };
-
-    ctrls.map((ctrl) => {
-      util.log('Running through controller', ctrl.cmd, 2);
-
-      const msg = messageMiddleware(message);
-      if (msg.parsed[0].toLowerCase() === ctrl.cmd.toLowerCase()) {
-        util.log('!!! Matched Ctrl to Cmd !!!', ctrl.cmd, 2);
-
-        // Ensure the communication is happening on a server
-        if (!ctrl.allowInDM) {
-          if (!message.guild) return onError(message, 'Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
+      // Loop through/join user message by space until end.
+      while (msgParsedIndex < message.parsed.length) {
+        // Add spaces after first word
+        if (msgParsedIndex !== 2) {
+          preparedMessage += ' ';
         }
-
-        // Do Stuff
-        const res = ctrl.action(message, ctrl, msg);
-        if (res) {
-          onSuccess(message, res, ctrl);
-        } else {
-          onError(message, res, ctrl);
-        }
+        preparedMessage += message.parsed[msgParsedIndex];
+        msgParsedIndex += 1;
       }
-      return ctrl;
+      return targetChannel.send(sender + ' has an announcment: ```' + preparedMessage + '```');
     });
-  };
 
-  return {
-    run: _run,
-  };
-};
+    return 'Broadcast sent!';
+  }
+
+  humorAction() {
+    let { message } = this;
+    // Compliments of gamedesigning.org
+    const jokes = [
+      'My girlfriend told me to stop plyaing Pokemon as it was childish.\n\nI started thrashing about and roared "You don\'t have enough badges to control me!"',
+      'What is the national sport of Minecraft?\n\nBoxing.',
+      'What do you get if you tape a stick of dynamite to a hedgehog?\n\nA Sonic boom',
+      'My girlfriend just left me because of my overwhelming obsession with Assassin\'s Creed.\n\nI tried to explain I can\'t Altair the past.',
+      'What does a gorilla wear to the beach?\n\nDonkey Thong.',
+      'What\'s Samus\' favorite food?\n\nMetroid Prime Rib.',
+      'Why does Donkey Kong always brush his teeth?\n\nTo prevent tooth DK.',
+      'Which video game system is always late?\n\nAtardi.',
+      'While driving yesterday, I saw a banana skin on the road and instinctively swerved to avoid it. Thanks, Mario Kart!',
+      'How did Link win the basketball game?\n\nHe used his hookshot.',
+      'Why was Navi on the internet?\n\nShe was looking for a Link.',
+      'Why couldn\'t Toad put an indoor pool in his house?\n\nIt took up too mushroom.',
+    ];
+    message = jokes[Math.floor(Math.random() * jokes.length)];
+    return message;
+  }
+}
+
+module.exports = ChannelController;

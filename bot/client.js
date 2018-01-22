@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
+const { isAdmin } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -20,6 +21,9 @@ client.on('message', (message) => {
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
 
+    // Build basic help string
+    let helpString = 'v1.3.2 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
+
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {
       // Instantiate the controller
@@ -27,11 +31,28 @@ client.on('message', (message) => {
       util.log('Controller instance', controllerInstance, 5);
       // Runs commands after constructor is called
       controllerInstance.run();
+
+      // Loop through commands if help command and add to string
+      if (message.content.toLowerCase() === '!help') {
+        Object.keys(controllerInstance.commands).forEach((commandKey) => {
+          const commandInstance = controllerInstance.commands[commandKey];
+          // Check if command should be shown in help menu
+          if (commandInstance.showWithHelp) {
+            if (commandInstance.adminOnly && isAdmin(message.member)) {
+              helpString += `\n\n \`${commandInstance.example}\` **- Admin Only** \n\t ${commandInstance.description}`;
+            } else if (commandInstance.adminOnly && !isAdmin(message.member)) {
+              helpString += '';
+            } else {
+              helpString += `\n\n \`${commandInstance.example}\` \n\t ${commandInstance.description}`;
+            }
+          }
+        });
+      }
     });
 
-    // TODO: Improve help message
+    // If help command called, display string
     if (message.content.toLowerCase() === '!help') {
-      message.reply('v1.3.2 Discovered Commands: \n `!roles` \n\t List all Armada Roles \n\n `!addRole` RoleName \n\t Adds yourself to a role and the related text/voice rooms. \n\n `!removeRole` RoleName \n\t Removes a role from yourself. \n\n `!addAllRoles` \n\t Add all roles to yourself. \n\n `!removeAllRoles` \n\t Remove all roles from yourself. \n\n `!verify emailAddress@student.fullsail.com` \n\t Self verify that you are a Full Sail Student / Alumni via your Full Sail email account.');
+      message.reply(helpString);
     }
   }
 });
