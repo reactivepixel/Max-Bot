@@ -36,7 +36,7 @@ class ChannelController extends BaseController {
       ),
     ];
     // Set a threshold votes must attain to pass
-    this.voteThreshold = 2;
+    this.voteThreshold = 10;
   }
 
   channelsAction() {
