@@ -1,46 +1,32 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 
-// If Production server default Debug mode to Production Setting
+// If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
 
 const client = new Discord.Client();
 
-// Pre Load Controllers
-const ctrls = require('./controllers')();
+// Pre-load controllers
+const controllers = require('./controllers')();
 
+// Alert when ready
 client.on('ready', () => {
-  util.log('Bot Online and Ready!', 0);
+  util.log('Bot Online and Ready', 0);
 });
 
+// Listen for messages
 client.on('message', (message) => {
-  // Check for ! Prefix on message to ensure it is a command
+  // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
-    util.log('!Cmd Message Received', message.content, 0);
-
-    const ctrlResponses = [];
+    util.log('Command message received', message.content, 0);
 
     // Process message against every controller
-    Object.keys(ctrls).forEach((ctrlKey) => {
-      if (ctrlKey) {
-        // initialize the controller
-        const ctrlInstance = ctrls[ctrlKey]();
-
-        // Determine the method names of each controller
-        const controllerMethodKeys = Object.keys(ctrlInstance);
-        util.log('Methods found in controller', controllerMethodKeys, 3);
-
-        // For each method on each controller
-        Object.keys(controllerMethodKeys).forEach((controllerMethodKey) => {
-          const methodName = controllerMethodKeys[controllerMethodKey];
-          const method = ctrlInstance[methodName];
-
-          util.log('Looping Through Each Method within each Controller', method, 4);
-
-          // Pass the message to each method of each controller
-          ctrlResponses.push(method(message));
-        });
-      }
+    Object.keys(controllers).forEach((key) => {
+      // Instantiate the controller
+      const controllerInstance = new controllers[key](message);
+      util.log('Controller instance', controllerInstance, 5);
+      // Runs commands after constructor is called
+      controllerInstance.run();
     });
 
     // TODO: Improve help message
