@@ -4,42 +4,12 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-<<<<<<< HEAD
-=======
 const { generateCode } = require('../botUtils.js');
->>>>>>> c60258d73f18b7b4d49ace1bdec5bf84bcec63bc
 
 class VerifyController extends BaseController {
   constructor(message) {
     // Call BaseController constructor
     super(message);
-<<<<<<< HEAD
-    // Method to generate random numeric verification code
-    // Modified to fit style guide from this SO answer:
-    // https://stackoverflow.com/a/39774334
-    this.generateCode = (n) => {
-      // Workaround method for Math.pow() and ** operator
-      const pow = (base, exp) => {
-        let result = 1;
-        for (let i = 0; i < exp; i += 1) {
-          result *= base;
-        }
-        return result;
-      };
-      const add = 1;
-      let max = 12 - add;
-      let min = 0;
-      if (n > max) {
-        return this.generateCode(max) + this.generateCode(n - max);
-      }
-      max = pow(10, n + add);
-      min = max / 10;
-      const number = Math.floor(Math.random() * (max - (min + 1))) + min;
-      return ('' + number).substring(add);
-    };
-    this.ctrls = [
-      new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction),
-=======
 
     // Aliasing 'this' as controller to allow for binding in actions
     const controller = this;
@@ -53,7 +23,6 @@ class VerifyController extends BaseController {
         'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
         this.verifyAction.bind(controller),
       ),
->>>>>>> c60258d73f18b7b4d49ace1bdec5bf84bcec63bc
     ];
   }
 
@@ -65,17 +34,14 @@ class VerifyController extends BaseController {
     const timeoutInMiliseconds = 600000;
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
+
     // We can set `codeLength` to whatever length we want the verif code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
-<<<<<<< HEAD
-      const code = this.generateCode(codeLength);
-=======
       // code to equal value generated
       const code = generateCode(codeLength);
 
->>>>>>> c60258d73f18b7b4d49ace1bdec5bf84bcec63bc
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
       const collector = message.channel.createMessageCollector(
