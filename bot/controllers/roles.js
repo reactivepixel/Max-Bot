@@ -4,25 +4,73 @@ const util = require('apex-util');
 
 class RoleController extends BaseController {
   constructor(message) {
+    // Call BaseController constructor
     super(message);
-    this.ctrls = [
-      new Command('!roles', '!roles', 'List All Roles', 'List all Armada Roles', this.rolesAction, 'dm'),
-      new Command('!addRole', '!addRole <role_name>', 'Add Role', 'Add a single role to yourself. Role is case-sensitive.', this.addRoleAction),
-      new Command('!addRoles', '!addRoles <role_name>,<role_name>,<role_name>', 'Add Multiple Specific Roles', 'Add a single role to yourself. Role is case-sensitive.', this.addRolesAction),
-      new Command('!removeRole', '!removeRole <role_name>', 'Remove a single role', 'Remove a single game role from yourself. Role is case-sensitive.', this.removeRoleAction),
-      new Command('!addAllRoles', '!addAllRoles', 'Add All Roles', 'Add every game role to yourself.', this.addAllRolesAction),
-      new Command('!removeAllRoles', '!removeAllRoles', 'Remove All Roles', 'Remove every game role from yourself.', this.removeAllRolesAction),
+
+    // Aliasing 'this' as controller to allow for binding in actions
+    const controller = this;
+
+    // Array of all commands, see baseCommand.js for prototype
+    this.commands = [
+      new Command(
+        '!roles',
+        '!roles',
+        'List All Roles',
+        'List all available Armada roles.',
+        this.rolesAction.bind(controller),
+        'dm',
+      ),
+      new Command(
+        '!addRole',
+        '!addRole <role_name>',
+        'Add Role',
+        'Add a single role to yourself. Role is case-sensitive.',
+        this.addRoleAction.bind(controller),
+      ),
+      new Command(
+        '!addRoles',
+        '!addRoles <role_name>,[role_name]',
+        'Add Multiple Roles',
+        'Add multiple roles to yourself. Rolea are case-sensitive.',
+        this.addRolesAction.bind(controller),
+      ),
+      new Command(
+        '!removeRole',
+        '!removeRole <role_name>',
+        'Remove Role',
+        'Remove a single role from yourself. Role is case-sensitive.',
+        this.removeRoleAction.bind(controller),
+      ),
+      new Command(
+        '!addAllRoles',
+        '!addAllRoles',
+        'Add All Roles',
+        'Add every game role to yourself.',
+        this.addAllRolesAction.bind(controller),
+      ),
+      new Command(
+        '!removeAllRoles',
+        '!removeAllRoles',
+        'Remove All Roles',
+        'Remove every game role from yourself.',
+        this.removeAllRolesAction.bind(controller),
+      ),
     ];
-    this.disallowedRoles = [];
-    this.run();
+
+    // User roles commands cannot change
+    this.disallowedRoles = [
+      'admin', 'armada officers', 'armada officer',
+      'moderator', 'privateers', 'privateer',
+      'tester', 'crew', 'fleet officer', '@everyone',
+    ];
   }
 
-  rolesAction(message) {
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
+  // Lists all roles
+  rolesAction() {
+    const { message, disallowedRoles } = this;
     const roles = [];
-    util.log('help!', message);
     message.guild.roles.map((role) => {
-      if (!this.disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name.toLowerCase())) {
         return roles.push(role.name);
       }
       return role.name;
@@ -30,15 +78,16 @@ class RoleController extends BaseController {
     return 'List of all Armada Roles: \n\n' + roles.join('\n');
   }
 
-  addRoleAction(message, msg) {
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
-    const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+  // Adds a role to the user
+  addRoleAction() {
+    const { message, disallowedRoles } = this;
+    const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
-      util.log('No role matched', msg.parsed[1], 2);
-      return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-    } else if (this.disallowedRoles.includes(targetRole.name.toLowerCase())) {
+      util.log('No role matched', message.parsed[1], 2);
+      return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+    } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return 'You are not worthy of the role ' + msg.parsed[1] + '.';
+      return 'You are not worthy of the role ' + message.parsed[1] + '.';
     } else {
       util.log('Adding Role to user', targetRole.name, 2);
       message.member.addRole(targetRole).catch(util.log);
@@ -46,13 +95,14 @@ class RoleController extends BaseController {
     }
   }
 
-  addRolesAction(message, msg) {
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
-    const roles = msg.parsed[1].split(',');
+  // Adds multiple roles to the user
+  addRolesAction() {
+    const { message, disallowedRoles } = this;
+    const roles = message.parsed[1].split(',');
     util.log('Multiple Roles Parsing', roles, 4);
 
     roles.map((role) => {
-      if (!this.disallowedRoles.includes(role.toLowerCase())) {
+      if (!disallowedRoles.includes(role.toLowerCase())) {
         const targetRole = message.guild.roles.find('name', role);
         util.log('Asking API for Role', targetRole, 4);
 
@@ -67,14 +117,15 @@ class RoleController extends BaseController {
     return 'All set!';
   }
 
-  removeRoleAction(message, msg) {
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
-    const targetRole = message.guild.roles.find('name', msg.parsed[1]);
+  // Removes role from user
+  removeRoleAction() {
+    const { message, disallowedRoles } = this;
+    const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
-      util.log('No role matched', msg.parsed[1], 2);
-      return '"' + msg.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      util.log('No role matched', message.parsed[1], 2);
+      return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
     }
-    if (this.disallowedRoles.includes(targetRole.name.toLowerCase())) {
+    if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You have not the power or the will to control this power.';
     }
@@ -84,10 +135,11 @@ class RoleController extends BaseController {
     return targetRole.name + ' removed.';
   }
 
-  addAllRolesAction(message) {
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
+  // Adds all roles to user
+  addAllRolesAction() {
+    const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
-      if (!this.disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name.toLowerCase())) {
         return message.member.addRole(role).catch(util.log);
       }
       return role.name;
@@ -96,10 +148,11 @@ class RoleController extends BaseController {
     return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
   }
 
-  removeAllRolesAction(message) {
-    this.disallowedRoles = ['admin', 'armada officers', 'armada officer', 'moderator', 'privateers', 'privateer', 'tester', 'crew', 'fleet officer', '@everyone'];
+  // Removes all roles from user
+  removeAllRolesAction() {
+    const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
-      if (!this.disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name.toLowerCase())) {
         return message.member.removeRole(role).catch(util.log);
       }
       return role.name;

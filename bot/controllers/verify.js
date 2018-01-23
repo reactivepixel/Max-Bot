@@ -4,10 +4,16 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
+<<<<<<< HEAD
+=======
+const { generateCode } = require('../botUtils.js');
+>>>>>>> c60258d73f18b7b4d49ace1bdec5bf84bcec63bc
 
 class VerifyController extends BaseController {
   constructor(message) {
+    // Call BaseController constructor
     super(message);
+<<<<<<< HEAD
     // Method to generate random numeric verification code
     // Modified to fit style guide from this SO answer:
     // https://stackoverflow.com/a/39774334
@@ -33,21 +39,43 @@ class VerifyController extends BaseController {
     };
     this.ctrls = [
       new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify user\'s email address', this.verifyAction),
+=======
+
+    // Aliasing 'this' as controller to allow for binding in actions
+    const controller = this;
+
+    // Array of all commands, see baseCommand.js for prototype
+    this.commands = [
+      new Command(
+        '!verify',
+        '!verify <email_address>',
+        'Verify Email Address',
+        'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
+        this.verifyAction.bind(controller),
+      ),
+>>>>>>> c60258d73f18b7b4d49ace1bdec5bf84bcec63bc
     ];
-    this.run();
   }
 
-  verifyAction(message, msg) {
+  // Verifies Full Sail email addresses
+  verifyAction() {
+    const { message } = this;
     const targetVerifiedRoleName = 'Crew';
     const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
-    const email = msg.parsed[1].toLowerCase();
+    const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
     // We can set `codeLength` to whatever length we want the verif code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
+<<<<<<< HEAD
       const code = this.generateCode(codeLength);
+=======
+      // code to equal value generated
+      const code = generateCode(codeLength);
+
+>>>>>>> c60258d73f18b7b4d49ace1bdec5bf84bcec63bc
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
       const collector = message.channel.createMessageCollector(

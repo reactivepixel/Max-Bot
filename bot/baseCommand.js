@@ -1,12 +1,17 @@
 class BaseCommand {
-  constructor(cmd, example, title, desc, action, resType = 'reply', showWithHelp = true, allowInDM = false) {
-    this.cmd = cmd;
+  constructor(
+    command, example, title,
+    description, action, responseType = 'reply',
+    adminOnly = false, showWithHelp = true, allowInDM = false,
+  ) {
+    this.command = command;
     this.example = example;
     this.title = title;
-    this.desc = desc;
+    this.description = description;
     this.showWithHelp = showWithHelp;
     this.allowInDM = allowInDM;
-    this.resType = resType;
+    this.adminOnly = adminOnly;
+    this.responseType = responseType;
     this.action = action;
   }
 }

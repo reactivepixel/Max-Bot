@@ -1,57 +1,69 @@
 const util = require('apex-util');
+const { isAdmin } = require('./botUtils.js');
 
 class BaseController {
   constructor(message) {
-    this.message = message;
-    this.ctrls = [];
+    // Add middleware to saved message
+    this.message = BaseController.messageMiddleware(message);
+    this.commands = [];
   }
 
-  onSuccess(res, ctrl) {
-    if (res !== null) {
-      if (ctrl.resType === 'reply') {
-        return this.message.reply(res);
-      } else if (ctrl.resType === 'dm') {
-        return this.message.author.send(res);
+  // Add extra information to message object
+  static messageMiddleware(message) {
+    // Creates an empty object container
+    const messageContainer = {};
+    // Tokenizes the message by space characters, adds to container
+    messageContainer.parsed = message.content.split(' ');
+    // Adds message object to container
+    return Object.assign(message, messageContainer);
+  }
+
+  onSuccess(commandResponse, command) {
+    if (commandResponse !== null) {
+      // Determine how to respond to message
+      if (command.responseType === 'reply') {
+        return this.message.reply(commandResponse);
+      } else if (command.responseType === 'dm') {
+        return this.message.author.send(commandResponse);
       }
     }
-    // Fail Safe
+    // Fail safe
     return false;
   }
 
-  // Not sure why error method accepted 3 params in "Do Stuff".
-  onError() {
-    this.message.reply('I Broke... Beep...Boop...Beep');
+  onError(errorMessage = 'I Broke... Beep...Boop...Beep') {
+    return this.message.reply(errorMessage);
   }
 
-  messageMiddleware() {
-    const container = {};
-    container.parsed = this.message.content.split(' ');
-    const msg = Object.assign(this.message, container);
-    return msg;
-  }
-
+  // Execute the command's functionality
   run() {
-    this.ctrls.map((ctrl) => {
-      util.log('Running through controller', ctrl.cmd, 2);
+    // Loop through each command and map to key
+    util.log('Looping through controller commands', 0);
+    Object.keys(this.commands).map((key) => {
+      // If command matches message
+      if (this.message.parsed[0].toLowerCase() === this.commands[key].command.toLowerCase()) {
+        util.log('Matching command found', this.commands[key].command, 2);
 
-      const msg = this.messageMiddleware();
-      if (msg.parsed[0].toLowerCase() === ctrl.cmd.toLowerCase()) {
-        util.log('!!! Matched Ctrl to Cmd !!!', ctrl.cmd, 2);
-
-        // Ensure the communication is happening on a server
-        if (!ctrl.allowInDM) {
-          if (!this.message.guild) return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
+        // If user messages the bot a channel-only command
+        if (!this.commands[key].allowInDM && !this.message.guild) {
+          return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
         }
 
-        // Do Stuff
-        const res = ctrl.action(this.message, msg);
-        if (res) {
-          this.onSuccess(res, ctrl);
+        // If non-admin enters admin command
+        if (this.commands[key].adminOnly && !isAdmin(this.message.member)) {
+          return this.onError('You don\'t have permissions to run this command.');
+        }
+
+        // Execute command's action
+        const commandResponse = this.commands[key].action();
+        // Handle if command responds or breaks
+        if (commandResponse) {
+          this.onSuccess(commandResponse, this.commands[key]);
         } else {
           this.onError();
         }
       }
-      return ctrl;
+      return this.commands[key];
     });
   }
 }
