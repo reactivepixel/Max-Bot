@@ -24,15 +24,14 @@ class ChannelController extends BaseController {
         'reply',
         true,
       ),
-      // new Command(
-      //   '!status',
-      //   '!status [ready],[away],[gone]',
-      //   'Announce To All Channels Availability Status',
-      //   'Broadcast to all channels that you are ready, away, or gone from your machine.',
-      //   this.awayAction.bind(controller),
-      //   'reply',
-      //   true,
-      // ),
+      new Command(
+        '!announceStatus',
+        '!announceStatus <ready>,<away>,<gone>',
+        'Announce To All Channels Availability Status',
+        'Broadcast to all channels that you are ready, away, or gone from your machine.',
+        this.statusAction.bind(controller),
+        'reply',
+      ),
     ];
   }
 
@@ -76,36 +75,43 @@ class ChannelController extends BaseController {
     return 'Broadcast sent!';
   }
 
-  // statusAction() {
-  //   const { message } = this;
-  //   // Status list
-  //   const status = [{
-  //     ready: ' is here and ready. LETS GO',
-  //   }, {
-  //     away: ' is collecting thoughts. Not many, be back soon',
-  //   }, {
-  //     gone: ' has gone fishing. Or something. Will not be here though',
-  //   }];
-  //   // Collect available channels
-  //   const channels = [];
-  //   message.guild.channels.map(channel => channels.push(channel.name));
-  //   // const channels = message.parsed[1].split(',');
-  //
-  //   // Send status to all channels
-  //   channels.map((channel) => {
-  //     const sender = message.author.username;
-  //
-  //     // Determine status entered and send message
-  //     if (message === 'ready' || message === 'away' || message === 'gone') {
-  //       return channel.send(sender + status.message);
-  //     } else {
-  //       return message + ' is not a known status. Please choose "ready", "away", or "gone".';
-  //     }
-  //   });
-  //
-  //   // Confirm status message sent
-  //   return 'Status announcement sent to all channels!';
-  // }
+  statusAction() {
+    const { message } = this;
+    const userStatus = message.parsed[1];
+
+    // Available status list
+    const status = [{
+      type: 'ready',
+      message: ' is here and ready. LETS GO',
+    }, {
+      type: 'away',
+      message: ' is collecting thoughts. Not many, be back soon',
+    }, {
+      type: 'gone',
+      message: ' has gone fishing. Or something. Will not be here though',
+    }];
+
+    // Collect available channels
+    const channels = [];
+    message.guild.channels.map(channel => channels.push(channel.name));
+
+    // Send status to all collected channels
+    channels.map((channel) => {
+      const sender = message.author.username;
+
+      // Determine status entered and send announcement
+      status.map((availStatus) => {
+        if (userStatus !== availStatus.type) {
+          return userStatus + ' is not a known status. Please choose "ready", "away", or "gone".';
+        }
+
+        return channel.send(sender + availStatus.message);
+      });
+    });
+
+    // Confirm status message sent
+    return userStatus + ' status announcement sent to all channels!';
+  }
 }
 
 module.exports = ChannelController;
