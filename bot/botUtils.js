@@ -22,8 +22,8 @@ exports.generateCode = (n) => {
 // Checks if person is an admin user, use GuildMember object
 exports.isAdmin = (member) => {
   const adminRoles = [
-    'admin', 'armada officers', 'armada officer',
-    'moderator', 'tester', 'fleet officer',
+    'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
+    'Moderator', 'Tester',
   ];
   if (adminRoles.some(role => member.roles.find('name', role))) {
     return true;
