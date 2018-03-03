@@ -101,11 +101,11 @@ Removing a semi-colon from any line of Javascript will trigger the linter to aut
 ## Example of Usage
 
 Instead of console.log() require the tool.js file
-and call the .debug() method passing in three arguments
+and call the .log() method passing in three arguments
 (title, output, level)
 
-[code] to call a debug()
-[code] to activate debug_mode
+[code] to call a log()
+[code] to activate DEBUG_MODE
 
 ### title: String
 
