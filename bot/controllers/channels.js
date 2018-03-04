@@ -7,45 +7,39 @@ class ChannelController extends BaseController {
     super(message);
     const controller = this;
     this.commands = [
-      new Command(
-        '!channels',
-        '!channels',
-        'List All Channels',
-        'List all available Armada channels.',
-        this.channelsAction.bind(controller),
-        'dm',
-      ),
-      new Command(
-        '!announce',
-        '!announce <channel_name>,[channel_name] <message>',
-        'Announce To Channels',
-        'Broadcast to multiple channels. Channels are case-sensitive.',
-        this.announceAction.bind(controller),
-        'reply',
-        true,
-      ),
+      new Command('!channels', '!channels', 'List All Channels', 'List all available Armada channels.', this.channelsAction.bind(controller), 'dm'),
+      new Command('!announce', '!announce <channel_name>,[channel_name] <message>', 'Announce To Channels', 'Broadcast to multiple channels. Channels are case-sensitive.', this.announceAction.bind(controller), 'reply', true),
     ];
   }
 
   channelsAction() {
     const { message } = this;
     const channels = [];
-    message.guild.channels.map(channel => channels.push(channel.name));
+    message
+      .guild
+      .channels
+      .map(channel => channels.push(channel.name));
     return 'List of all Armada Channels: \n\n' + channels.join('\n');
   }
 
   announceAction() {
     const { message } = this;
-    const channels = message.parsed[1].split(',');
+    const channels = message
+      .parsed[1]
+      .split(',');
     util.log('Multiple Channels Parsing', channels, 4);
 
     channels.map((channel) => {
-      const targetChannel = message.guild.channels.find('name', channel);
+      const targetChannel = message
+        .guild
+        .channels
+        .find('name', channel);
       const sender = message.author.username;
       util.log('Asking API for Channel', targetChannel, 4);
 
       if (targetChannel === null) {
-        return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)';
+        return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They ar' +
+            'e case-sensitive)';
       }
 
       // Set parsed value to 2 for message.
