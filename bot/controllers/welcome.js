@@ -1,6 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const util = require('apex-util');
+// const util = require('apex-util');
 
 class WelcomeMessageController extends BaseController {
   constructor(message) {
@@ -26,8 +26,7 @@ class WelcomeMessageController extends BaseController {
   // Lists all roles
   rolesAction() {
     const { message } = this;
-    util.log('WELCOME CONTROLLER', message.guild, 0);
-    return 'Hello world';
+    return `Welcome to the server, ${message.author.username}. Enjoy your stay!`;
   }
 }
 
