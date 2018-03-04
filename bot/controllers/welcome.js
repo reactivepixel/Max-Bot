@@ -17,14 +17,14 @@ class WelcomeMessageController extends BaseController {
         '!welcome',
         'Welcome Message',
         'Send the welcome message again',
-        this.rolesAction.bind(controller),
+        this.welcomeAction.bind(controller),
         'dm',
       ),
     ];
   }
 
   // Lists all roles
-  rolesAction() {
+  welcomeAction() {
     const { message } = this;
     return `Welcome to the server, ${message.author.username}. Enjoy your stay!`;
   }
