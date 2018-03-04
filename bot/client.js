@@ -36,6 +36,7 @@ client.on('message', (message) => {
       if (message.content.toLowerCase() === '!help') {
         Object.keys(controllerInstance.commands).forEach((commandKey) => {
           const commandInstance = controllerInstance.commands[commandKey];
+          util.log('COMMANDS', commandInstance, 0);
           // Check if command should be shown in help menu
           if (commandInstance.showWithHelp) {
             if (commandInstance.adminOnly && isAdmin(message.member)) {
