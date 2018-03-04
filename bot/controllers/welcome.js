@@ -23,7 +23,7 @@ class WelcomeMessageController extends BaseController {
     ];
   }
 
-  // Lists all roles
+  // Send the welcome message with their username included
   welcomeAction() {
     const { message } = this;
     return `Welcome to the server, ${message.author.username}. Enjoy your stay!`;
