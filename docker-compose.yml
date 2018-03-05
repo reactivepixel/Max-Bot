@@ -23,4 +23,4 @@ services:
     ports:
       - "$DB_PORT_HOST:$DB_PORT_GUEST"
 volumes:
-  my-datavolume:
+  my-datavolume: {}

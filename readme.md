@@ -26,6 +26,7 @@ MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
 MYSQL_PASS=xxx
 MYSQL_DATABASE=max
+MYSQL_HOST=mysql
 DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
 NODE_ENV=development
 DB_PORT_HOST=3306
