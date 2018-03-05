@@ -57,4 +57,9 @@ client.on('message', (message) => {
   }
 });
 
+// Send message for a new user
+client.on('guildMemberAdd', (member) => {
+  member.sendMessage(`Welcome to the server ${member.user.username}!. Enjoy your stay!`);
+});
+
 client.login(process.env.TOKEN);
