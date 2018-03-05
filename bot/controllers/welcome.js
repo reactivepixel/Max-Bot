@@ -23,8 +23,9 @@ class WelcomeController extends BaseController {
   }
 
   welcomeAction() {
+    // This will dm the user with the welcome message recieved when they join the server.
     const { message } = this;
-    return `${message.author.username}, test!`;
+    return `${message.author.username}, Welcome to the Full Sail Armada! Enjoy your stay! and use !help to see list of commands!`;
   }
 }
 
