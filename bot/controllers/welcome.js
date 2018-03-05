@@ -20,11 +20,12 @@ class WelcomeController extends BaseController {
         'reply',
       ),
     ];
-}
+  }
 
-welcomeAction() {
-  const { message } = this;
-  return `${member.user.username}, test!`;
+  welcomeAction() {
+    const { message } = this;
+    return `${member.user.username}, test!`;
+  }
 }
 
 module.exports = WelcomeController;
