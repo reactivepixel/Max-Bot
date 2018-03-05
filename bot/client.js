@@ -57,4 +57,10 @@ client.on('message', (message) => {
   }
 });
 
+// This will send the welcome message for new users who join.
+client.on('guildMemberAdd', (member) => {
+  member.sendMessage(`${member.user.username}, Welcome to the Full Sail Armada! Enjoy your stay! and use !help to see list of commands!`);
+});
+
+
 client.login(process.env.TOKEN);
