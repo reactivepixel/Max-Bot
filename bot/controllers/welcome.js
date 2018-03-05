@@ -17,7 +17,7 @@ class WelcomeController extends BaseController {
         'Welcome Message',
         'Replay welcome message recieved when you join the server.',
         this.welcomeAction.bind(controller),
-        'reply',
+        'dm',
       ),
     ];
   }
