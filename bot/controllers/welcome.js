@@ -24,7 +24,7 @@ class WelcomeController extends BaseController {
 
   welcomeAction() {
     const { message } = this;
-    return `${member.user.username}, test!`;
+    return `${message.author.username}, test!`;
   }
 }
 
