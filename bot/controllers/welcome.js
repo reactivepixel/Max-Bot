@@ -16,9 +16,15 @@ class WelcomeController extends BaseController {
         '!welcome',
         'Welcome Message',
         'Replay welcome message recieved when you join the server.',
-        this.removeAllRolesAction.bind(controller),
+        this.welcomeAction.bind(controller),
+        'reply',
       ),
     ];
+}
+
+welcomeAction() {
+  const { message } = this;
+  return `${member.user.username}, test!`;
 }
 
 module.exports = WelcomeController;
