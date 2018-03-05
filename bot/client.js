@@ -57,4 +57,9 @@ client.on('message', (message) => {
   }
 });
 
+client.on('guildMemberAdd', (member) => {
+  // this will send a message to the user when they enter the discord sevrer
+  member.sendMessage(`Hey ${member.user.username} welcome to the server.`);
+});
+
 client.login(process.env.TOKEN);
