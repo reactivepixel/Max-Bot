@@ -12,8 +12,7 @@ class newUserController extends BaseController {
 
   msgNewUserWelcome() {
     const { message } = this;
-    if (!message) return '(this is for eslint)';// this is to stop esling to breaking due to (class-methods-use-this)
-    return 'Welcome to the channel';
+    return `${message.user.username}, Welcome to the channel`;
   }
 }
 module.exports = newUserController;
