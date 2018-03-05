@@ -23,9 +23,10 @@ class WelcomeController extends BaseController {
     ];
   }
 
+  // this message will be sent to the user's dm with their username
   welcomeAction() {
     const { message } = this;
-    return `Welcome to the server, ${message.server}`;
+    return `Welcome to the server, ${message.author.username}`;
   }
 }
 
