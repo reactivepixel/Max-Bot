@@ -12,7 +12,7 @@ class newUserController extends BaseController {
 
   msgNewUserWelcome() {
     const { message } = this;
-    return `${message.user.username}, Welcome to the channel`;
+    return `${message.author.username}, Welcome to the channel`;
   }
 }
 module.exports = newUserController;
