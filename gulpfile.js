@@ -23,7 +23,7 @@ gulp.task('pm2', () => {
       script: './bot/client.js',
       env: {
         TOKEN: process.env.DISCORD_BOT_TOKEN,
-        DEBUG_MODE: '3',
+        DEBUG_MODE: process.env.DEBUG_MODE,
         EMAIL_USERNAME: process.env.EMAIL_USERNAME,
         EMAIL_PASS: process.env.EMAIL_PASS,
         NODE_ENV: process.env.NODE_ENV,

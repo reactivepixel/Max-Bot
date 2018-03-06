@@ -22,18 +22,22 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 Create an ```.env``` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
 ```
+NODE_ENV=development
+DEBUG_MODE=3
+
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
 MYSQL_PASS=xxx
 MYSQL_DATABASE=max
-DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
-NODE_ENV=development
+MYSQL_HOST=mysql
 DB_PORT_HOST=3306
 DB_PORT_GUEST=3306
+
+DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
+
 BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
-BOT_PORT_HOST=80
-BOT_PORT_GUEST=3000
+
 EMAIL_USERNAME=xxx
 EMAIL_PASS=xxx
 ```
