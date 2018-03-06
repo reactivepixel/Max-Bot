@@ -17,18 +17,12 @@ gulp.task('db', () => {
 
 gulp.task('pm2', () => {
   require('dotenv').config();
-  const config = {
-    apps: [{
-      name: 'max',
-      script: './bot/client.js',
-      env: {
-        TOKEN: process.env.DISCORD_BOT_TOKEN,
-        DEBUG_MODE: '3',
-        EMAIL_USERNAME: process.env.EMAIL_USERNAME,
-        EMAIL_PASS: process.env.EMAIL_PASS,
-        NODE_ENV: process.env.NODE_ENV,
-      },
-    }],
-  };
+  const config = { apps: [{ name: 'max',
+    script: './bot/client.js',
+    env: { TOKEN: process.env.DISCORD_BOT_TOKEN,
+      DEBUG_MODE: process.env.DEBUG_MODE,
+      EMAIL_USERNAME: process.env.EMAIL_USERNAME,
+      EMAIL_PASS: process.env.EMAIL_PASS,
+      NODE_ENV: process.env.NODE_ENV } }] };
   fs.writeFileSync('./max.config.js', 'module.exports = ' + JSON.stringify(config));
 });
