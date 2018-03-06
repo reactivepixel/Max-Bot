@@ -8,7 +8,7 @@ MAINTAINER Chapman@Apextion.com
 WORKDIR /var/app
 COPY package.json .
 
-RUN npm install
+RUN npm install --silent
 
 # Global Installs
 RUN npm install -g pm2 sequelize-cli gulp-cli
