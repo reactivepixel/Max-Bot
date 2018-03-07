@@ -1,31 +1,24 @@
 
 
 module.exports = {
-  up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Members', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Members', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       discorduser: {
-        type: Sequelize.STRING,
-      },
-      uuid: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
-      points: {
-        type: Sequelize.INTEGER,
-      },
-      messagesCount: {
-        type: Sequelize.INTEGER,
+      uuid: {
+        type: Sequelize.STRING
       },
       verified: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
