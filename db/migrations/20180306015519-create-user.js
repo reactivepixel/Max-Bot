@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) =>
-    queryInterface.createTable('Member', {
+    queryInterface.createTable('Members', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,6 +10,9 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       discorduser: {
+        type: Sequelize.STRING,
+      },
+      uuid: {
         type: Sequelize.STRING,
       },
       email: {
@@ -35,5 +38,5 @@ module.exports = {
         defaultValue: Sequelize.fn('now'),
       },
     }),
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Member'),
+  down: (queryInterface, Sequelize) => queryInterface.dropTable('Members'),
 };
