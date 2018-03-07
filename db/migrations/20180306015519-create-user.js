@@ -21,7 +21,7 @@ module.exports = {
       points: {
         type: Sequelize.INTEGER,
       },
-      messages: {
+      messagesCount: {
         type: Sequelize.INTEGER,
       },
       verified: {
