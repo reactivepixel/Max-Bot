@@ -11,6 +11,7 @@ class topPointsController extends BaseController {
         '!topUsers',
         '!topUsers <Limit_Wanted>',
         'Return Top Number of Users',
+        true,
         'Sends a message with the users with the most points earned.',
         this.topPointsAction.bind(controller),
         'dm',
