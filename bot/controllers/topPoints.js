@@ -19,19 +19,19 @@ class topPointsController extends BaseController {
     ];
   }
 
-  async topPointsAction() {
+  topPointsAction() {
     const { message } = this;
     util.log('Limit Wanted', message.parsed[1], 4);
     if (!isNaN(message.parsed[1])) {
-      const users = await models.Member.findAll(
+      const users = models.Member.findAll(
         {
           where: { verified: 1 },
           limit: parseInt(message.parsed[1], 10),
           order: [['points', 'DESC']],
         },
       );
-      util.log('TRYING', users[0].email, 4);
-      return users || 'nope';
+      util.log('TRYING', users, 4);
+      return 'nope';
     }
     return 'Is that a number? You might want to try again.';
   }
