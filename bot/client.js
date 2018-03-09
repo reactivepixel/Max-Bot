@@ -18,27 +18,19 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', async (message) => {
-  console.log('USERS', message.author.id);
   const memberData = await models.Member.findAll(
     {
       attributes: ['messagesCount', 'points'],
-      where: {
-        discordUser: message.author.id,
-      },
+      where: { discordUser: message.author.id },
     },
   );
-  await console.log(memberData[0].dataValues);
+  util.log('Results from database call', memberData[0].dataValues, 4);
   await models.Member.update(
-    {
-      messagesCount: memberData[0].dataValues.messagesCount + 1,
-      points: Math.floor(memberData[0].dataValues.messagesCount / 5),
-    },
-    {
-      where: {
-        discordUser: message.author.id,
-      },
-    },
-  );
+    { messagesCount: 3424242 },
+    { where: { discordUser: message.author.id } },
+  ).then((updatedRows) => {
+    util.log('Updated result', updatedRows, 4);
+  });
 
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
