@@ -1,7 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const models = require('../../db/models');
-const util = require('apex-util');
 
 class topPointsController extends BaseController {
   constructor(message) {
@@ -21,19 +20,25 @@ class topPointsController extends BaseController {
 
   topPointsAction() {
     const { message } = this;
-    util.log('Limit Wanted', message.parsed[1], 4);
+    // Check to see if the user added a number
     if (!isNaN(message.parsed[1])) {
-      const users = models.Member.findAll(
+      // Grab all the entries with the limit and sort descending
+      models.Member.findAll(
         {
           where: { verified: 1 },
           limit: parseInt(message.parsed[1], 10),
           order: [['points', 'DESC']],
         },
-      );
-      util.log('TRYING', users, 4);
-      return 'nope';
-    }
-    return 'Is that a number? You might want to try again.';
+      ).then((results) => {
+        // Map out the data and set it equal to a variable
+        const fullMessage = results.map(element => `User: ${element.dataValues.email} Points: ${element.dataValues.points}`);
+        // Send the message. Not using return because it breaks.
+        message.author.send(fullMessage);
+      });
+    } else return 'Is that a number? You might want to try again.';
+    // Return a header because it'll break otherwise
+    return 'Top Users';
   }
 }
+
 module.exports = topPointsController;
