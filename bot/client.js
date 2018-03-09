@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
+const models = require('../db/models');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -16,7 +17,29 @@ client.on('ready', () => {
 });
 
 // Listen for messages
-client.on('message', (message) => {
+client.on('message', async (message) => {
+  console.log('USERS', message.author.id);
+  const memberData = await models.Member.findAll(
+    {
+      attributes: ['messagesCount', 'points'],
+      where: {
+        discordUser: message.author.id,
+      },
+    },
+  );
+  await console.log(memberData[0].dataValues);
+  await models.Member.update(
+    {
+      messagesCount: memberData[0].dataValues.messagesCount + 1,
+      points: Math.floor(memberData[0].dataValues.messagesCount / 5),
+    },
+    {
+      where: {
+        discordUser: message.author.id,
+      },
+    },
+  );
+
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
@@ -49,6 +72,7 @@ client.on('message', (message) => {
         });
       }
     });
+
 
     // If help command called, display string
     if (message.content.toLowerCase() === '!help') {
