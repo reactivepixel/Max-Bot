@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
+const models = require('../db/models');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -10,11 +11,32 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
-// const numberOfMessagesForBonus = 1000;
-const awardBonusPoints = (user) => {
+
+const awardBonusPoints = async (user) => {
+  const numberOfMessagesForBonus = 1000;
   // Get User Message Count
+  const memberData = await models.Member.findAll(
+    {
+      attributes: ['messagesCount', 'points'],
+      where: { discordUser: user },
+    },
+  );
+  let { messagesCount } = memberData[0].dataValues;
+  let { points } = memberData[0].dataValues;
+  util.log('Results from database call', memberData[0].dataValues, 4);
   // Check if its greater or equal to numberOfMessagesForBonus
-  util.log('User: ', user, 0);
+  if (messagesCount >= numberOfMessagesForBonus) {
+    points += 5;
+    messagesCount = 0;
+  }
+  // Update member information
+  // await models.Member.update(
+  //   { messagesCount: 3424242 },
+  //   { where: { discordUser: user } },
+  // ).then((updatedRows) => {
+  //   util.log('Updated result', updatedRows, 4);
+  // });
+  // util.log('User: ', user, 0);
 };
 
 // Alert when ready
@@ -24,7 +46,7 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', (message) => {
-  awardBonusPoints(message.author.username);
+  awardBonusPoints(message.author.id);
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
