@@ -10,6 +10,13 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
+// const numberOfMessagesForBonus = 1000;
+const awardBonusPoints = (user) => {
+  // Get User Message Count
+  // Check if its greater or equal to numberOfMessagesForBonus
+  util.log('User: ', user, 0);
+};
+
 // Alert when ready
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
@@ -17,6 +24,7 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', (message) => {
+  awardBonusPoints(message.author.username);
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
