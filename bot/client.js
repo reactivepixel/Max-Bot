@@ -11,14 +11,15 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
-
+// Award bonus points
 const awardBonusPoints = async (user) => {
   const numberOfMessagesForBonus = 1000;
+  const amountOfBonusPoints = 100;
   // Get User Message Count
   const memberData = await models.Member.findAll(
     {
       attributes: ['messagesCount', 'points'],
-      where: { discordUser: user },
+      where: { discordUser: user.author.id },
     },
   );
   let { messagesCount } = memberData[0].dataValues;
@@ -26,17 +27,14 @@ const awardBonusPoints = async (user) => {
   util.log('Results from database call', memberData[0].dataValues, 4);
   // Check if its greater or equal to numberOfMessagesForBonus
   if (messagesCount >= numberOfMessagesForBonus) {
-    points += 5;
+    points += amountOfBonusPoints;
     messagesCount = 0;
+    // Update member information
+    await models.Member.update(
+      { messagesCount, points },
+      { where: { discordUser: user.author.id } },
+    );
   }
-  // Update member information
-  // const updateMemberData = await models.Member.update(
-  //   { messagesCount: 3424242 },
-  //   { where: { discordUser: user } },
-  // );
-  // util.log('Updated result', updateMemberData, 4);
-
-  // util.log('User: ', user, 0);
 };
 
 // Alert when ready
@@ -46,7 +44,7 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', (message) => {
-  awardBonusPoints(message.author.id);
+  awardBonusPoints(message);
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
