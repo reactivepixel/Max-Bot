@@ -15,23 +15,34 @@ const controllers = require('./controllers')();
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
-
-// Listen for messages
-client.on('message', async (message) => {
-  const memberData = await models.Member.findAll(
+// Function for the select the points and messagesCount from the database
+const getPointsAndMessageCount = message =>
+  models.Member.findAll(
     {
       attributes: ['messagesCount', 'points'],
       where: { discordUser: message.author.id },
     },
   );
+
+const awardMessageSendPoints = async (message) => {
+  // Call the function to get the data
+  const memberData = await getPointsAndMessageCount(message);
+  // Deconstruct the variable for easy reading
+  const { messagesCount } = memberData[0].dataValues;
   util.log('Results from database call', memberData[0].dataValues, 4);
   await models.Member.update(
-    { messagesCount: 3424242 },
+    {
+      messagesCount: messagesCount + 1,
+      points: Math.floor((messagesCount + 1) / 5),
+    },
     { where: { discordUser: message.author.id } },
   ).then((updatedRows) => {
     util.log('Updated result', updatedRows, 4);
   });
+};
 
+// Listen for messages
+client.on('message', (message) => {
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
@@ -70,6 +81,8 @@ client.on('message', async (message) => {
     if (message.content.toLowerCase() === '!help') {
       message.reply(helpString);
     }
+  } else {
+    awardMessageSendPoints(message);
   }
 });
 
