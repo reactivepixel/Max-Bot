@@ -30,12 +30,12 @@ const awardBonusPoints = async (user) => {
     messagesCount = 0;
   }
   // Update member information
-  // await models.Member.update(
+  // const updateMemberData = await models.Member.update(
   //   { messagesCount: 3424242 },
   //   { where: { discordUser: user } },
-  // ).then((updatedRows) => {
-  //   util.log('Updated result', updatedRows, 4);
-  // });
+  // );
+  // util.log('Updated result', updateMemberData, 4);
+
   // util.log('User: ', user, 0);
 };
 
