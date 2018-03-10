@@ -22,8 +22,7 @@ const awardBonusPoints = async (user) => {
       where: { discordUser: user.author.id },
     },
   );
-  let { messagesCount } = memberData[0].dataValues;
-  let { points } = memberData[0].dataValues;
+  let { messagesCount, points } = memberData[0].dataValues;
   util.log('Results from database call', memberData[0].dataValues, 4);
   // Check if its greater or equal to numberOfMessagesForBonus
   if (messagesCount >= numberOfMessagesForBonus) {
