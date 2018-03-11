@@ -19,29 +19,31 @@ client.on('ready', () => {
 const getPointsAndMessageCount = message =>
   models.Member.findAll(
     {
-      attributes: ['messagesCount', 'points'],
+      attributes: ['messagesCount', 'points', 'verified'],
       where: { discordUser: message.author.id },
     },
   );
 // All the logic to determine if they are awarded points
 const awardMessageSendPoints = async (message) => {
   const { content, channel } = message;
-  if (channel.type !== 'dm' && content.length >= 10) {
+  if (channel.type !== 'dm' && content.length >= 5) {
     // Call the function to get the data
     const memberData = await getPointsAndMessageCount(message);
     // Deconstruct the variable for easy reading
-    const { messagesCount } = memberData[0].dataValues;
+    const { messagesCount, verified } = memberData[0].dataValues;
     util.log('Results from database call', memberData[0].dataValues, 4);
-    // Update the messagesCount and points for the user
-    await models.Member.update(
-      {
-        messagesCount: messagesCount + 1,
-        points: Math.floor((messagesCount + 1) / 5),
-      },
-      { where: { discordUser: message.author.id } },
-    ).then((updatedRows) => {
-      util.log('Updated result', updatedRows, 4);
-    });
+    // Update the messagesCount and points for the user if they are verified
+    if (verified) {
+      await models.Member.update(
+        {
+          messagesCount: messagesCount + 1,
+          points: Math.floor((messagesCount + 1) / 5),
+        },
+        { where: { discordUser: message.author.id } },
+      ).then((updatedRows) => {
+        util.log('Updated result', updatedRows, 4);
+      });
+    }
   }
 };
 
