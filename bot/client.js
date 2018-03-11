@@ -23,22 +23,26 @@ const getPointsAndMessageCount = message =>
       where: { discordUser: message.author.id },
     },
   );
-
+// All the logic to determine if they are awarded points
 const awardMessageSendPoints = async (message) => {
-  // Call the function to get the data
-  const memberData = await getPointsAndMessageCount(message);
-  // Deconstruct the variable for easy reading
-  const { messagesCount } = memberData[0].dataValues;
-  util.log('Results from database call', memberData[0].dataValues, 4);
-  await models.Member.update(
-    {
-      messagesCount: messagesCount + 1,
-      points: Math.floor((messagesCount + 1) / 5),
-    },
-    { where: { discordUser: message.author.id } },
-  ).then((updatedRows) => {
-    util.log('Updated result', updatedRows, 4);
-  });
+  const { content, channel } = message;
+  if (channel.type !== 'dm' && content.length >= 10) {
+    // Call the function to get the data
+    const memberData = await getPointsAndMessageCount(message);
+    // Deconstruct the variable for easy reading
+    const { messagesCount } = memberData[0].dataValues;
+    util.log('Results from database call', memberData[0].dataValues, 4);
+    // Update the messagesCount and points for the user
+    await models.Member.update(
+      {
+        messagesCount: messagesCount + 1,
+        points: Math.floor((messagesCount + 1) / 5),
+      },
+      { where: { discordUser: message.author.id } },
+    ).then((updatedRows) => {
+      util.log('Updated result', updatedRows, 4);
+    });
+  }
 };
 
 // Listen for messages
@@ -82,13 +86,13 @@ client.on('message', (message) => {
       message.reply(helpString);
     }
   } else {
+    // Award points for messages not related to commands
     awardMessageSendPoints(message);
   }
 });
 
 client.on('guildMemberAdd', (member) => {
   member.sendMessage('Welcome to the channel!');
-  //
 });
 
 // controllers.newUserController();
