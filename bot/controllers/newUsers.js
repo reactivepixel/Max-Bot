@@ -6,7 +6,14 @@ class newUserController extends BaseController {
     super(message);
     const controller = this;
     this.commands = [
-      new Command('!welcome', '!welcome', 'Welcome Message', 'Sends a new user of the channel the welcome message', this.msgNewUserWelcome.bind(controller), 'dm'),
+      new Command(
+        '!welcome',
+        '!welcome',
+        'Welcome Message',
+        'Sends a new user of the channel the welcome message',
+        this.msgNewUserWelcome.bind(controller),
+        'dm',
+      ),
     ];
   }
 
