@@ -13,7 +13,6 @@ const controllers = require('./controllers')();
 
 // Award bonus points
 const awardBonusPoints = async (user) => {
-  const numberOfMessagesForBonus = 1000;
   const amountOfBonusPoints = 100;
   // Get User Message Count
   const memberData = await models.Member.findAll(
@@ -22,15 +21,15 @@ const awardBonusPoints = async (user) => {
       where: { discordUser: user.author.id },
     },
   );
-  let { messagesCount, points } = memberData[0].dataValues;
+  const messagesCountTemp = memberData[0].dataValues.messagesCount.toString().slice(-3);
+  let { points } = memberData[0].dataValues;
   util.log('Results from database call', memberData[0].dataValues, 4);
   // Check if its greater or equal to numberOfMessagesForBonus
-  if (messagesCount >= numberOfMessagesForBonus) {
+  if (messagesCountTemp === '000') {
     points += amountOfBonusPoints;
-    messagesCount = 0;
     // Update member information
     await models.Member.update(
-      { messagesCount, points },
+      { points },
       { where: { discordUser: user.author.id } },
     );
   }
