@@ -57,4 +57,9 @@ client.on('message', (message) => {
   }
 });
 
+client.on('presenceUpdate', (oldMember, newMember) => {
+  // User: online to offline
+  console.log(`${oldMember.user.username}: ${oldMember.presence.status} to ${newMember.presence.status}`);
+});
+
 client.login(process.env.TOKEN);
