@@ -24,7 +24,8 @@ class StatusController extends BaseController {
 
   statusAction() {
     const { message } = this;
-    return `${message.author.username}, test`;
+    // return `${message.author.username}, test`;
+    return `${message.author.username}: ${message.author.presence.status}`;
   }
 }
 
