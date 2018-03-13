@@ -57,10 +57,5 @@ client.on('message', (message) => {
   }
 });
 
-client.on('guildMemberAdd', (member) => {
-  member.sendMessage('Welcome to the channel!');
-  //
-});
-
 // controllers.newUserController();
 client.login(process.env.TOKEN);
