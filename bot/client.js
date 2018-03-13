@@ -56,6 +56,4 @@ client.on('message', (message) => {
     }
   }
 });
-
-// controllers.newUserController();
 client.login(process.env.TOKEN);
