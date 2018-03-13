@@ -22,16 +22,22 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 Create an `.env` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
 ```
+NODE_ENV=development
+DEBUG_MODE=3
+
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
 MYSQL_PASS=xxx
 MYSQL_DATABASE=max
-DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
-NODE_ENV=development
+MYSQL_HOST=mysql
 DB_PORT_HOST=3306
 DB_PORT_GUEST=3306
+
+DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
+
 BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
+
 EMAIL_USERNAME=xxx
 EMAIL_PASS=xxx
 ```
@@ -49,7 +55,7 @@ As an authorized user of the bot you will need to add it to a server.
 1.  Go to the Discord developer pages (login if you haven't).
 2.  Go to the application with the bot you want to add to your channel.
 3.  Copy the Client/Application ID.
-4.  Go to https://discordapp.com/aboutoauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
+4.  Go to https://discordapp.com/oauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
 5.  Select server and click authorize.
 
 > [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
