@@ -1,5 +1,3 @@
-
-
 module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.addColumn('Members', 'points', {
