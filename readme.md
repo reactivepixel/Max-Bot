@@ -1,4 +1,5 @@
 # Max Bot
+
 ## The Official Bot of the Full Sail Armada
 
 Interested in learning how to use Max? See the [Usage documentation here](usage.md).
@@ -6,8 +7,8 @@ Interested in learning how to use Max? See the [Usage documentation here](usage.
 # Installation
 
 ### Prerequisites
-* [Git](https://git-scm.com/downloads
-)
+
+* [Git](https://git-scm.com/downloads)
 * [Docker (Stable)](https://docs.docker.com/docker-for-mac/install/)
 
 ### Clone the Codebase.
@@ -18,8 +19,7 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 
 ### ENV Vars
 
-
-Create an ```.env``` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
+Create an `.env` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
 ```
 NODE_ENV=development
@@ -42,36 +42,31 @@ EMAIL_USERNAME=xxx
 EMAIL_PASS=xxx
 ```
 
-> Update ```DiscordBotToken``` with the token you receive from the next step.
-
-
-
+> Update `DiscordBotToken` with the token you receive from the next step.
 
 ### Bot Token
 
 Obtain a [Discord App Bot Token](https://discordapp.com/developers/applications/me) from your registered app (or register a new one) to proceed or contact a Release Manager for Max's Dev Bot token.
 
-Replace the ```{DiscordBotToken}``` within the ```max.config.js``` file with the token provided to you.
-
 ### Adding the Bot to a Server
 
 As an authorized user of the bot you will need to add it to a server.
 
-1. Go to the Discord developer pages (login if you haven't).
-1. Go to the application with the bot you want to add to your channel.
-1. Copy the Client/Application ID.
-1. Go to https://discordapp.com/aboutoauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
-1. Select server and click authorize.
+1.  Go to the Discord developer pages (login if you haven't).
+2.  Go to the application with the bot you want to add to your channel.
+3.  Copy the Client/Application ID.
+4.  Go to https://discordapp.com/oauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
+5.  Select server and click authorize.
 
 > [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
 
 ### Configure Email Functionality
+
 Max uses [Nodemailer](https://nodemailer.com/about/) to send verification emails to users joining the Armada server. to work proper locally please follow these steps to create a new gmail account to locally test with:
 
-1. Create a new gmail.com account
-2. Once logged in with this account enable [less secure application access](https://myaccount.google.com/u/1/lesssecureapps?pageId=none&pli=1).
-3. fill in the ```EMAIL_USERNAME``` & ```EMAIL_PASS``` values on the ```.env``` file with this new gmail account's info.
-
+1.  Create a new gmail.com account
+2.  Once logged in with this account enable [less secure application access](https://myaccount.google.com/u/1/lesssecureapps?pageId=none&pli=1).
+3.  fill in the `EMAIL_USERNAME` & `EMAIL_PASS` values on the `.env` file with this new gmail account's info.
 
 # Running the Bot
 
@@ -81,13 +76,11 @@ To run the bot locally ensure that you have followed the installation instructio
 
 Use docker-compose to start the container with the bot client.
 
-```
-docker-compose up
-```
+`docker-compose up --build` or `docker-compose up`
 
-If all went well, and your **DEBUG_MODE** is set properly you will see a logged message of ```Bot Online and Ready!:```
+If all went well, and your **DEBUG_MODE** is set properly you will see a logged message of `Bot Online and Ready!:`
 
-Hop onto your discord server and find a room with the bot and run the command ```!help``` to see a display of optional commands.
+Hop onto your discord server and find a room with the bot and run the command `!help` to see a display of optional commands.
 
 # Style Guide
 
@@ -105,7 +98,6 @@ Install the linter-eslint package for Atom.
 apm install linter-eslint
 ```
 
-
 ## Confirm Linting Works
 
 Removing a semi-colon from any line of Javascript will trigger the linter to automatically flag the edited line.
@@ -115,11 +107,11 @@ Removing a semi-colon from any line of Javascript will trigger the linter to aut
 ## Example of Usage
 
 Instead of console.log() require the tool.js file
-and call the .debug() method passing in three arguments
+and call the .log() method passing in three arguments
 (title, output, level)
 
-[code] to call a debug()
-[code] to activate debug_mode
+[code] to call a log()
+[code] to activate DEBUG_MODE
 
 ### title: String
 
@@ -138,22 +130,23 @@ of this particular output should be. Reference the **Debug Level Chart**
 
 ## Debug Level Chart
 
-0. Production Environment Level Output
-1. Staging Environment Level Output
-2. General Debug Information for Development
-3. Very Detailed and in-depth Output.
-4. Highly Fine Grained Detailed and in-depth Output.
+set .env to DEBUG_MODE=
 
+* 0.  Production Environment Level Output
+* 1.  Staging Environment Level Output
+* 2.  General Debug Information for Development
+* 3.  Very Detailed and in-depth Output.
+* 4.  Highly Fine Grained Detailed and in-depth Output.
 
 # Modules & integrations
 
 ## Database
+
 ### How to connect using Sequel Pro
 
 You can find more information about the config file `db/config/config.json`
 
 ![](https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png)
-
 
 # Container Information
 
