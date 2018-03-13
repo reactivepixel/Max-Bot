@@ -22,10 +22,26 @@ class StatusController extends BaseController {
     ];
   }
 
+  // statusAction() {
+  //   const { message } = this;
+  //   // return `${message.author.username}, test`;
+  //   return `${message.author.username}: ${message.author.presence.game.name}`;
+  // }
+
   statusAction() {
     const { message } = this;
-    // return `${message.author.username}, test`;
-    return `${message.author.username}: ${message.author.presence.game.name}`;
+    const activityName = message.author.presence.game.name;
+    if (activityName === null) {
+      console.log('User is not active');
+      return 'Nothing';
+    } else {
+      // type [0, 1, 2]
+      // 0    Game         Playing {name}        "Playing Rocket League"
+      // 1    Streaming    Streaming {name}      "Streaming Rocket League"
+      // 2    Listening    Listening to {name}   "Listening to Spotify"
+      console.log(message.author.username + ' name -> ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
+      return `Memeber -> ${message.author.username} is using ${message.author.presence.game.name}`;
+    }
   }
 }
 
