@@ -11,7 +11,7 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
-// Award bonus points
+// Award bonus points when user reaches every 1000 messages
 const awardBonusPoints = async (user) => {
   const amountOfBonusPoints = 100;
   // Get User Message Count
