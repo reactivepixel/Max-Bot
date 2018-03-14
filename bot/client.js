@@ -14,7 +14,7 @@ const controllers = require('./controllers')();
 // Function to add points for chatting
 const awardPointsforChatting = async (message) => {
   const { content, channel, author } = message;
-  if (content.type !== 'dm' && content.length >= 5) {
+  if (channel.type !== 'dm' && content.length >= 5) {
     // SQL select statement
     const memberData = await Member.findAll({
       attributes: ['messagesCount', 'points', 'verified'],
