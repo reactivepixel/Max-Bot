@@ -20,7 +20,18 @@ const awardPointsforChatting = async (message) => {
       attributes: ['messagesCount', 'points', 'verified'],
       where: { discordUser: author.id },
     });
-    await util.log('Member data from SQL call', memberData[0].dataValues, 4);
+    util.log('Member data from SQL call', memberData[0].dataValues, 4);
+    let { messagesCount, points } = memberData[0].dataValues;
+    const { verified } = memberData[0].dataValues;
+    messagesCount += 1;
+    points += 1;
+
+    await Member.update(
+      { messagesCount, points },
+      { where: { discordUser: author.id } },
+    ).then((updatedRows) => {
+      util.log('Updated Result', updatedRows, 4);
+    });
   }
 };
 
