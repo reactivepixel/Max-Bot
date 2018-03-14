@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
+const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -57,40 +58,20 @@ client.on('message', (message) => {
   }
 });
 
-client.on('presenceUpdate', (oldMember, newMember) => {
-  // User: online to offline
-  console.log(`${oldMember.user.username}: ${oldMember.presence.status} to ${newMember.presence.status}`);
-});
+client.on('presenceUpdate', (newMember) => {
+  // models.Member or Member
+  // points
+  // discordUser
 
-client.on('presenceUpdate', (oldMember, newMember) => {
-  // User: online to offline
-  console.log(`${oldMember.user.username}: ${oldMember.presence.game.type} / ${newMember.presence.game.type}`);
+  const userName = newMember.user.username;
+  const { game } = newMember.presence;
 
-  // const { message } = this;
-  const type = oldMember.presence.game.type;
-  const name = oldMember.presence.game.name;
-
-  if (type === null) {
-    console.log(' ⚡️⚡️⚡️ ', type);
-    return `${oldMember.user.username} Nothing`;
-  } else if (type === 0) {
-    console.log(oldMember.user.username + ' Playing ' + name + ' type -> ' + type);
-    return `${oldMember.user.username} Playing ` + name;
-  } else if (type === 1) {
-    console.log(oldMember.user.username + ' Streaming ' + name + ' type -> ' + type);
-    return `${oldMember.user.username} Streaming ` + name;
-  } else if (type === 2) {
-    console.log(oldMember.user.username + ' Listening to ' + name + ' type -> ' + type);
-    return `${oldMember.user.username} Listening to ` + name;
-  } else {
-    console.log(' ⭕️⭕️⭕️ ', type);
-    return `${oldMember.user.username} Broken`;
+  if (game) {
+    const { type, name } = newMember.presence.game;
+    console.log('Username:' + userName + ' Name:' + name + ' Type:' + type);
+    return userName + ' Using: ' + name;
   }
-});
-
-// This will send the welcome message for new users who join.
-client.on('guildMemberAdd', (member) => {
-  member.reply(`${member.presence.game.type}, type test`);
+  return '';
 });
 
 client.login(process.env.TOKEN);
