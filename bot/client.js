@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
+const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -9,6 +10,17 @@ const client = new Discord.Client();
 
 // Pre-load controllers
 const controllers = require('./controllers')();
+
+// Function to add points for chatting
+const awardPointsforChatting = async (message) => {
+  const { content, channel, author } = message;
+  // SQL select statement
+  const memberData = await Member.findAll({
+    attributes: ['messagesCount', 'points', 'verified'],
+    where: { discordUser: author.id },
+  });
+  await util.log('Member data from SQL call', memberData[0].dataValues, 4);
+};
 
 // Alert when ready
 client.on('ready', () => {
@@ -54,6 +66,8 @@ client.on('message', (message) => {
     if (message.content.toLowerCase() === '!help') {
       message.reply(helpString);
     }
+  } else {
+    awardPointsforChatting(message);
   }
 });
 
