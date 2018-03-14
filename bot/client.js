@@ -26,7 +26,6 @@ const awardPointsforChatting = async (message) => {
     const { verified } = memberData[0].dataValues;
     messagesCount += 1;
     points += messagesPoints;
-    console.log('Points', points);
     if (verified) {
       await Member.update(
         { messagesCount, points: parseFloat(points.toFixed(2)) },
