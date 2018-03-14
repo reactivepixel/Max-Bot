@@ -34,6 +34,28 @@ const awardPointsforChatting = async (message) => {
         util.log('Updated Result', updatedRows, 4);
       });
     }
+    
+// Award bonus points when user reaches every 1000 messages
+const awardBonusPoints = async (user) => {
+  const amountOfBonusPoints = 100;
+  // Get User Message Count
+  const memberData = await Member.findAll(
+    {
+      attributes: ['messagesCount', 'points'],
+      where: { discordUser: user.author.id },
+    },
+  );
+  const messagesCountTemp = memberData[0].dataValues.messagesCount.toString().slice(-3);
+  let { points } = memberData[0].dataValues;
+  util.log('Results from database call', memberData[0].dataValues, 4);
+  // Check if its greater or equal to numberOfMessagesForBonus
+  if (messagesCountTemp === '000') {
+    points += amountOfBonusPoints;
+    // Update member information
+    await Member.update(
+      { points },
+      { where: { discordUser: user.author.id } },
+    );
   }
 };
 
@@ -44,6 +66,7 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', (message) => {
+  awardBonusPoints(message);
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
@@ -87,4 +110,10 @@ client.on('message', (message) => {
   }
 });
 
+client.on('guildMemberAdd', (member) => {
+  member.sendMessage('Welcome to the channel!');
+  //
+});
+
+// controllers.newUserController();
 client.login(process.env.TOKEN);
