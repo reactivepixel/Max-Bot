@@ -30,7 +30,7 @@ class topPointsController extends BaseController {
         order: [['points', 'DESC']],
       }).then((results) => {
         // Map out the data and set it equal to a variable
-        const fullMessage = results.map(element => `${element.dataValues.email}:${element.dataValues.points}`);
+        const fullMessage = results.map(element => `${element.dataValues.email}: ${element.dataValues.points} points`);
         // Send the message. Not using return because it breaks.
         message.author.send(fullMessage);
       });
