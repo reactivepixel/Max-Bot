@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin, getUserPointsandUpdate } = require('./botUtils.js');
+const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
