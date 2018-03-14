@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
-const models = require('../db/models');
+const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -11,11 +11,37 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
+// Function to add points for chatting
+const awardPointsforChatting = async (message) => {
+  const { content, channel, author } = message;
+  if (channel.type !== 'dm' && content.length >= 5) {
+    const messagesPoints = 0.2;
+    // SQL select statement
+    const memberData = await Member.findAll({
+      attributes: ['messagesCount', 'points', 'verified'],
+      where: { discordUser: author.id },
+    });
+    await util.log('Member data from SQL call', memberData[0].dataValues, 4);
+    let { messagesCount, points } = memberData[0].dataValues;
+    const { verified } = memberData[0].dataValues;
+    messagesCount += 1;
+    points += messagesPoints;
+    if (verified) {
+      await Member.update(
+        { messagesCount, points: parseFloat(points.toFixed(2)) },
+        { where: { discordUser: author.id } },
+      ).then((updatedRows) => {
+        util.log('Updated Result', updatedRows, 4);
+      });
+    }
+  }
+};
+
 // Award bonus points when user reaches every 1000 messages
 const awardBonusPoints = async (user) => {
   const amountOfBonusPoints = 100;
   // Get User Message Count
-  const memberData = await models.Member.findAll(
+  const memberData = await Member.findAll(
     {
       attributes: ['messagesCount', 'points'],
       where: { discordUser: user.author.id },
@@ -28,7 +54,7 @@ const awardBonusPoints = async (user) => {
   if (messagesCountTemp === '000') {
     points += amountOfBonusPoints;
     // Update member information
-    await models.Member.update(
+    await Member.update(
       { points },
       { where: { discordUser: user.author.id } },
     );
@@ -80,6 +106,9 @@ client.on('message', (message) => {
     if (message.content.toLowerCase() === '!help') {
       message.reply(helpString);
     }
+  } else {
+    // Award points if the message isn't a command
+    awardPointsforChatting(message);
   }
 });
 

@@ -58,6 +58,8 @@ class VerifyController extends BaseController {
               email,
               uuid: uuidv4(),
               verified: 1,
+              messagesCount: 0,
+              points: 0,
             });
             // mapping guild roles to find the crew role id
             const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
