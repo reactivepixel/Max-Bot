@@ -11,35 +11,29 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
-// Award bonus points
+// Award bonus points when user reaches every 1000 messages
 const awardBonusPoints = async (user) => {
-    const numberOfMessagesForBonus = 1000;
-    const amountOfBonusPoints = 100;
-     // Get User Message Count
-     // Get User Message Count
-    const memberData = await models.Member.findAll(
-      {
-        attributes: ['messagesCount', 'points'],
-        where: { discordUser: user.author.id },
-      },
-    );
-    let { messagesCount, points } = memberData[0].dataValues;
-    let { points } = memberData[0].dataValues;
+  const amountOfBonusPoints = 100;
+  // Get User Message Count
+  const memberData = await models.Member.findAll(
+    {
+      attributes: ['messagesCount', 'points'],
+      where: { discordUser: user.author.id },
+    },
+  );
+  const messagesCountTemp = memberData[0].dataValues.messagesCount.toString().slice(-3);
+  let { points } = memberData[0].dataValues;
   util.log('Results from database call', memberData[0].dataValues, 4);
-   // Check if its greater or equal to numberOfMessagesForBonus
-   // Check if its greater or equal to numberOfMessagesForBonus
--  util.log('User: ', user, 0);
-  if (messagesCount >= numberOfMessagesForBonus) {
+  // Check if its greater or equal to numberOfMessagesForBonus
+  if (messagesCountTemp === '000') {
     points += amountOfBonusPoints;
-    messagesCount = 0;
-}
-await models.Member.update(
-       { messagesCount, points },
-       { where: { discordUser: user.author.id } },
-      );
- };
- 
-  
+    // Update member information
+    await models.Member.update(
+      { points },
+      { where: { discordUser: user.author.id } },
+    );
+  }
+};
 
 // Alert when ready
 client.on('ready', () => {
@@ -48,7 +42,7 @@ client.on('ready', () => {
 
 // Listen for messages
 client.on('message', (message) => {
-  awardBonusPoints(message.author.id);
+  awardBonusPoints(message);
   // Check for ! prefix on message to ensure it is a command
   if (message.content.charAt(0) === '!') {
     util.log('Command message received', message.content, 0);
@@ -89,4 +83,10 @@ client.on('message', (message) => {
   }
 });
 
+client.on('guildMemberAdd', (member) => {
+  member.sendMessage('Welcome to the channel!');
+  //
+});
+
+// controllers.newUserController();
 client.login(process.env.TOKEN);
