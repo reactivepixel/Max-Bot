@@ -14,12 +14,14 @@ const controllers = require('./controllers')();
 // Function to add points for chatting
 const awardPointsforChatting = async (message) => {
   const { content, channel, author } = message;
-  // SQL select statement
-  const memberData = await Member.findAll({
-    attributes: ['messagesCount', 'points', 'verified'],
-    where: { discordUser: author.id },
-  });
-  await util.log('Member data from SQL call', memberData[0].dataValues, 4);
+  if (content.type !== 'dm' && content.length >= 5) {
+    // SQL select statement
+    const memberData = await Member.findAll({
+      attributes: ['messagesCount', 'points', 'verified'],
+      where: { discordUser: author.id },
+    });
+    await util.log('Member data from SQL call', memberData[0].dataValues, 4);
+  }
 };
 
 // Alert when ready
