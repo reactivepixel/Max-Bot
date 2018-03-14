@@ -10,6 +10,39 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
+// Award bonus points when user reaches every 1000 messages
+const awardBonusPoints = (message, messagesCount, currentPoints) => {
+  const amountOfBonusPoints = 100;
+  let points = 0;
+  const messagesCountTemp = messagesCount.toString().slice(-3);
+  // Check if its greater or equal to numberOfMessagesForBonus
+  messagesCountTemp === '000' ? points = currentPoints + amountOfBonusPoints : null;
+  return points;
+};
+
+// Function to add points for chatting
+const awardPointsforChatting = async (message) => {
+  const { content, channel, author } = message;
+  if (channel.type !== 'dm' && content.length >= 5) {
+    const messagesPoints = 0.2;
+    const memberData = await Member.findAll({
+      attributes: ['messagesCount', 'points', 'verified'],
+      where: { discordUser: author.id },
+    });
+    let { messagesCount, points } = memberData[0].dataValues;
+    const { verified } = memberData[0].dataValues;
+    messagesCount += 1;
+    const bonusPoints = awardBonusPoints(message, messagesCount, points);
+    points += (messagesPoints + bonusPoints);
+    if (verified) {
+      Member.update(
+        { messagesCount, points: parseFloat(points.toFixed(2)) },
+        { where: { discordUser: author.id } },
+      );
+    }
+  }
+};
+
 // Alert when ready
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
@@ -54,6 +87,9 @@ client.on('message', (message) => {
     if (message.content.toLowerCase() === '!help') {
       message.reply(helpString);
     }
+  } else {
+    // Award points if the message isn't a command
+    awardPointsforChatting(message);
   }
 });
 
@@ -65,5 +101,4 @@ client.on('presenceUpdate', (oldMember) => {
   !game ? getUserPointsandUpdate(id, 5) : null;
   util.log('Game presence', game, 4);
 });
-
 client.login(process.env.TOKEN);

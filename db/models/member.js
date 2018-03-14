@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     verified: DataTypes.BOOLEAN,
     messagesCount: DataTypes.INTEGER,
     points: DataTypes.DOUBLE,
+
   }, {
     classMethods: {
       associate: (models) => {
