@@ -1,3 +1,5 @@
+const { Member } = require('../db/models');
+
 exports.generateCode = (n) => {
   // Workaround method for Math.pow() and ** operator
   const pow = (base, exp) => {
@@ -30,3 +32,11 @@ exports.isAdmin = (member) => {
   }
   return false;
 };
+
+// Get the user data from the database
+exports.getUserData = (user, attributes = ['messagesCount', 'points']) =>
+  Member.findAll({ attributes, where: { discordUser: user } });
+
+// Update the user points in the database
+exports.updateUserPoints = (user, points) =>
+  Member.increment({ points: parseFloat(points.toFixed(2)) }, { where: { discordUser: user } });
