@@ -33,10 +33,10 @@ exports.isAdmin = (member) => {
   return false;
 };
 
-// Get the user data from the database
-exports.getUserData = (user, attributes = ['messagesCount', 'points']) =>
-  Member.findAll({ attributes, where: { discordUser: user } });
-
 // Update the user points in the database
-exports.updateUserPoints = (user, points) =>
-  Member.increment({ points: parseFloat(points.toFixed(2)) }, { where: { discordUser: user } });
+exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
+  const memberData = await Member.findAll({ attributes: ['points'], where: { discordUser: userId } });
+  await Member.update(
+    { points: memberData[0].dataValues.points + pointsToAdd },
+    { where: { discordUser: userId } });
+};

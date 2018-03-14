@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin, getUserData, updateUserPointsandMsgCount } = require('./botUtils.js');
+const { isAdmin, getUserPointsandUpdate } = require('./botUtils.js');
 const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
@@ -26,21 +26,21 @@ const awardPointsforChatting = async (message) => {
   const { content, channel, author } = message;
   if (channel.type !== 'dm' && content.length >= 5) {
     const messagesPoints = 0.2;
-    const memberData = await getUserData(author.id, ['messagesCount', 'points', 'verified']);
-    await util.log('Member data from SQL call', memberData[0].dataValues, 4);
+    const memberData = await Member.findAll({
+      attributes: ['messagesCount', 'points', 'verified'],
+      where: { discordUser: author.id },
+    });
     let { messagesCount, points } = memberData[0].dataValues;
     const { verified } = memberData[0].dataValues;
     messagesCount += 1;
     const bonusPoints = awardBonusPoints(message, messagesCount, points);
     points += (messagesPoints + bonusPoints);
-    util.log('Points after change', points, 4);
     if (verified) {
-      Member.increment(
+      Member.update(
         { messagesCount, points: parseFloat(points.toFixed(2)) },
         { where: { discordUser: author.id } },
       );
     }
-    verified ? await updateUserPointsandMsgCount(author.id, points, messagesCount) : null;
   }
 };
 
