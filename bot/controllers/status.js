@@ -30,19 +30,30 @@ class StatusController extends BaseController {
 
   statusAction() {
     const { message } = this;
-    const activityName = message.author.presence.game.name;
-    if (activityName === null) {
-      console.log('User is not active');
+    const aType = message.author.presence.game.type;
+    if (aType === null || '') {
+      console.log(' 😞 ');
+      console.log(message.author.presence.game.type);
       return 'Nothing';
+    } else if (aType === 0) {
+      console.log(message.author.username + ' Playing ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
+      return `Memeber -> ${message.author.username} Playing ${message.author.presence.game.name}`;
+    } else if (aType === 1) {
+      console.log(message.author.username + ' Streaming ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
+      return `Memeber -> ${message.author.username} Streaming ${message.author.presence.game.name}`;
+    } else if (aType === 2) {
+      console.log(message.author.username + ' Listening to ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
+      return `Memeber -> ${message.author.username} Listening to ${message.author.presence.game.name}`;
     } else {
-      // type [0, 1, 2]
-      // 0    Game         Playing {name}        "Playing Rocket League"
-      // 1    Streaming    Streaming {name}      "Streaming Rocket League"
-      // 2    Listening    Listening to {name}   "Listening to Spotify"
-      console.log(message.author.username + ' name -> ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
+      console.log(message.author.username + ' name: ' + message.author.presence.game.name + ' type: ' + message.author.presence.game.type);
+      console.log(message.author.presence.game.type);
       return `Memeber -> ${message.author.username} is using ${message.author.presence.game.name}`;
     }
   }
+  // type [0, 1, 2]
+  // 0    Game         Playing {name}        "Playing Rocket League"
+  // 1    Streaming    Streaming {name}      "Streaming Rocket League"
+  // 2    Listening    Listening to {name}   "Listening to Spotify"
 }
 
 module.exports = StatusController;

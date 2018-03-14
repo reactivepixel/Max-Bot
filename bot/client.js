@@ -64,7 +64,8 @@ client.on('message', (message) => {
 
 client.on('presenceUpdate', (oldMember, newMember) => {
   // User: online to offline
-  console.log(`${oldMember.user.username}: ${oldMember.presence.game.name} to ${newMember.presence.game.name}`);
+  console.log(`${oldMember.user.username}: ${oldMember.presence.status} to ${newMember.presence.status}`);
+  console.log(`${oldMember.user.username}: ${oldMember.presence.game.type} / ${newMember.presence.game.type}`);
 });
 
 client.login(process.env.TOKEN);
