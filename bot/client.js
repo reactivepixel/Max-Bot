@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isAdmin, getUserPointsandUpdate } = require('./botUtils.js');
 const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
@@ -94,5 +94,12 @@ client.on('message', (message) => {
   }
 });
 
-// controllers.newUserController();
+// When user plays, streams, or Listens give 5 points
+// oldMember is required due to documentation
+client.on('presenceUpdate', (oldMember) => {
+  const { id } = oldMember.user;
+  const { game } = oldMember.presence;
+  !game ? getUserPointsandUpdate(id, 5) : null;
+  util.log('Game presence', game, 4);
+});
 client.login(process.env.TOKEN);
