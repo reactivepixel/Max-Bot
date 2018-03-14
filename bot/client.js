@@ -34,7 +34,9 @@ const awardPointsforChatting = async (message) => {
         util.log('Updated Result', updatedRows, 4);
       });
     }
-    
+  }
+};
+
 // Award bonus points when user reaches every 1000 messages
 const awardBonusPoints = async (user) => {
   const amountOfBonusPoints = 100;
