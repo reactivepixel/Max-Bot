@@ -82,6 +82,7 @@ client.on('message', (message) => {
       message.reply(helpString);
     }
   } else {
+    // Award points if the message isn't a command
     awardPointsforChatting(message);
   }
 });
