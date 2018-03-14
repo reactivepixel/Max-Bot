@@ -30,24 +30,24 @@ class StatusController extends BaseController {
 
   statusAction() {
     const { message } = this;
-    const aType = message.author.presence.game.type;
-    if (aType === null || '') {
-      console.log(' 😞 ');
-      console.log(message.author.presence.game.type);
-      return 'Nothing';
-    } else if (aType === 0) {
-      console.log(message.author.username + ' Playing ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
-      return `Memeber -> ${message.author.username} Playing ${message.author.presence.game.name}`;
-    } else if (aType === 1) {
-      console.log(message.author.username + ' Streaming ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
-      return `Memeber -> ${message.author.username} Streaming ${message.author.presence.game.name}`;
-    } else if (aType === 2) {
-      console.log(message.author.username + ' Listening to ' + message.author.presence.game.name + ' type -> ' + message.author.presence.game.type);
-      return `Memeber -> ${message.author.username} Listening to ${message.author.presence.game.name}`;
+    const type = message.author.presence.game.type;
+    const name = message.author.presence.game.name;
+
+    if (type === null) {
+      console.log(' 🔥🔥🔥 ', type);
+      return `${message.author.username} Nothing`;
+    } else if (type === 0) {
+      console.log(message.author.username + ' Playing ' + name + ' type -> ' + type);
+      return `${message.author.username} Playing ` + name;
+    } else if (type === 1) {
+      console.log(message.author.username + ' Streaming ' + name + ' type -> ' + type);
+      return `${message.author.username} Streaming ` + name;
+    } else if (type === 2) {
+      console.log(message.author.username + ' Listening to ' + name + ' type -> ' + type);
+      return `${message.author.username} Listening to ` + name;
     } else {
-      console.log(message.author.username + ' name: ' + message.author.presence.game.name + ' type: ' + message.author.presence.game.type);
-      console.log(message.author.presence.game.type);
-      return `Memeber -> ${message.author.username} is using ${message.author.presence.game.name}`;
+      console.log(' ❌❌❌ ', type);
+      return `${message.author.username} Broken`;
     }
   }
   // type [0, 1, 2]
