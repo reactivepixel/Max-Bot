@@ -11,14 +11,16 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
+// Award bonus points
 const awardBonusPoints = async (user) => {
     const numberOfMessagesForBonus = 1000;
+    const amountOfBonusPoints = 100;
      // Get User Message Count
      // Get User Message Count
     const memberData = await models.Member.findAll(
       {
         attributes: ['messagesCount', 'points'],
-        where: { discordUser: user },
+        where: { discordUser: user.author.id },
       },
     );
     let { messagesCount } = memberData[0].dataValues;
@@ -28,17 +30,13 @@ const awardBonusPoints = async (user) => {
    // Check if its greater or equal to numberOfMessagesForBonus
 -  util.log('User: ', user, 0);
   if (messagesCount >= numberOfMessagesForBonus) {
-    points += 5;
+    points += amountOfBonusPoints;
     messagesCount = 0;
 }
-  // Update member information
-  // await models.Member.update(
-  //   { messagesCount: 3424242 },
-  //   { where: { discordUser: user } },
-  // ).then((updatedRows) => {
-  //   util.log('Updated result', updatedRows, 4);
-  // });
-  // util.log('User: ', user, 0);
+await models.Member.update(
+       { messagesCount, points },
+       { where: { discordUser: user.author.id } },
+      );
  };
  
   
