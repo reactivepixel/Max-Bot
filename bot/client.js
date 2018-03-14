@@ -15,19 +15,21 @@ const controllers = require('./controllers')();
 const awardPointsforChatting = async (message) => {
   const { content, channel, author } = message;
   if (channel.type !== 'dm' && content.length >= 5) {
+    const messagesPoints = 0.2;
     // SQL select statement
     const memberData = await Member.findAll({
       attributes: ['messagesCount', 'points', 'verified'],
       where: { discordUser: author.id },
     });
-    util.log('Member data from SQL call', memberData[0].dataValues, 4);
+    await util.log('Member data from SQL call', memberData[0].dataValues, 4);
     let { messagesCount, points } = memberData[0].dataValues;
     const { verified } = memberData[0].dataValues;
     messagesCount += 1;
-    points += 1;
+    points += messagesPoints;
+    console.log('Points', points);
     if (verified) {
       await Member.update(
-        { messagesCount, points },
+        { messagesCount, points: parseFloat(points.toFixed(2)) },
         { where: { discordUser: author.id } },
       ).then((updatedRows) => {
         util.log('Updated Result', updatedRows, 4);

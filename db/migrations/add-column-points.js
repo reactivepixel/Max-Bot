@@ -1,9 +1,7 @@
-
-
 module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.addColumn('Members', 'points', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DOUBLE,
     }),
 
   down: (queryInterface, Sequelize) =>
