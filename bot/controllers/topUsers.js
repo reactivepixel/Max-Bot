@@ -31,11 +31,11 @@ class topPointsController extends BaseController {
       }).then((results) => {
         // Map out the data and set it equal to a variable
         const fullMessage = results.map(element => `${element.dataValues.email}: ${element.dataValues.points} points`);
-        // Send the message. Not using return because it breaks.
+        // Send the message. Not using return because it causes issues where it tries to return too early.
         message.author.send(fullMessage);
       });
     } else return 'Is that a number? You might want to try again.';
-    // Return a header because it'll break otherwise
+    // Adding a return since the ESLint tests will not pass without it
     return 'Top Users';
   }
 }
