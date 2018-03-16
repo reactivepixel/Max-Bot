@@ -29,9 +29,9 @@ class inviteController extends BaseController {
   inviteAction() {
     const { message } = this;
     const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
-    // let functionDone = '';
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
+    // create the invite for the channel
     message.channel.createInvite().then((invite, err) => {
       if (err)util.log('create invite err : ', err, 3);
 
@@ -45,7 +45,7 @@ class inviteController extends BaseController {
           },
         });
         // Nodemailer email recipient & message
-        // TODO: Build email template
+        // the email template
         const mailOptions = {
           from: process.env.EMAIL_USERNAME,
           to: email,
@@ -59,22 +59,20 @@ class inviteController extends BaseController {
           if (err) {
             message.reply(errorMsg);
             util.log('Email not sent', err, 3);
+            message.author.send('Invite not sent ');
           } else {
             util.log('Email details', info, 3);
-            getUserPointsandUpdate(message.author.id, 2);
+            // for every invite sent the user will receive 1 point
+            getUserPointsandUpdate(message.author.id, 1);
+            // notify the user that the message has been sent
             message.author.send('you have sent the invite');
-            return 'you have sent the invite';
           }
         });
       } else {
-        return 'Sorry, I can only invite Full Sail University email addresses.';
+        message.author.send('Sorry the invite could not be sent please contact a admin for assistance');
       }
     });
-    if(!functionDone) return functionDone;
-    // return ' heloo';
-    // }
-    // inviteLink();
-    // return `Hey ${message.author} you have sent the email.`;
+    return 'You have received 1 point';
   }
 }
 
