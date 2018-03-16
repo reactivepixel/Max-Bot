@@ -3,7 +3,7 @@ const Command = require('../baseCommand.js');
 const nodemailer = require('nodemailer');
 const util = require('apex-util');
 const { getUserPointsandUpdate } = require('../botUtils');
-
+const { validDomains } = require('../botUtils');
 
 class inviteController extends BaseController {
   constructor(message) {
@@ -28,7 +28,6 @@ class inviteController extends BaseController {
   // this message will be sent to the user's dm with their username
   inviteAction() {
     const { message } = this;
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
     // create the invite for the channel

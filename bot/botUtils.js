@@ -40,3 +40,5 @@ exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
     { points: memberData[0].dataValues.points + pointsToAdd },
     { where: { discordUser: userId } });
 };
+
+exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
