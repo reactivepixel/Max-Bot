@@ -19,7 +19,7 @@ class inviteController extends BaseController {
         '!invite',
         '!invite <email_address>',
         'invite Message',
-        'Resend the welcome message you recieved when you joined the server.',
+        'Receive one bonus point for every Full Sail student you invite that can be verified.',
         this.inviteAction.bind(controller),
         'dm',
       ),

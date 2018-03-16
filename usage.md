@@ -54,7 +54,27 @@ Example: `!removeAllRoles`
 
 Removes all roles from the user. _Tabula rasa_, baby.
 
+## Earn Points
+
+### !invite
+
+Example: `!invite` <email_address>
+
+Receive one bonus point for every Full Sail student you invite that can be verified.
+
+### Gaming, Streaming, and Messaging
+
+* Every five messages you send earns you one point. Make friends here in the channel and earn points. It's that easy!
+
+* Every time Max detects you're playing a game you earn one point. If the game is on Steam, then Max can detect it. Max can also detect some desktop applications as games, i.e. Spotify etc.
+
 
 ## Administrative commands
 
 Max also includes a couple of special commands just for Officers and above for making announcements to multiple channels.
+
+### !topUsers
+
+Example: `!topUsers <limit_number_filter>`
+
+Displays a sorted list of users with the length limit provided. (high to low) 
