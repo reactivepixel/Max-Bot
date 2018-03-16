@@ -29,6 +29,7 @@ class inviteController extends BaseController {
   inviteAction() {
     const { message } = this;
     const email = message.parsed[1].toLowerCase();
+    const invitePointsAwarded = 1;
     const emailDomain = email.split('@').pop();
     // create the invite for the channel
     message.channel.createInvite().then((invite, err) => {
@@ -49,7 +50,7 @@ class inviteController extends BaseController {
           from: process.env.EMAIL_USERNAME,
           to: email,
           subject: 'Armada Invite',
-          html: `<table><tr><td><p>Please follow this link to be included in the discord <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord enjoy.</p></td></tr></table>`,
+          html: `<table><tr><td><p>Please follow this link to be included in the Discord server <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord server. Enjoy!</p></td></tr></table>`,
         };
         // Call sendMail on sendInvite
         // Pass mailOptions & callback function
@@ -58,20 +59,20 @@ class inviteController extends BaseController {
           if (err) {
             message.reply(errorMsg);
             util.log('Email not sent', err, 3);
-            message.author.send('Invite not sent ');
+            message.author.send('Invite not sent.');
           } else {
             util.log('Email details', info, 3);
             // for every invite sent the user will receive 1 point
-            getUserPointsandUpdate(message.author.id, 1);
+            getUserPointsandUpdate(message.author.id, invitePointsAwarded);
             // notify the user that the message has been sent
-            message.author.send('you have sent the invite');
+            message.author.send('You have sent the invite.');
           }
         });
       } else {
-        message.author.send('Sorry the invite could not be sent please contact a admin for assistance');
+        message.author.send('Sorry the invite could not be sent please contact a admin for assistance.');
       }
     });
-    return 'You have received 1 point';
+    return `Hey ${message.author}, you have received ${invitePointsAwarded} point(s) for sending this invite.`;
   }
 }
 
