@@ -1,4 +1,5 @@
 const { Member } = require('../db/models');
+const util = require('apex-util');
 
 exports.generateCode = (n) => {
   // Workaround method for Math.pow() and ** operator
@@ -47,5 +48,5 @@ exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
   const pointsBeingAdded = parseFloat((points + pointsToAdd).toFixed(2));
   verified ? await Member.update(
     { points: pointsBeingAdded },
-    { where: { discordUser: userId } }) : console.log('Cannot add points');
+    { where: { discordUser: userId } }) : util.log('User is not verified', userId, 4);
 };
