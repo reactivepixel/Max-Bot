@@ -3,7 +3,7 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
-const { getUserPointsandUpdate, sendEmail } = require('../botUtils');
+const { sendEmail } = require('../botUtils');
 const { generateCode } = require('../botUtils.js');
 
 class VerifyController extends BaseController {
@@ -59,7 +59,7 @@ class VerifyController extends BaseController {
               uuid: uuidv4(),
               verified: 1,
               messagesCount: 0,
-              points: 0,
+              points: 1,
             });
             // mapping guild roles to find the crew role id
             const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
