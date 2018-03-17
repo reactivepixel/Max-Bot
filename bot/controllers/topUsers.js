@@ -2,7 +2,7 @@ const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const { Member } = require('../../db/models');
 
-class topPointsController extends BaseController {
+class topUsersController extends BaseController {
   constructor(message) {
     super(message);
     const controller = this;
@@ -13,13 +13,13 @@ class topPointsController extends BaseController {
         'Return Top Number of Users',
         true,
         'Sends a message with the users with the most points earned.',
-        this.topPointsAction.bind(controller),
+        this.topUsersAction.bind(controller),
         'dm',
       ),
     ];
   }
 
-  topPointsAction() {
+  topUsersAction() {
     const { message } = this;
     // Check to see if the user added a number
     if (!isNaN(message.parsed[1])) {
@@ -42,4 +42,4 @@ class topPointsController extends BaseController {
   }
 }
 
-module.exports = topPointsController;
+module.exports = topUsersController;
