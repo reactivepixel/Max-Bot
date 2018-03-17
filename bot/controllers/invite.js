@@ -1,8 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const nodemailer = require('nodemailer');
 const util = require('apex-util');
-const { getUserPointsandUpdate } = require('../botUtils');
+const { getUserPointsandUpdate, sendEmail } = require('../botUtils');
 
 
 class inviteController extends BaseController {
@@ -36,36 +35,13 @@ class inviteController extends BaseController {
       if (err)util.log('create invite err : ', err, 3);
 
       if (validDomains.includes(emailDomain)) {
-        // Set up Nodemailer to send emails through gmail
-        const sendInvite = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.EMAIL_USERNAME,
-            pass: process.env.EMAIL_PASS,
-          },
-        });
-        // Nodemailer email recipient & message
-        // the email template
-        const mailOptions = {
-          from: process.env.EMAIL_USERNAME,
-          to: email,
-          subject: 'Armada Invite',
-          html: `<table><tr><td><p>Please follow this link to be included in the discord <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord enjoy.</p></td></tr></table>`,
-        };
-        // Call sendMail on sendInvite
-        // Pass mailOptions & callback function
-        sendInvite.sendMail(mailOptions, (err, info) => {
-          const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you send a invite.';
-          if (err) {
-            message.reply(errorMsg);
-            util.log('Email not sent', err, 3);
-            message.author.send('Invite not sent ');
-          } else {
-            util.log('Email details', info, 3);
-            // for every invite sent the user will receive 1 point
-            getUserPointsandUpdate(message.author.id, 1);
-            // notify the user that the message has been sent
-            message.author.send('you have sent the invite');
+        const emailType = 'invite';
+        const emailSubject = 'Armada Invite';
+        const emailBodyString = `<table><tr><td><p>Please follow this link to be included in the discord <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord enjoy.</p></td></tr></table>`;
+        sendEmail(message, email, emailSubject, emailBodyString, emailType, (sendStatus) => {
+          if (sendStatus) {
+            const numPointToAdd = 1;
+            getUserPointsandUpdate(message.author.id, numPointToAdd);
           }
         });
       } else {
