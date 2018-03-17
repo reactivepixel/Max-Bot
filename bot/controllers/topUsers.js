@@ -9,7 +9,7 @@ class topPointsController extends BaseController {
     this.commands = [
       new Command(
         '!topUsers',
-        '!topUsers <Limit_Wanted>',
+        '!topUsers <num_users_wanted>',
         'Return Top Number of Users',
         true,
         'Sends a message with the users with the most points earned.',
