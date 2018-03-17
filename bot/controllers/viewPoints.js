@@ -25,7 +25,7 @@ class ViewPointsController extends BaseController {
       const memberData = await Member.findAll({ attributes: ['points'], where: { discordUser: message.author.id } });
       // Get points
       const points = memberData[0].dataValues.points;
-      message.author.send(points);
+      message.author.send(`Your total Points: ${points}`);
   }
 }
 
