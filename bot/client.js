@@ -10,15 +10,6 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
-// Function to add points for chatting
-const awardPointsforChatting = async (message) => {
-  const { content, channel, author } = message;
-  if (channel.type !== 'dm' && content.length >= 5) {
-    const messagesPoints = 0.2;
-    getUserPointsandUpdate(author.id, messagesPoints);
-  }
-};
-
 // Alert when ready
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
@@ -65,7 +56,11 @@ client.on('message', (message) => {
     }
   } else {
     // Award points if the message isn't a command
-    awardPointsforChatting(message);
+    const { content, channel, author } = message;
+    if (channel.type !== 'dm' && content.length >= 5) {
+      const messagesPoints = 0.2;
+      getUserPointsandUpdate(author.id, messagesPoints);
+    }
   }
 });
 

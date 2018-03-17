@@ -33,6 +33,13 @@ exports.isAdmin = (member) => {
   return false;
 };
 
+// Checks if the member has been verified
+exports.isVerified = async (userId) => {
+  const memberData = await Member.findAll({ attributes: ['verified'], where: { discordUser: userId } });
+  const verified = await memberData[0].dataValues.verified;
+  return Promise.resolve(!!verified);
+};
+
 // Update the user points in the database
 exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
   const memberData = await Member.findAll({ attributes: ['points', 'verified'], where: { discordUser: userId } });
