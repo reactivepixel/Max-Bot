@@ -12,8 +12,8 @@ class ViewPointsController extends BaseController {
       new Command(
         '!viewPoints',
         '!viewPoints',
-        'Return Users Current Points',
-        'Receive a message with the users current points.',
+        'Returns current point total.',
+        'Receive a message with your current point total.',
         this.viewPointsAction.bind(controller),
         'dm',
       ),
