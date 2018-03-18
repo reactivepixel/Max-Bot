@@ -1,6 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const { Member } = require('../../db/models');
+const { welcomeCommand } = require('../botUtils');
+const util = require('apex-util');
 
 class newUserController extends BaseController {
   constructor(message) {
@@ -20,6 +21,7 @@ class newUserController extends BaseController {
 
   welcomeCommandAction() {
     const { message } = this;
+    return welcomeCommand(message.member);
   }
 }
 

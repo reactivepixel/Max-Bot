@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin, getUserPointsandUpdate } = require('./botUtils.js');
+const { isAdmin, getUserPointsandUpdate, welcomeCommand } = require('./botUtils.js');
 const { Member } = require('../db/models');
 
 // If production server, set default debug mode to production setting
@@ -102,4 +102,10 @@ client.on('presenceUpdate', (oldMember) => {
   !game ? getUserPointsandUpdate(id, 5) : null;
   util.log('Game presence', game, 4);
 });
+
+// Function to send the welcome message for a new user
+client.on('guildMemberAdd', (member) => {
+  member.send(welcomeCommand(member));
+});
+
 client.login(process.env.TOKEN);
