@@ -31,9 +31,17 @@ class inviteController extends BaseController {
     const email = message.parsed[1].toLowerCase();
     const invitePointsAwarded = 1;
     const emailDomain = email.split('@').pop();
+    const filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
+
     // create the invite for the channel
     message.channel.createInvite().then((invite, err) => {
       if (err)util.log('create invite err : ', err, 3);
+      // Test to see if the users email exist
+      if (!filter.test(email.value)) {
+        // Send user message if the email is not correct
+        message.author.send('Please provide a valid email address');
+        email.focus;
+      }
 
       if (validDomains.includes(emailDomain)) {
         // Set up Nodemailer to send emails through gmail
@@ -65,14 +73,14 @@ class inviteController extends BaseController {
             // for every invite sent the user will receive 1 point
             getUserPointsandUpdate(message.author.id, invitePointsAwarded);
             // notify the user that the message has been sent
-            message.author.send('You have sent the invite.');
+            message.author.send('The invite has been sent succesfully.');
           }
         });
       } else {
         message.author.send('Sorry the invite could not be sent please contact a admin for assistance.');
       }
     });
-    return `Hey ${message.author}, you have received ${invitePointsAwarded} point(s) for sending this invite.`;
+    return `Hey ${message.author}, you've received ${invitePointsAwarded} point(s) for sending this invite.`;
   }
 }
 
