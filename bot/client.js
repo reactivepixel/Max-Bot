@@ -96,10 +96,12 @@ client.on('message', (message) => {
 
 // When user plays, streams, or Listens give 5 points
 // oldMember is required due to documentation
+// docs: https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-presenceUpdate
 client.on('presenceUpdate', (oldMember) => {
   const { id } = oldMember.user;
   const { game } = oldMember.presence;
-  !game ? getUserPointsandUpdate(id, 5) : null;
+  const pointsToAddforChange = 5;
+  !game ? getUserPointsandUpdate(id, pointsToAddforChange) : null;
   util.log('Game presence', game, 4);
 });
 client.login(process.env.TOKEN);
