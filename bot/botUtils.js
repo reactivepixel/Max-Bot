@@ -34,6 +34,15 @@ exports.isAdmin = (member) => {
   return false;
 };
 
+// Checks if the member has been verified
+exports.isVerified = async (userId) => {
+  const memberData = await Member.findOne({ attributes: ['verified'], where: { discordUser: userId } });
+  if (memberData) {
+    return !!memberData.dataValues.verified;
+  }
+  return false;
+};
+
 // Update the user points in the database
 exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
   const memberData = await Member.findAll({ attributes: ['points', 'verified'], where: { discordUser: userId } });
@@ -44,9 +53,12 @@ exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
     { where: { discordUser: userId } }) : util.log('User is not verified', userId, 4);
 };
 
-exports.welcomeCommand = (member) => {
+// Using async and await is the only way I could get this to work
+// It needed to be forced to wait and go line by line to get the proper data
+exports.welcomeCommand = async (member) => {
   const { user } = member;
   util.log('User id', user.id, 4);
+  let welcomeString = null;
   const pointsMethods = `
     **How to Earn Points:**
     \n\`Chatting with friends\`
@@ -56,7 +68,13 @@ exports.welcomeCommand = (member) => {
     \n\`Invite New Members\`
     Invite new members to the group and be rewarded with points!
   `;
-  return `
-  Welcome to the server ${user.username}! Get verified to start earning points! \n${pointsMethods}
-  `;
+  // Asnyc await was needed to set the string properly for being verified or not
+  await this.isVerified(user.id).then((verified) => {
+    if (verified) {
+      welcomeString = `Welcome to the server ${user.username}! Start earning points! \n${pointsMethods}`;
+    } else {
+      welcomeString = `Welcome to the server ${user.username}! Get verified to start earning points! \n${pointsMethods}`;
+    }
+  });
+  await member.send(welcomeString);
 };

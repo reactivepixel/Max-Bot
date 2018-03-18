@@ -1,7 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const { welcomeCommand } = require('../botUtils');
-const util = require('apex-util');
 
 class newUserController extends BaseController {
   constructor(message) {
