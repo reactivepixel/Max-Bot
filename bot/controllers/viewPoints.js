@@ -1,8 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const {
-  Member,
-} = require('../../db/models');
+const { Member } = require('../../db/models');
 
 class ViewPointsController extends BaseController {
   constructor(message) {
@@ -23,15 +21,15 @@ class ViewPointsController extends BaseController {
   async viewPointsAction() {
     const { message } = this;
     // Get Member Data
-    const memberData = await Member.findAll({
+    const memberData = await Member.findOne({
       attributes: ['points'],
       where: {
         discordUser: message.author.id,
       },
     });
     // Get points
-    const points = memberData[0].dataValues.points;
-    message.author.send(`Your total Points: ${points}`);
+    const points = memberData.dataValues.points;
+    message.author.send(`Your current point total: \`${points}\``);
   }
 }
 
