@@ -66,7 +66,7 @@ exports.welcomeCommand = async (member) => {
     \n\`Gaming, Streaming, and More!\`
     Be rewarded for engagement through streaming, playing games with others, listening to Spotify, and more!
     \n\`Invite New Members\`
-    Invite new members to the group and be rewarded with points!
+    Invite other students from Full Sail University to the server and be awarded points!
   `;
   // Asnyc await was needed to set the string properly for being verified or not
   await this.isVerified(user.id).then((verified) => {
