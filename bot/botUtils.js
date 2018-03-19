@@ -81,7 +81,6 @@ exports.welcomeCommand = async (member) => {
   await member.send(welcomeString);
 };
 
-
 // Nodemailer email function
 // Set up Nodemailer to send emails through gmail
 exports.sendEmail = async (message, toEmailAdd, emailSubject,
@@ -118,3 +117,4 @@ exports.sendEmail = async (message, toEmailAdd, emailSubject,
   });
   return null;
 };
+exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];

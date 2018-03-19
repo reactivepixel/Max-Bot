@@ -3,8 +3,7 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
-const { sendEmail } = require('../botUtils');
-const { generateCode } = require('../botUtils.js');
+const { generateCode, validDomains, sendEmail } = require('../botUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -30,7 +29,6 @@ class VerifyController extends BaseController {
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
