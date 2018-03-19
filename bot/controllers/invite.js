@@ -2,8 +2,7 @@ const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const nodemailer = require('nodemailer');
 const util = require('apex-util');
-const { getUserPointsandUpdate } = require('../botUtils');
-const { validDomains } = require('../botUtils');
+const { getUserPointsandUpdate, validDomains } = require('../botUtils');
 
 class inviteController extends BaseController {
   constructor(message) {
@@ -37,10 +36,9 @@ class inviteController extends BaseController {
     message.channel.createInvite().then((invite, err) => {
       if (err)util.log('create invite err : ', err, 3);
       // Test to see if the users email exist
-      if (!filter.test(email.value)) {
+      if (!filter.test(email)) {
         // Send user message if the email is not correct
         message.author.send('Please provide a valid email address');
-        email.focus;
       }
 
       if (validDomains.includes(emailDomain)) {
@@ -73,14 +71,14 @@ class inviteController extends BaseController {
             // for every invite sent the user will receive 1 point
             getUserPointsandUpdate(message.author.id, invitePointsAwarded);
             // notify the user that the message has been sent
-            message.author.send('The invite has been sent succesfully.');
+            message.author.send(`You've received ${invitePointsAwarded} point(s) for sending this invite.`);
           }
         });
       } else {
         message.author.send('Sorry the invite could not be sent please contact a admin for assistance.');
       }
     });
-    return `Hey ${message.author}, you've received ${invitePointsAwarded} point(s) for sending this invite.`;
+    return `${message.author}, Invite Status: `;
   }
 }
 

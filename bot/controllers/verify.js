@@ -4,8 +4,7 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-const { generateCode } = require('../botUtils.js');
-const { validDomains } = require('../botUtils');
+const { generateCode, validDomains } = require('../botUtils.js');
 
 
 class VerifyController extends BaseController {
