@@ -1,4 +1,5 @@
 const { Member } = require('../db/models');
+const util = require('apex-util');
 
 exports.generateCode = (n) => {
   // Workaround method for Math.pow() and ** operator
@@ -33,10 +34,19 @@ exports.isAdmin = (member) => {
   return false;
 };
 
+// Checks if the member has been verified
+exports.isVerified = async (userId) => {
+  const memberData = await Member.findAll({ attributes: ['verified'], where: { discordUser: userId } });
+  const verified = await memberData[0].dataValues.verified;
+  return Promise.resolve(!!verified);
+};
+
 // Update the user points in the database
 exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
-  const memberData = await Member.findAll({ attributes: ['points'], where: { discordUser: userId } });
-  await Member.update(
-    { points: memberData[0].dataValues.points + pointsToAdd },
-    { where: { discordUser: userId } });
+  const memberData = await Member.findOne({ attributes: ['points', 'verified'], where: { discordUser: userId } });
+  const { points, verified } = memberData.dataValues;
+  const pointsBeingAdded = parseFloat((points + pointsToAdd).toFixed(2));
+  verified ? await Member.update(
+    { points: pointsBeingAdded },
+    { where: { discordUser: userId } }) : util.log('User is not verified', userId, 4);
 };
