@@ -34,7 +34,7 @@ class inviteController extends BaseController {
     // create the invite for the channel
     message.channel.createInvite().then((invite, err) => {
       if (err)util.log('create invite err : ', err, 3);
-      // Test to see if the users email exist
+      // Test to see if the email exists
       if (!filter.test(email)) {
         // Send user message if the email is not correct
         message.author.send('Please provide a valid email address');
