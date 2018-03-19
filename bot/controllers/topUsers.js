@@ -28,10 +28,10 @@ class topUsersController extends BaseController {
         where: { verified: 1 },
         limit: parseInt(message.parsed[1], 10),
         order: [['points', 'DESC']],
-      }).then((results) => {
+      }).then((memberData) => {
         // Map out the data and set it equal to a variable
-        const fullMessage = results.map(element =>
-          `${element.dataValues.email}: ${element.dataValues.points} points`);
+        const fullMessage = memberData.map(member =>
+          `${member.dataValues.email}: ${member.dataValues.points} points`);
         // Send the message.
         // Not using return because it causes issues where it tries to return too early.
         message.author.send(fullMessage);

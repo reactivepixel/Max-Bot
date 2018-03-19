@@ -73,9 +73,9 @@ exports.welcomeCommand = async (member) => {
   // Asnyc await was needed to set the string properly for being verified or not
   await this.isVerified(user.id).then((verified) => {
     if (verified) {
-      welcomeString = `Welcome to the server ${user.username}! Start earning points! \n${pointsMethods}`;
+      welcomeString = `Welcome to the server ${user}! Start earning points! \n${pointsMethods}`;
     } else {
-      welcomeString = `Welcome to the server ${user.username}! Get verified to start earning points! \n${pointsMethods}`;
+      welcomeString = `Welcome to the server ${user}! Get verified to start earning points! \n${pointsMethods}`;
     }
   });
   await member.send(welcomeString);
