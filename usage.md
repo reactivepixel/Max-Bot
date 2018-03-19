@@ -68,13 +68,12 @@ Receive one bonus point for every Full Sail student you invite that can be verif
 
 * Every time Max detects you're playing a game you earn one point. If the game is on Steam, then Max can detect it. Max can also detect some desktop applications as games, i.e. Spotify etc.
 
-
 ## Administrative commands
 
 Max also includes a couple of special commands just for Officers and above for making announcements to multiple channels.
 
 ### !topUsers
 
-Example: `!topUsers <limit_number_filter>`
+Example: `!topUsers <num_users_wanted>`
 
-Displays a sorted list of users with the length limit provided. (high to low) 
+Displays a sorted list of users with the length limit provided. (high to low)
