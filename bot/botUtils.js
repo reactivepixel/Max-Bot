@@ -48,6 +48,7 @@ exports.getUserPointsandUpdate = async (userId, pointsToAdd) => {
   const memberData = await Member.findAll({ attributes: ['points', 'verified'], where: { discordUser: userId } });
   const { points, verified } = memberData[0].dataValues;
   const pointsBeingAdded = parseFloat((points + pointsToAdd).toFixed(2));
+  // Checks to see if the person has verified before adding points.
   verified ? await Member.update(
     { points: pointsBeingAdded },
     { where: { discordUser: userId } }) : util.log('User is not verified', userId, 4);
