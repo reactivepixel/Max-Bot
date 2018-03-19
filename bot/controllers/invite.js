@@ -2,8 +2,7 @@ const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const nodemailer = require('nodemailer');
 const util = require('apex-util');
-const { getUserPointsandUpdate } = require('../botUtils');
-
+const { getUserPointsandUpdate, validDomains } = require('../botUtils');
 
 class inviteController extends BaseController {
   constructor(message) {
@@ -28,12 +27,19 @@ class inviteController extends BaseController {
   // this message will be sent to the user's dm with their username
   inviteAction() {
     const { message } = this;
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const email = message.parsed[1].toLowerCase();
+    const invitePointsAwarded = 1;
     const emailDomain = email.split('@').pop();
+    const filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
+
     // create the invite for the channel
     message.channel.createInvite().then((invite, err) => {
       if (err)util.log('create invite err : ', err, 3);
+      // Test to see if the users email exist
+      if (!filter.test(email)) {
+        // Send user message if the email is not correct
+        message.author.send('Please provide a valid email address');
+      }
 
       if (validDomains.includes(emailDomain)) {
         // Set up Nodemailer to send emails through gmail
@@ -50,7 +56,7 @@ class inviteController extends BaseController {
           from: process.env.EMAIL_USERNAME,
           to: email,
           subject: 'Armada Invite',
-          html: `<table><tr><td><p>Please follow this link to be included in the discord <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord enjoy.</p></td></tr></table>`,
+          html: `<table><tr><td><p>Please follow this link to be included in the Discord server <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord server. Enjoy!</p></td></tr></table>`,
         };
         // Call sendMail on sendInvite
         // Pass mailOptions & callback function
@@ -59,20 +65,20 @@ class inviteController extends BaseController {
           if (err) {
             message.reply(errorMsg);
             util.log('Email not sent', err, 3);
-            message.author.send('Invite not sent ');
+            message.author.send('Invite not sent.');
           } else {
             util.log('Email details', info, 3);
             // for every invite sent the user will receive 1 point
-            getUserPointsandUpdate(message.author.id, 1);
+            getUserPointsandUpdate(message.author.id, invitePointsAwarded);
             // notify the user that the message has been sent
-            message.author.send('you have sent the invite');
+            message.author.send(`You've received ${invitePointsAwarded} point(s) for sending this invite.`);
           }
         });
       } else {
-        message.author.send('Sorry the invite could not be sent please contact a admin for assistance');
+        message.author.send('Sorry the invite could not be sent please contact a admin for assistance.');
       }
     });
-    return 'You have received 1 point';
+    return `${message.author}, Invite Status: `;
   }
 }
 

@@ -79,3 +79,5 @@ exports.welcomeCommand = async (member) => {
   });
   await member.send(welcomeString);
 };
+
+exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
