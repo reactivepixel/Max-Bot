@@ -81,6 +81,44 @@ exports.welcomeCommand = async (member) => {
   await member.send(welcomeString);
 };
 
+// E-mail template
+exports.templateTop = () => {
+  return `<html>
+            <head>
+              <link rel="stylesheet" type="text/css" href="css/app.css">
+              <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+              <meta name="viewport" content="width=device-width">
+              <title>Full Sail Armada</title>
+            </head>
+            <body>
+            <center data-parsed="">
+              <table align="center" class="container body-border float-center"><tbody><tr><td>
+                <table class="row"><tbody><tr>
+                  <th class="small-12 large-12 columns first last"><table><tr><th>
+                    <center data-parsed="">
+                      <img style="max-width: 60%;" src="https://i.imgur.com/ZEu7Qqe.png" align="center" class="float-center">
+                    </center>
+                    <table class="spacer"><tbody><tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr></tbody></table>`;
+};
+
+exports.templateBottom = () => {
+  return `<center data-parsed="">
+            <table align="center" class="menu float-center"><tr><td><table><tr>
+              <th class="menu-item float-center"><a href=" https://www.facebook.com/FullSailArmada/">Facebook</a></th>
+              <th class="menu-item float-center"><a href="https://twitter.com/fullsailarmada">Twitter</a></th>
+              <th class="menu-item float-center"><a href="https://www.twitch.tv/fullsailarmada">Twitch</a></th>
+            </tr></table></td></tr></table>
+          </center>
+        </th>
+        <th class="expander"></th></tr></table></th>
+      </tr></tbody></table>
+    </td></tr></tbody></table>
+  </center>
+  </body>
+</html>`;
+};
+
+
 // Nodemailer email function
 // Set up Nodemailer to send emails through gmail
 exports.sendEmail = async (message, toEmailAdd, emailSubject,
@@ -117,4 +155,4 @@ exports.sendEmail = async (message, toEmailAdd, emailSubject,
   });
   return null;
 };
-exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
+exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com', 'gmail.com'];
