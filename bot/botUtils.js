@@ -155,4 +155,4 @@ exports.sendEmail = async (message, toEmailAdd, emailSubject,
   });
   return null;
 };
-exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com', 'gmail.com'];
+exports.validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
