@@ -1,8 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
-const { getUserPointsandUpdate, sendEmail, validDomains } = require('../botUtils');
-const emailTemplate = require('../botUtils');
+const { getUserPointsandUpdate, sendEmail, validDomains, formatEmail } = require('../botUtils');
 
 class inviteController extends BaseController {
   constructor(message) {
@@ -44,9 +43,7 @@ class inviteController extends BaseController {
       if (validDomains.includes(emailDomain)) {
         const emailType = 'invite';
         const emailSubject = 'Armada Invite';
-        const templateTop = emailTemplate.templateTop();
-        const templateBottom = emailTemplate.templateBottom();
-        const emailBodyString = `${templateTop}<table><tr><td><p>Please follow this link to be included in the discord <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord enjoy.</p></td></tr></table>${templateBottom}`;
+        const emailBodyString = formatEmail(`Please follow this link to be included in the discord <a href=${invite.url}>link</a> Thank you for your interest for wanting to be in the Discord enjoy.`);
         sendEmail(message, email, emailSubject, emailBodyString, emailType, (sendStatus) => {
           if (sendStatus) {
             getUserPointsandUpdate(message.author.id, invitePointsAwarded);
