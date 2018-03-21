@@ -84,12 +84,6 @@ exports.welcomeCommand = async (member) => {
 // E-mail template
 exports.formatEmail = (emailBodyString) => {
   const emailTemplate = `<html>
-                        <head>
-                          <link rel="stylesheet" type="text/css" href="css/app.css">
-                          <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                          <meta name="viewport" content="width=device-width">
-                          <title>Full Sail Armada</title>
-                        </head>
                         <body>
                           <center data-parsed="">
                             <table align="center" class="container body-border float-center"><tbody><tr><td>
