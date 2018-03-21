@@ -3,7 +3,7 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
-const { generateCode, validDomains, sendEmail } = require('../botUtils.js');
+const { generateCode, validDomains, sendEmail, formatEmail } = require('../botUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -79,7 +79,7 @@ class VerifyController extends BaseController {
       });
       const emailType = 'verify';
       const emailSubject = 'Armada Verification Code';
-      const emailBodyString = `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`;
+      const emailBodyString = formatEmail(`Enter the code below into Discord, in the same channel on the Armada Server. <br> Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command. <tr><td><h2>Verification Code: ${code}</h2></td></tr>`);
       sendEmail(message, email, emailSubject, emailBodyString, emailType, sendStatus => sendStatus);
 
       util.log('Code', code, 3);
