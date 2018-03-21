@@ -84,30 +84,32 @@ exports.welcomeCommand = async (member) => {
 // E-mail template
 exports.formatEmail = (emailBodyString) => {
   const emailTemplate = `<html>
-                        <body>
-                          <center data-parsed="">
-                            <table align="center" class="container body-border float-center"><tbody><tr><td>
-                              <table class="row"><tbody><tr>
-                                <th class="small-12 large-12 columns first last"><table><tr><th>
-                                  <center data-parsed="">
-                                    <img style="max-width: 50%;" src="https://i.imgur.com/ZEu7Qqe.png" align="center" class="float-center">
-                                  </center>
-                                  <table class="spacer"><tbody><tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr></tbody></table>
-                                  ${emailBodyString}
-                                  <center data-parsed="">
-                                    <table align="center" class="menu float-center"><tr><td><table><tr>
-                                      <th class="menu-item float-center"><a href=" https://www.facebook.com/FullSailArmada/">Facebook</a></th>
-                                      <th class="menu-item float-center"><a href="https://twitter.com/fullsailarmada">Twitter</a></th>
-                                      <th class="menu-item float-center"><a href="https://www.twitch.tv/fullsailarmada">Twitch</a></th>
-                                    </tr></table></td></tr></table>
-                                  </center>
-                                </th>
-                                <th class="expander"></th></tr></table></th>
-                              </tr></tbody></table>
-                            </td></tr></tbody></table>
-                          </center>
-                        </body>
-                      </html>`;
+                          <body>
+                            <center data-parsed="">
+                              <table align="center" class="container body-border float-center"><tbody><tr><td>
+                                <table class="row"><tbody><tr>
+                                  <th class="small-12 large-12 columns first last"><table><tr><th>
+                                    <center data-parsed="">
+                                      <img style="max-width: 50%;" src="https://i.imgur.com/ZEu7Qqe.png" align="center" class="float-center">
+                                    </center>
+                                    <table class="spacer"><tbody><tr><td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td></tr></tbody></table>
+                                    <table style="margin: auto;">
+                                      <tr><td><p>${emailBodyString}</p></td></tr>
+                                    </table>
+                                    <center data-parsed="">
+                                      <table align="center" class="menu float-center"><tr><td><table><tr>
+                                        <th class="menu-item float-center"><a href=" https://www.facebook.com/FullSailArmada/">Facebook</a></th>
+                                        <th class="menu-item float-center"><a href="https://twitter.com/fullsailarmada">Twitter</a></th>
+                                        <th class="menu-item float-center"><a href="https://www.twitch.tv/fullsailarmada">Twitch</a></th>
+                                      </tr></table></td></tr></table>
+                                    </center>
+                                  </th>
+                                  <th class="expander"></th></tr></table></th>
+                                </tr></tbody></table>
+                              </td></tr></tbody></table>
+                            </center>
+                          </body>
+                        </html>`;
   return emailTemplate;
 };
 
