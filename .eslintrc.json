@@ -3,7 +3,7 @@
 		"node": true,
 		"mocha": true
 	},
-	"extends": "airbnb",
+	"extends": "airbnb-base",
 	"plugins": [],
 	"rules": {
 		"new-cap": 0,
