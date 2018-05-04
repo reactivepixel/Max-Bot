@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isAdmin, getUserPointsandUpdate, welcomeCommand } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -54,7 +54,30 @@ client.on('message', (message) => {
     if (message.content.toLowerCase() === '!help') {
       message.reply(helpString);
     }
+  } else {
+    // Award points if the message isn't a command
+    const { content, channel, author } = message;
+    if (channel.type !== 'dm' && content.length >= 5) {
+      const messagesPoints = 0.2;
+      getUserPointsandUpdate(author.id, messagesPoints);
+    }
   }
+});
+
+// When user plays, streams, or Listens give 5 points
+// oldMember is required due to documentation
+// docs: https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-presenceUpdate
+client.on('presenceUpdate', (oldMember) => {
+  const { id } = oldMember.user;
+  const { game } = oldMember.presence;
+  const pointsToAddforChange = 5;
+  !game ? getUserPointsandUpdate(id, pointsToAddforChange) : null;
+  util.log('Game presence', game, 4);
+});
+
+// Function to send the welcome message for a new user
+client.on('guildMemberAdd', (member) => {
+  member.send(welcomeCommand(member));
 });
 
 client.login(process.env.TOKEN);

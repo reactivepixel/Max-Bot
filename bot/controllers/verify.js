@@ -3,8 +3,7 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
-const nodemailer = require('nodemailer');
-const { generateCode } = require('../botUtils.js');
+const { generateCode, validDomains, sendEmail } = require('../botUtils.js');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -30,7 +29,6 @@ class VerifyController extends BaseController {
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
@@ -58,6 +56,7 @@ class VerifyController extends BaseController {
               email,
               uuid: uuidv4(),
               verified: 1,
+              points: 1,
             });
             // mapping guild roles to find the crew role id
             const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
@@ -78,33 +77,10 @@ class VerifyController extends BaseController {
           message.reply(verificationTimeout);
         }
       });
-      // Set up Nodemailer to send emails through gmail
-      const sendVerifyCode = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASS,
-        },
-      });
-      // Nodemailer email recipient & message
-      // TODO: Build email template
-      const mailOptions = {
-        from: process.env.EMAIL_USERNAME,
-        to: email,
-        subject: 'Armada Verification Code',
-        html: `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`,
-      };
-      // Call sendMail on sendVerifyCode
-      // Pass mailOptions & callback function
-      sendVerifyCode.sendMail(mailOptions, (err, info) => {
-        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
-        if (err) {
-          message.reply(errorMsg);
-          util.log('Email not sent', err, 3);
-        } else {
-          util.log('Email details', info, 3);
-        }
-      });
+      const emailType = 'verify';
+      const emailSubject = 'Armada Verification Code';
+      const emailBodyString = `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`;
+      sendEmail(message, email, emailSubject, emailBodyString, emailType, sendStatus => sendStatus);
 
       util.log('Code', code, 3);
       return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
