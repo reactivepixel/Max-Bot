@@ -15,15 +15,9 @@ class VerifyController extends BaseController {
     const controller = this;
 
     // Array of all commands, see baseCommand.js for prototype
-    this.commands = [
-      new Command(
-        '!verify',
-        '!verify <email_address>',
-        'Verify Email Address',
-        'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
-        this.verifyAction.bind(controller),
-      ),
-    ];
+    this.commands = [new Command('!verify', '!verify <email_address>', 'Verify Email Address', 'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.' +
+        'com.',
+    this.verifyAction.bind(controller))];
   }
 
   // Verifies Full Sail email addresses
@@ -32,8 +26,12 @@ class VerifyController extends BaseController {
     const targetVerifiedRoleName = 'Crew';
     const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
-    const email = message.parsed[1].toLowerCase();
-    const emailDomain = email.split('@').pop();
+    const email = message
+      .parsed[1]
+      .toLowerCase();
+    const emailDomain = email
+      .split('@')
+      .pop();
 
     // We can set `codeLength` to whatever length we want the verif code to be.
     // Recommend ngt 8 digits.
@@ -44,30 +42,38 @@ class VerifyController extends BaseController {
 
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
-      const collector = message.channel.createMessageCollector(
-        m => m.content.includes(code),
-        { time: timeoutInMiliseconds });
+      const collector = message
+        .channel
+        .createMessageCollector(m => m.content.includes(code), { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
         const verifyUser = 'Welcome aboard, Crewmate!';
         const userAlredyOnSystem = 'This email has already been verified to a discord user.';
-        models.Member.findOne({ where: { email } }).then((matchedUserData) => {
-          if (matchedUserData === null) {
-            // no existing record found
-            models.Member.create({
-              discorduser: m.author.id,
-              email,
-              uuid: uuidv4(),
-              verified: 1,
-            });
-            // mapping guild roles to find the crew role id
-            const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
-            message.member.addRole(targetRole).catch(util.log);
-            message.reply(verifyUser);
-          } else {
-            // existing record found
-            message.reply(userAlredyOnSystem);
-          }
-        });
+        models
+          .Member
+          .findOne({ where: {
+            email,
+          } })
+          .then((matchedUserData) => {
+            if (matchedUserData === null) {
+              // no existing record found
+              models
+                .Member
+                .create({ discorduser: m.author.id, email, uuid: uuidv4(), verified: 1 });
+              // mapping guild roles to find the crew role id
+              const targetRole = message
+                .guild
+                .roles
+                .find('name', targetVerifiedRoleName);
+              message
+                .member
+                .addRole(targetRole)
+                .catch(util.log);
+              message.reply(verifyUser);
+            } else {
+              // existing record found
+              message.reply(userAlredyOnSystem);
+            }
+          });
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
@@ -94,10 +100,10 @@ class VerifyController extends BaseController {
         subject: 'Armada Verification Code',
         html: `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`,
       };
-      // Call sendMail on sendVerifyCode
-      // Pass mailOptions & callback function
+      // Call sendMail on sendVerifyCode Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
-        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
+        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reac' +
+            'h out to a moderator to help you verify.';
         if (err) {
           message.reply(errorMsg);
           util.log('Email not sent', err, 3);

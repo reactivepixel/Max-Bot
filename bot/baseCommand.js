@@ -1,9 +1,5 @@
 class BaseCommand {
-  constructor(
-    command, example, title,
-    description, action, responseType = 'reply',
-    adminOnly = false, showWithHelp = true, allowInDM = false,
-  ) {
+  constructor(command, example, title, description, action, responseType = 'reply', adminOnly = false, showWithHelp = true, allowInDM = false) {
     this.command = command;
     this.example = example;
     this.title = title;
