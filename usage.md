@@ -54,7 +54,23 @@ Example: `!removeAllRoles`
 
 Removes all roles from the user. _Tabula rasa_, baby.
 
+### !channels
+
+Example: `!channels`
+
+Sends a DM to the user with a list of all available Armada channels.
+
+### !nominateChannel
+
+Example: `!nominateChannel <channel_name>`
+
+Allows a user to nominate a channel to be created. Once nominated, users may vote by reacting to approve a channel, making sure it reaches a defined reaction threshold before approval.
 
 ## Administrative commands
 
 Max also includes a couple of special commands just for Officers and above for making announcements to multiple channels.
+
+## !announce
+Example: `!announce <channel_name>,<channel_name>,<channel_name>`
+
+Broadcasts to multiple specified channels all at once. Role names _are_ case-sensitive.

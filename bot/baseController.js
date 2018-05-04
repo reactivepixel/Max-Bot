@@ -54,16 +54,37 @@ class BaseController {
           return this.onError('You don\'t have permissions to run this command.');
         }
 
-        // Execute command's action
-        const commandResponse = this.commands[key].action();
-        // Handle if command responds or breaks
-        if (commandResponse) {
-          this.onSuccess(commandResponse, this.commands[key]);
-        } else {
-          this.onError();
+        // Check if command has action
+        if (this.commands[key].action !== null) {
+          // Execute command's action
+          const commandResponse = this.commands[key].action();
+          // Handle if command responds or breaks
+          if (commandResponse) {
+            this.onSuccess(commandResponse, this.commands[key]);
+          } else {
+            this.onError();
+          }
         }
       }
       return this.commands[key];
+    });
+  }
+
+  // Called when a reaction is made to a message with command
+  react() {
+    // Loop through each command and map to key
+    util.log('Looping through controller commands', 0);
+    Object.keys(this.commands).map((key) => {
+      // If command matches message
+      if (this.message.parsed[0].toLowerCase() === this.commands[key].command.toLowerCase()) {
+        util.log('Matching command found', this.commands[key].command, 2);
+        // Check if command has reaction
+        if (this.commands[key].reaction !== null) {
+          // Execute command's reaction
+          this.commands[key].reaction();
+        }
+      }
+      return false;
     });
   }
 }
