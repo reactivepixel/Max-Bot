@@ -19,7 +19,7 @@ class WelcomeController extends BaseController {
   }
   welcomeAction() {
     const { message } = this;
-    return `${message.author.username}, Welcome message test`;
+    return `${message.author.username}, Welcome to the Full Sail Armada! These are the terms of service...`;
   }
 }
 module.exports = WelcomeController;

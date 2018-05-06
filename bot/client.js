@@ -57,4 +57,9 @@ client.on('message', (message) => {
   }
 });
 
+// If User joins server this message will be sent
+client.on('guildMemberAdd', (member) => {
+  member.sendMessage(`${member.user.username}, Welcome to the Full Sail Armada! These are the terms of service...`);
+});
+
 client.login(process.env.TOKEN);
