@@ -7,8 +7,19 @@ class WelcomeController extends BaseController {
     super(message);
     const controller = this;
     this.commands = [
-
+      new Command(
+        '!welcome',
+        '!welcome',
+        'Welcome Message',
+        'Replays welcome message.',
+        this.welcomeAction.bind(controller),
+        'dm',
+      ),
     ];
   }
-
+  welcomeAction() {
+    const { message } = this;
+    return `${message.author.username}, Welcome message test`;
+  }
+}
 module.exports = WelcomeController;
