@@ -13,7 +13,6 @@ class AddGameController extends BaseController {
         'Add new game',
         'Adds new game to channels and roles.',
         this.addGameAction.bind(controller),
-        'dm',
       ),
     ];
   }
@@ -32,6 +31,14 @@ class AddGameController extends BaseController {
         voiceChannel.setParent('441995839892750339');
       },
     );
+
+    message.guild.createRole({
+      name: gameName.split('-').join('_'),
+      color: 'RED',
+      hoist: false,
+      position: 2,
+      mentionable: false,
+    });
   }
 }
 module.exports = AddGameController;
