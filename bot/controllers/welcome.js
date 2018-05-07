@@ -1,5 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
+const util = require('apex-util');
 
 class WelcomeController extends BaseController {
   constructor(message) {
@@ -22,13 +23,14 @@ class WelcomeController extends BaseController {
     ];
   }
 
-  // Sends a direct welcome message to the new user
+  // Sends the welcome message to the user
   welcomeAction() {
     const { message } = this;
     if (message) {
-      return 'This is test';
+      util.log('Sending Welcome Message to User', 0);
+      return 'Welcome to the server! Please read our Terms of Service below to get started: \n\n --Terms of Service--';
     }
-    return 'No No';
+    return 'Hmm, it seems something went missing! Please try requesting the welcome message again.';
   }
 }
 
