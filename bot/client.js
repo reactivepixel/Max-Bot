@@ -18,10 +18,10 @@ client.on('ready', () => {
 // Actions for new guild members
 client.on('guildMemberAdd', (member) => {
   // Send a the direct welcome message to a guild member
-  member.send(`Welcome ${member.user.username} to the Full Sail Armada! Please read our Terms of Service below to get started: \n\n --Terms of Service--`);
+  member.send(`Welcome ${member} to the Full Sail Armada! Please read our Terms of Service below to get started: \n\n --Terms of Service--`);
   util.log('Direct Message Sent to New Member', 0);
   // Welcome a new user in the general chat
-  client.channels.find('name', 'general').send(`Welcome to the Full Sail Armada ${member.user.username}!`);
+  client.channels.find('name', 'general').send(`Welcome to the Full Sail Armada ${member}!`);
   util.log('Welcome Message Broadcasted to General Channel', 0);
 });
 
