@@ -15,9 +15,12 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
-// Message new guild members
+// Actions for new guild members
 client.on('guildMemberAdd', (member) => {
-  member.sendMessage('Welcome to the server! Please read our Terms of Service below to get started: \n\n --Terms of Service--');
+  // Send a the direct welcome message to a guild member
+  member.send('Welcome to the server! Please read our Terms of Service below to get started: \n\n --Terms of Service--');
+  // Welcome a new user in the general chat
+  client.channels.get('442823511036395541').send(`Welcome to Armada ${member.user.username}!`);
   util.log('Message Sent to New Member', 0);
 });
 
