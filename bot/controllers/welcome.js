@@ -27,7 +27,7 @@ class WelcomeController extends BaseController {
   welcomeAction() {
     const { message } = this;
     util.log('Sending Welcome Message to User', 0);
-    return `Welcome to the Full Sail Armada ${message.author.user}! Please read our Terms of Service below to get started: \n\n --Terms of Service--`;
+    return `Welcome to the Full Sail Armada @${message.author.user}! Please read our Terms of Service below to get started: \n\n --Terms of Service--`;
   }
 }
 
