@@ -60,13 +60,13 @@ client.on('message', (message) => {
 // Event listener for new members
 client.on('guildMemberAdd', (member) => {
   // Send welcome message to members who join
-  member.sendMessage(`${member}, Welcome to the Full Sail Armada! These are the terms of service...`);
+  member.send(`${member}, Welcome to the Full Sail Armada! These are the terms of service...`);
   // Send message to specific channel on the server
   const channel = member.guild.channels.find('name', 'general');
   // If channel is not found do nothing
   if (!channel) return;
   // Send message with members name
-  channel.sendMessage(`Welcome to the Full Sail Armada ${member}! for more information use !help`);
+  channel.send(`Welcome to the Full Sail Armada ${member}! for more information use !help`);
 });
 
 client.login(process.env.TOKEN);
