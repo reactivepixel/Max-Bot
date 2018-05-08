@@ -1,4 +1,4 @@
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 describe('Sanity Testing', () => {
   it('1 === 1', () => {

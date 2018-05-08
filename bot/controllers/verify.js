@@ -46,7 +46,8 @@ class VerifyController extends BaseController {
       // TODO: Set `time` prop to 600000 (10min)
       const collector = message.channel.createMessageCollector(
         m => m.content.includes(code),
-        { time: timeoutInMiliseconds });
+        { time: timeoutInMiliseconds },
+      );
       collector.on('collect', (m) => {
         const verifyUser = 'Welcome aboard, Crewmate!';
         const userAlredyOnSystem = 'This email has already been verified to a discord user.';
