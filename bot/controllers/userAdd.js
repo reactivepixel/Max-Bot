@@ -21,10 +21,8 @@ class UserAdd extends BaseController {
   }
   sendMessage() {
     const { userMsg } = this;
-    if (userMsg !== null) {
-      return `Welcome to the server ${userMsg.author.username}`;
-    }
-    return 'Oops';
+
+    return `Welcome to the server ${userMsg.author.username}`;
   }
 }
 module.exports = UserAdd;
