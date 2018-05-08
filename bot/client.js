@@ -15,12 +15,6 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
-// This will alert the Discord Server that a new member has joined and message them the ToS.
-client.on('guildMemberAdd', (member) => {
-  member.send(`Hey ${member.user.username}! Welcome to our server this is the Terms of Service Agreement!`);
-  member.guild.channels.find('name', 'general').send(`Welcome to the family ${member.user.username}!!`);
-});
-
 // Listen for messages
 client.on('message', (message) => {
   // Check for ! prefix on message to ensure it is a command
