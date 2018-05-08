@@ -15,6 +15,14 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
+// Message for new users
+client.on('guildMemberAdd', (member) => {
+  // Send Direct Message with Terms of Service
+  member.send(`Welcome ${member.user.username} to the family! Please read our Terms of Service`);
+  // Send Welcome User Message in the General Channel
+  member.guild.channels.find('name', 'general').send(`Welcome ${member.user.username} to the Family!`);
+});
+
 // Listen for messages
 client.on('message', (message) => {
   // Check for ! prefix on message to ensure it is a command
