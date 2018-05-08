@@ -15,6 +15,18 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
+// Message for new users
+client.on('guildMemberAdd', (member) => {
+  // Set Variables for Channel & Message
+  const targetChannel = 'general';
+  const message = `Welcome ${member} to the Full Sail Armada!`;
+  const tos = 'Read our Terms of Service';
+  // Send Direct Message with Terms of Service
+  member.send(message + tos);
+  // Send Welcome User Message in the General Channel
+  member.guild.channels.find('name', targetChannel).send(message);
+});
+
 // Listen for messages
 client.on('message', (message) => {
   // Check for ! prefix on message to ensure it is a command
