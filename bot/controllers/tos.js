@@ -15,7 +15,7 @@ class TosController extends BaseController {
         '!tos',
         '!tos',
         'Terms of Service',
-        'Send Copy of the Terms of Service',
+        'Sends Copy of the Terms of Service via Direct Messages',
         this.tosAction.bind(controller),
         'dm',
       ),
@@ -25,7 +25,7 @@ class TosController extends BaseController {
   tosAction() {
     // Send Direct Message with the Terms of Service
     const { message } = this;
-    return `<@${message.author.id}> read our Terms of service`;
+    return `Welcome <@${message.author.id}> to the Full Sail Armada! Read our Terms of Service`;
   }
 }
 module.exports = TosController;
