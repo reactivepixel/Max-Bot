@@ -1,6 +1,5 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const util = require('apex-util');
 
 class UserAdd extends BaseController {
   constructor(message) {
@@ -22,7 +21,10 @@ class UserAdd extends BaseController {
   }
   sendMessage() {
     const { userMsg } = this;
-    return `Welcome to the server ${userMsg.author.username}`;
+    if (userMsg !== null) {
+      return `Welcome to the server ${userMsg.author.username}`;
+    }
+    return 'Oops';
   }
 }
 module.exports = UserAdd;
