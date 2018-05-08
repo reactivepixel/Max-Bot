@@ -25,7 +25,7 @@ class TosController extends BaseController {
   tosAction() {
     // Send Direct Message with the Terms of Service
     const { message } = this;
-    return `${message.author.username} read our Terms of service`;
+    return `<@${ message.author.id }> read our Terms of service`;
   }
 }
 module.exports = TosController;

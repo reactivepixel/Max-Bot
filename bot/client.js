@@ -18,9 +18,9 @@ client.on('ready', () => {
 // Message for new users
 client.on('guildMemberAdd', (member) => {
   // Send Direct Message with Terms of Service
-  member.send(`Welcome ${member.user.username} to the Full Sail Armada! Read our Terms of Service`);
+  member.send(`Welcome ${member} to the Full Sail Armada! Read our Terms of Service`);
   // Send Welcome User Message in the General Channel
-  member.guild.channels.find('name', 'general').send(`Welcome ${member.user.username} to the Full Sail Armada!`);
+  member.guild.channels.find('name', 'general').send(`Welcome ${member} to the Full Sail Armada!`);
 });
 
 // Listen for messages
