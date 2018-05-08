@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isAdmin, welcomeUser } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -13,6 +13,22 @@ const controllers = require('./controllers')();
 // Alert when ready
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
+});
+
+// Actions for new guild members
+client.on('guildMemberAdd', (member) => {
+  // Send a the direct welcome message to a guild member
+  member.send(welcomeUser(member.user.id));
+  util.log('Direct Message Sent to New Member', 0);
+
+  // Variable to store channel if it exists
+  const channel = client.channels.find('name', 'general');
+  // Check if channel exists
+  if (channel) {
+    // Send a welcome broadcast to the general channel
+    channel.send(`Please welcome ${member} to the Full Sail Armada!`);
+    util.log('Welcome Message Broadcasted to General Channel', 0);
+  }
 });
 
 // Listen for messages

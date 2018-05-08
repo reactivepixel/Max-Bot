@@ -1,3 +1,7 @@
+// Returns the welcome message for the user
+exports.welcomeUser = userID => `Welcome to the Full Sail Armada <@${userID}>! Please read our Terms of Service below to get started: \n\n --Terms of Service--`;
+
+
 exports.generateCode = (n) => {
   // Workaround method for Math.pow() and ** operator
   const pow = (base, exp) => {
