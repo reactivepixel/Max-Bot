@@ -10,6 +10,12 @@ const client = new Discord.Client();
 // Pre-load controllers
 const controllers = require('./controllers')();
 
+// Sending the message to the user when they add
+client.on('guildMemberAdd', (member) => {
+  member.send(`Hello ${member.user.username}`);
+  client.channels.get('442034467482370052').send(`Welcome ${member.user.username} to the server.`);
+});
+
 // Alert when ready
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
