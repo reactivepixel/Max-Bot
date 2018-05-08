@@ -20,7 +20,7 @@ client.on('guildMemberAdd', (member) => {
   // Send a the direct welcome message to a guild member
   member.send(`Welcome ${member} to the Full Sail Armada! Please read our Terms of Service below to get started: \n\n --Terms of Service--`);
   util.log('Direct Message Sent to New Member', 0);
-  
+
   // Variable to store channel if it exists
   const channel = client.channels.find('name', 'general');
   // Check if channel exists
