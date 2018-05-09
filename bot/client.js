@@ -61,12 +61,10 @@ client.on('message', (message) => {
 client.on('guildMemberAdd', (member) => {
   // Channel to send messages at
   const channel = member.guild.channels.find('name', 'general');
-  // Direct message to member
-  const dmMsg = welcomeMsg(member.user.id);
   // Channel Announcement Message
   const chanMsg = `Welcome to the Full Sail Armada ${member}!`;
   // Send welcome message to members who join
-  member.send(dmMsg);
+  member.send(welcomeMsg(member.user.id));
   util.log('Direct message sent to new member', 0);
   // Check for channel
   if (channel) {

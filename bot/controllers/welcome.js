@@ -1,5 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
+const { welcomeMsg } = require('../botUtils.js');
 
 class WelcomeController extends BaseController {
   constructor(message) {
@@ -25,8 +26,7 @@ class WelcomeController extends BaseController {
   // Send direct message to user
   welcomeAction() {
     const { message } = this;
-    const directMsg = `<@${message.author.id}>, Welcome to the Full Sail Armada! These are the terms of service...`;
-    return directMsg;
+    return welcomeMsg(message.author.id);
   }
 }
 module.exports = WelcomeController;
