@@ -25,7 +25,8 @@ class WelcomeController extends BaseController {
   // Send direct message to user
   welcomeAction() {
     const { message } = this;
-    return `<@${message.author.id}>, Welcome to the Full Sail Armada! These are the terms of service...`;
+    const directMsg = `<@${message.author.id}>, Welcome to the Full Sail Armada! These are the terms of service...`;
+    return directMsg;
   }
 }
 module.exports = WelcomeController;
