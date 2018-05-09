@@ -1,18 +1,17 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 
-class UserAdd extends BaseController {
+class Welcome extends BaseController {
   constructor(message) {
     super(message);
 
     const controller = this;
-
     this.commands = [
       new Command(
         '!resend',
         '!resend',
-        'Resend Message',
-        'Send Message',
+        'Resend Welcome Message',
+        'Resend Welcome Message',
         this.sendMessage.bind(controller),
         'dm',
 
@@ -21,8 +20,7 @@ class UserAdd extends BaseController {
   }
   sendMessage() {
     const { userMsg } = this;
-
-    return `Welcome to the server ${userMsg.author.username}`;
+    return `Welcome ${userMsg.author.id} to the server.`;
   }
 }
-module.exports = UserAdd;
+module.exports = Welcome;
