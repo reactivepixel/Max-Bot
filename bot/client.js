@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isAdmin, welcomeMsg } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -62,7 +62,7 @@ client.on('guildMemberAdd', (member) => {
   // Channel to send messages at
   const channel = member.guild.channels.find('name', 'general');
   // Direct message to member
-  const dmMsg = `${member}, Welcome to the Full Sail Armada! These are the terms of service...`;
+  const dmMsg = welcomeMsg(member.user.id);
   // Channel Announcement Message
   const chanMsg = `Welcome to the Full Sail Armada ${member}!`;
   // Send welcome message to members who join
