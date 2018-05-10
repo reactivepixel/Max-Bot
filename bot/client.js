@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isAdmin, messages } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -54,6 +54,23 @@ client.on('message', (message) => {
     if (message.content.toLowerCase() === '!help') {
       message.reply(helpString);
     }
+  }
+});
+
+// Event listener for new members
+client.on('guildMemberAdd', (member) => {
+  // Channel to send messages at
+  const channel = member.guild.channels.find('name', 'general');
+  // Send welcome message to members who join
+  member.send(messages.welcome(member.user.id));
+  util.log('Direct message sent to new member', 0);
+  // Check for channel
+  if (channel) {
+    // Send message to channel
+    channel.send(messages.newMember(member.user.id));
+    util.log('Announcement for new member sent to channel ID: ' + channel, 0);
+  } else {
+    util.log('Channel ID:' + channel + ' not found', 0);
   }
 });
 
