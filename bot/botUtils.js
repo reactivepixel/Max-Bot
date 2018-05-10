@@ -31,5 +31,12 @@ exports.isAdmin = (member) => {
   return false;
 };
 
-// Welcome Message return
-exports.welcomeMsg = memberID => `<@${memberID}>, Welcome to the Full Sail Armada! These are the terms of service...`;
+// Return messages
+exports.messages = ({
+  welcome(memberID) {
+    return `<@${memberID}>, Welcome to the Full Sail Armada! These are the terms of service...`;
+  },
+  newMember(memberID) {
+    return `Welcome to the Full Sail Armada <@${memberID}>!`;
+  },
+});
