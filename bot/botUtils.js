@@ -30,3 +30,10 @@ exports.isAdmin = (member) => {
   }
   return false;
 };
+
+// Return messages
+exports.messages = ({
+  newChannel(memberID) {
+    return `<@${memberID}>, You successfully created the channels & roles for `;
+  },
+});
