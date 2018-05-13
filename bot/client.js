@@ -15,6 +15,8 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
+// TODO: Set Twitch notification
+
 // Message for new users
 client.on('guildMemberAdd', (member) => {
   // Send Direct Message with Terms of Service
