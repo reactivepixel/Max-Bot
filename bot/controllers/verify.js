@@ -4,7 +4,7 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-const { generateCode } = require('../botUtils.js');
+const { generateCode, language } = require('../botUtils.js');
 const Localize = require('localize');
 
 const myLocale = new Localize({
@@ -14,7 +14,7 @@ const myLocale = new Localize({
     alien: 'Eaiuwbg akwu alwkjg wakjg akwjf aqiuwy. qwoigb qw @wke.eiowbg.weg wy @wkjwlt.com.',
   },
 });
-myLocale.setLocale('en_US');
+myLocale.setLocale(language());
 
 class VerifyController extends BaseController {
   constructor(message) {
