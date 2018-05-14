@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isAdmin, language } = require('./botUtils.js');
 const Localize = require('localize');
 
 const myLocale = new Localize({
@@ -10,7 +10,7 @@ const myLocale = new Localize({
     alien: 'v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**',
   },
 });
-myLocale.setLocale('en_US');
+myLocale.setLocale(language());
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
