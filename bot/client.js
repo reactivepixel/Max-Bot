@@ -1,6 +1,16 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
+const Localize = require('localize');
+
+const myLocale = new Localize({
+  help: {
+    en_US: 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**',
+    es_MX: 'v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**',
+    alien: 'v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**',
+  },
+});
+myLocale.setLocale('en_US');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -22,7 +32,7 @@ client.on('message', (message) => {
     util.log('Command message received', message.content, 0);
 
     // Build basic help string
-    let helpString = 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
+    let helpString = myLocale.translate('help');
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {

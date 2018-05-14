@@ -1,6 +1,41 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
+const Localize = require('localize');
+
+const myLocale = new Localize({
+  roles: {
+    en_US: 'List all available Armada roles.',
+    es_MX: 'Enumera todos los roles de Armada disponibles.',
+    alien: 'Aaskfjbaw awf akjebgkej akwjbf khchd.',
+  },
+  addRole: {
+    en_US: 'Add a single role to yourself. Role is case-sensitive.',
+    es_MX: 'Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.',
+    alien: 'Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg.',
+  },
+  addRoles: {
+    en_US: 'Add multiple roles to yourself. Rolea are case-sensitive.',
+    es_MX: 'Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.',
+    alien: 'Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav.',
+  },
+  removeRole: {
+    en_US: 'Remove a single role from yourself. Role is case-sensitive.',
+    es_MX: 'Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.',
+    alien: 'Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg.',
+  },
+  addAllRoles: {
+    en_US: 'List all available Armada channels.',
+    es_MX: 'Agrega todas las funciones del juego a ti mismo.',
+    alien: 'Iakwjgb awli qowig liwfg alwglakwg.',
+  },
+  removeAllRoles: {
+    en_US: 'Remove every game role from yourself.',
+    es_MX: 'Elimina cada función del juego de ti mismo.',
+    alien: 'Oalkwbg awkur ewgkj awkjbf wekhgv alsigf.',
+  },
+});
+myLocale.setLocale('en_US');
 
 class RoleController extends BaseController {
   constructor(message) {
@@ -16,7 +51,7 @@ class RoleController extends BaseController {
         '!roles',
         '!roles',
         'List All Roles',
-        'List all available Armada roles.',
+        myLocale.translate('roles'),
         this.rolesAction.bind(controller),
         'dm',
       ),
@@ -24,35 +59,35 @@ class RoleController extends BaseController {
         '!addRole',
         '!addRole <role_name>',
         'Add Role',
-        'Add a single role to yourself. Role is case-sensitive.',
+        myLocale.translate('addRole'),
         this.addRoleAction.bind(controller),
       ),
       new Command(
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
-        'Add multiple roles to yourself. Rolea are case-sensitive.',
+        myLocale.translate('addRoles'),
         this.addRolesAction.bind(controller),
       ),
       new Command(
         '!removeRole',
         '!removeRole <role_name>',
         'Remove Role',
-        'Remove a single role from yourself. Role is case-sensitive.',
+        myLocale.translate('removeRole'),
         this.removeRoleAction.bind(controller),
       ),
       new Command(
         '!addAllRoles',
         '!addAllRoles',
         'Add All Roles',
-        'Add every game role to yourself.',
+        myLocale.translate('addAllRoles'),
         this.addAllRolesAction.bind(controller),
       ),
       new Command(
         '!removeAllRoles',
         '!removeAllRoles',
         'Remove All Roles',
-        'Remove every game role from yourself.',
+        myLocale.translate('removeAllRoles'),
         this.removeAllRolesAction.bind(controller),
       ),
     ];
