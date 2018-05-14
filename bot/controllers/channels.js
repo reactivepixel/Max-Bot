@@ -1,6 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
+const { language } = require('../botUtils.js');
 const Localize = require('localize');
 
 const myLocale = new Localize({
@@ -15,7 +16,7 @@ const myLocale = new Localize({
     alien: 'Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg.',
   },
 });
-myLocale.setLocale('en_US');
+myLocale.setLocale(language());
 
 class ChannelController extends BaseController {
   constructor(message) {
