@@ -9,12 +9,12 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   verify: {
-    en_US: 'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
-    es_MX: 'Verifique su dirección de correo electrónico de Full Sail. Debe ser @student.fullsail.edu o @fullsail.com.',
-    alien: 'Eaiuwbg akwu alwkjg wakjg akwjf aqiuwy. qwoigb qw @wke.eiowbg.weg wy @wkjwlt.com.',
+    en: 'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
+    es: 'Verifique su dirección de correo electrónico de Full Sail. Debe ser @student.fullsail.edu o @fullsail.com.',
+    al: 'Eaiuwbg akwu alwkjg wakjg akwjf aqiuwy. qwoigb qw @wke.eiowbg.weg wy @wkjwlt.com.',
   },
 });
-myLocale.setLocale(language());
+myLocale.setLocale(process.env.LANG);
 
 class VerifyController extends BaseController {
   constructor(message) {

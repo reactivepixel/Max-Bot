@@ -5,12 +5,12 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   help: {
-    en_US: 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**',
-    es_MX: 'v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**',
-    alien: 'v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**',
+    en: 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**',
+    es: 'v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**',
+    al: 'v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**',
   },
 });
-myLocale.setLocale(language());
+myLocale.setLocale(process.env.LANG);
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -33,6 +33,7 @@ client.on('message', (message) => {
 
     // Build basic help string
     let helpString = myLocale.translate('help');
+    util.log('TEST', process.env, 0);
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {

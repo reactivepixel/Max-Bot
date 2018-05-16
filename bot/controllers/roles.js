@@ -6,37 +6,37 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   roles: {
-    en_US: 'List all available Armada roles.',
-    es_MX: 'Enumera todos los roles de Armada disponibles.',
-    alien: 'Aaskfjbaw awf akjebgkej akwjbf khchd.',
+    en: 'List all available Armada roles.',
+    es: 'Enumera todos los roles de Armada disponibles.',
+    al: 'Aaskfjbaw awf akjebgkej akwjbf khchd.',
   },
   addRole: {
-    en_US: 'Add a single role to yourself. Role is case-sensitive.',
-    es_MX: 'Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.',
-    alien: 'Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg.',
+    en: 'Add a single role to yourself. Role is case-sensitive.',
+    es: 'Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.',
+    al: 'Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg.',
   },
   addRoles: {
-    en_US: 'Add multiple roles to yourself. Rolea are case-sensitive.',
-    es_MX: 'Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.',
-    alien: 'Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav.',
+    en: 'Add multiple roles to yourself. Rolea are case-sensitive.',
+    es: 'Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.',
+    al: 'Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav.',
   },
   removeRole: {
-    en_US: 'Remove a single role from yourself. Role is case-sensitive.',
-    es_MX: 'Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.',
-    alien: 'Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg.',
+    en: 'Remove a single role from yourself. Role is case-sensitive.',
+    es: 'Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.',
+    al: 'Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg.',
   },
   addAllRoles: {
-    en_US: 'List all available Armada channels.',
-    es_MX: 'Agrega todas las funciones del juego a ti mismo.',
-    alien: 'Iakwjgb awli qowig liwfg alwglakwg.',
+    en: 'List all available Armada channels.',
+    es: 'Agrega todas las funciones del juego a ti mismo.',
+    al: 'Iakwjgb awli qowig liwfg alwglakwg.',
   },
   removeAllRoles: {
-    en_US: 'Remove every game role from yourself.',
-    es_MX: 'Elimina cada función del juego de ti mismo.',
-    alien: 'Oalkwbg awkur ewgkj awkjbf wekhgv alsigf.',
+    en: 'Remove every game role from yourself.',
+    es: 'Elimina cada función del juego de ti mismo.',
+    al: 'Oalkwbg awkur ewgkj awkjbf wekhgv alsigf.',
   },
 });
-myLocale.setLocale(language());
+myLocale.setLocale(process.env.LANG);
 
 class RoleController extends BaseController {
   constructor(message) {

@@ -6,17 +6,17 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   channel: {
-    en_US: 'List all available Armada channels.',
-    es_MX: 'Enumera todos los canales de Armada disponibles.',
-    alien: 'Fawjf akjwbg kejawbgkjw kajebg sjhgrg.',
+    en: 'List all available Armada channels.',
+    es: 'Enumera todos los canales de Armada disponibles.',
+    al: 'Fawjf akjwbg kejawbgkjw kajebg sjhgrg.',
   },
   announce: {
-    en_US: 'Broadcast to multiple channels. Channels are case-sensitive.',
-    es_MX: 'Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.',
-    alien: 'Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg.',
+    en: 'Broadcast to multiple channels. Channels are case-sensitive.',
+    es: 'Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.',
+    al: 'Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg.',
   },
 });
-myLocale.setLocale(language());
+myLocale.setLocale(process.env.LANG);
 
 class ChannelController extends BaseController {
   constructor(message) {
