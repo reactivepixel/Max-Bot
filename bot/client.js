@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin, language } = require('./botUtils.js');
+const { isAdmin } = require('./botUtils.js');
 const Localize = require('localize');
 
 const myLocale = new Localize({

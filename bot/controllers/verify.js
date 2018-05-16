@@ -4,7 +4,7 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
-const { generateCode, language } = require('../botUtils.js');
+const { generateCode } = require('../botUtils.js');
 const Localize = require('localize');
 
 const myLocale = new Localize({
