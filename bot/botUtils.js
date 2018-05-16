@@ -30,17 +30,3 @@ exports.isAdmin = (member) => {
   }
   return false;
 };
-
-// Language Setting
-exports.language = () => {
-  const language = 'en_US';
-  if (language === 'en_US') {
-    return 'en_US';
-  } else if (language === 'es_MX') {
-    return 'es_MX';
-  } else if (language === 'alien') {
-    return 'alien';
-  } else {
-    return 'en_US';
-  }
-};
