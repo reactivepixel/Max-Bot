@@ -27,6 +27,7 @@ gulp.task('pm2', () => {
         EMAIL_USERNAME: process.env.EMAIL_USERNAME,
         EMAIL_PASS: process.env.EMAIL_PASS,
         NODE_ENV: process.env.NODE_ENV,
+        LANG: process.env.LANG,
       },
     }],
   };
