@@ -2,29 +2,29 @@ const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
 
 class BaseController {
-  constructor(message) {
-    // Add middleware to saved message
-    this.message = BaseController.messageMiddleware(message);
+  constructor(eventObj) {
+    // Add middleware to saved eventObj
+    this.eventObj = BaseController.eventMiddleware(eventObj);
     this.commands = [];
   }
 
-  // Add extra information to message object
-  static messageMiddleware(message) {
+  // Add extra information to eventObj object
+  static eventMiddleware(eventObj) {
     // Creates an empty object container
-    const messageContainer = {};
-    // Tokenizes the message by space characters, adds to container
-    messageContainer.parsed = message.content.split(' ');
-    // Adds message object to container
-    return Object.assign(message, messageContainer);
+    const eventObjContainer = {};
+    // Tokenizes the eventObj by space characters, adds to container
+    eventObjContainer.parsed = eventObj.content.split(' ');
+    // Adds eventObj object to container
+    return Object.assign(eventObj, eventObjContainer);
   }
 
   onSuccess(commandResponse, command) {
     if (commandResponse !== null) {
-      // Determine how to respond to message
+      // Determine how to respond to eventObj
       if (command.responseType === 'reply') {
-        return this.message.reply(commandResponse);
+        return this.eventObj.reply(commandResponse);
       } else if (command.responseType === 'dm') {
-        return this.message.author.send(commandResponse);
+        return this.eventObj.author.send(commandResponse);
       }
     }
     // Fail safe
@@ -32,7 +32,7 @@ class BaseController {
   }
 
   onError(errorMessage = 'I Broke... Beep...Boop...Beep') {
-    return this.message.reply(errorMessage);
+    return this.eventObj.reply(errorMessage);
   }
 
   // Execute the command's functionality
@@ -40,17 +40,17 @@ class BaseController {
     // Loop through each command and map to key
     util.log('Looping through controller commands', 0);
     Object.keys(this.commands).map((key) => {
-      // If command matches message
-      if (this.message.parsed[0].toLowerCase() === this.commands[key].command.toLowerCase()) {
+      // If command matches eventObj
+      if (this.eventObj.parsed[0].toLowerCase() === this.commands[key].command.toLowerCase()) {
         util.log('Matching command found', this.commands[key].command, 2);
 
-        // If user messages the bot a channel-only command
-        if (!this.commands[key].allowInDM && !this.message.guild) {
+        // If user eventObjs the bot a channel-only command
+        if (!this.commands[key].allowInDM && !this.eventObj.guild) {
           return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
         }
 
         // If non-admin enters admin command
-        if (this.commands[key].adminOnly && !isAdmin(this.message.member)) {
+        if (this.commands[key].adminOnly && !isAdmin(this.eventObj.member)) {
           return this.onError('You don\'t have permissions to run this command.');
         }
 
