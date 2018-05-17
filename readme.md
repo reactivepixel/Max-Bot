@@ -57,7 +57,7 @@ EMAIL_PASS=xxx
 
 ### Setup Discord Server & Bot
 
-1. Go the Discord Client and create a new Discord Server. Need Help Follow this [Guide](https://support.discordapp.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
+1. Go to the Discord Client and create a new Discord Server. Need Help Follow this [Guide](https://support.discordapp.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
 2. Go to the [Discord Developer Page](https://discordapp.com/developers) and create a new App.
 3. Go to the App Review Page and Create a Bot User.
 4. Update the ```DISCORD_BOT_TOKEN``` in the .env file with the App Bot User Token provided to you.
