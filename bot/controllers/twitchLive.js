@@ -18,6 +18,9 @@ class StreamerLiveController extends BaseController {
   }
   addTwitchAction() {
     const { message } = this;
+    const streamName = message.parsed[1];
+    const twitchClientID = '';
+    const nameList = {};
   }
 }
 module.exports = StreamerLiveController;
