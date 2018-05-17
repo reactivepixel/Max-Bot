@@ -1,6 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const util = require('apex-util');
+// const util = require('apex-util');
 
 class StreamerLiveController extends BaseController {
   constructor(message) {
@@ -13,6 +13,8 @@ class StreamerLiveController extends BaseController {
         'Twitch Live',
         'A quick easy way to announce you are going live on Twitch.',
         this.addTwitchAction.bind(controller),
+        'reply',
+        true,
       ),
     ];
   }
@@ -21,8 +23,10 @@ class StreamerLiveController extends BaseController {
     const twitchName = message.parsed[1];
     const twitchURL = `https://www.twitch.tv/${twitchName}`;
     const twitchGame = message.parsed[2];
-    const streamMessage = `Hey everyone! ${message.author.username} is going live playing ${twitchGame}!! Check him out at ${twitchURL}!`;
-    return streamMessage;
+    const streamMessage = `Hey everyone! ${message.author.username} is going live playing ${twitchGame}!! Check him out at ${twitchURL} !`;
+    const targetChannel = message.guild.channels.get('319548128267206666');
+    const sender = message.author.username;
+    return targetChannel.send('```' + sender + ' has an announcment: ```' + streamMessage);
   }
 }
 module.exports = StreamerLiveController;
