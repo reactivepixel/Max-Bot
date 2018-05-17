@@ -17,7 +17,7 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
-function controllerPicker(event, eventObj) {
+function eventPicker(event, eventObj) {
   // Check for ! prefix on message to ensure it is a command
   if (event === 'message' && eventObj.content.charAt(0) === '!') {
     util.log('Command message received', eventObj.content, 0);
@@ -61,8 +61,8 @@ function controllerPicker(event, eventObj) {
     // Process message against every controller
     Object.keys(events).forEach((key) => {
       // Instantiate the controller
-      const eventInstance = new controllers[key]('welcome');
-      util.log('Controller instance', eventInstance, 5);
+      const eventInstance = new events[key](eventObj);
+      util.log('Event instance', eventInstance, 5);
       // Runs commands after constructor is called
       eventInstance.run();
     });
@@ -71,12 +71,12 @@ function controllerPicker(event, eventObj) {
 
 // Create an event listener for new guild members
 client.on('guildMemberAdd', (member) => {
-  controllerPicker('guildMemberAdd', member);
+  eventPicker('guildMemberAdd', member);
 });
 
 // Listen for messages
 client.on('message', (message) => {
-  controllerPicker(message);
+  eventPicker('message', message);
 });
 
 client.login(process.env.TOKEN);

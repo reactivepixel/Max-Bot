@@ -20,6 +20,7 @@ class BaseController {
       return Object.assign(eventObj, eventObjContainer);
     }
     // EVENT OBJECT: MEMBER
+    console.log('MIDDLEWARE ', eventObj);
     return eventObj;
   }
 
@@ -43,7 +44,7 @@ class BaseController {
   // Execute the command's functionality
   run() {
     // EVENT OBJECT: MESSAGE
-    if (this.commands) {
+    if (this.eventObj.constructor.name.toLowerCase() === 'message') {
       // Loop through each command and map to key
       util.log('Looping through controller commands', 0);
       Object.keys(this.commands).map((key) => {
@@ -72,9 +73,15 @@ class BaseController {
         }
         return this.commands[key];
       });
+    } else {
+      // EVENT OBJECT: MEMBER
+      console.log('RUN COMMAND', this.events);
+      Object.keys(this.events).map((key) => {
+        this.events[key].action();
+        return this.events[key];
+      });
     }
-    // EVENT OBJECT: MEMBER
-    return this.action;
+    return '';
   }
 }
 module.exports = BaseController;

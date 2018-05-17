@@ -2,22 +2,23 @@ const BaseController = require('../baseController.js');
 const Event = require('../baseEvent.js');
 // const util = require('apex-util');
 
-class ChannelController extends BaseController {
-  constructor(message) {
-    super(message);
+class GuildMemberAddEvent extends BaseController {
+  constructor(member) {
+    super(member);
     const controller = this;
-    this.event = [
+    this.events = [
       new Event(
         this.event = 'guildMemberAdd',
+        this.name = 'welcomeGuildMember',
         this.action = this.welcomeAction.bind(controller),
       ),
     ];
   }
 
   welcomeAction() {
-    const { member } = this;
-    console.log('THE MEMBER IS: ', member);
+    // const { GuildMember } = this;
+    console.log('THE MEMBER IS: ', this.member);
   }
 }
 
-module.exports = ChannelController;
+module.exports = GuildMemberAddEvent;

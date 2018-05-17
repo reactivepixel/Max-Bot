@@ -2,8 +2,8 @@ const fs = require('fs');
 const util = require('apex-util');
 
 module.exports = () => {
-  const events = [];
-  const targetPath = './bot/events';
+  const controllers = [];
+  const targetPath = './bot/controllers';
   const validExtensions = ['js'];
 
   // Auto-load controller files
@@ -20,11 +20,11 @@ module.exports = () => {
     // Check if extension is on approved array
     if (validExtensions.includes(currentExt)) {
       // Add controller to list
-      events.push(require(`./${file}`));
+      controllers.push(require(`./${file}`));
     }
     return true;
   });
 
-  util.log('Events found within target path' + targetPath, events, 3);
-  return events;
+  util.log('Controllers found within target path' + targetPath, controllers, 3);
+  return controllers;
 };
