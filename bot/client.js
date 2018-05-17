@@ -10,15 +10,16 @@ const client = new Discord.Client();
 
 // Pre-load controllers
 const controllers = require('./controllers')();
+const events = require('./events')();
 
 // Alert when ready
 client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
-function controllerPicker(eventObj) {
+function controllerPicker(event, eventObj) {
   // Check for ! prefix on message to ensure it is a command
-  if (eventObj.content.charAt(0) === '!') {
+  if (event === 'message' && eventObj.content.charAt(0) === '!') {
     util.log('Command message received', eventObj.content, 0);
 
     // Build basic help string
@@ -55,16 +56,22 @@ function controllerPicker(eventObj) {
       eventObj.reply(helpString);
     }
   }
+
+  if (event === 'guildMemberAdd') {
+    // Process message against every controller
+    Object.keys(events).forEach((key) => {
+      // Instantiate the controller
+      const eventInstance = new controllers[key]('welcome');
+      util.log('Controller instance', eventInstance, 5);
+      // Runs commands after constructor is called
+      eventInstance.run();
+    });
+  }
 }
 
 // Create an event listener for new guild members
 client.on('guildMemberAdd', (member) => {
-  // Send the message to a designated channel on a server:
-  const channel = member.guild.channels.find('name', 'general');
-  // Do nothing if the channel wasn't found on this server
-  if (!channel) return;
-  // Send the message, mentioning the member
-  channel.send(`Welcome to the server, ${member}`);
+  controllerPicker('guildMemberAdd', member);
 });
 
 // Listen for messages
