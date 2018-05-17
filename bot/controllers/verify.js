@@ -36,7 +36,7 @@ class VerifyController extends BaseController {
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
 
-    // We can set `codeLength` to whatever length we want the verif code to be.
+    // We can set `codeLength` to whatever length we want the verify code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
@@ -46,6 +46,7 @@ class VerifyController extends BaseController {
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
       const collector = message.channel.createMessageCollector(
+
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
@@ -63,10 +64,10 @@ class VerifyController extends BaseController {
             // mapping guild roles to find the crew role id
             const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
             message.member.addRole(targetRole).catch(util.log);
-            message.reply(verifyUser);
+            message.author.sendMessage(verifyUser);
           } else {
             // existing record found
-            message.reply(userAlredyOnSystem);
+            message.author.sendMessage(userAlredyOnSystem);
           }
         });
         util.log('Collected', m.content, 3);
