@@ -8,10 +8,10 @@ class StreamerLiveController extends BaseController {
     const controller = this;
     this.commands = [
       new Command(
-        '!addTwitch',
-        '!addTwitch <twitch_name>',
-        'Add Twitch',
-        'Add Twitch Name',
+        '!twitchLive',
+        '!twitchLive <twitch_name>',
+        'Twitch Live',
+        'A quick easy way to ',
         this.addTwitchAction.bind(controller),
       ),
     ];
