@@ -9,7 +9,7 @@ class StreamerLiveController extends BaseController {
     this.commands = [
       new Command(
         '!twitchLive',
-        '!twitchLive <twitch_name>',
+        '!twitchLive <twitch_name> <twitch_game>',
         'Twitch Live',
         'A quick easy way to announce you are going live on Twitch.',
         this.addTwitchAction.bind(controller),
@@ -19,7 +19,10 @@ class StreamerLiveController extends BaseController {
   addTwitchAction() {
     const { message } = this;
     const twitchName = message.parsed[1];
-    const nameList = `https://www.twitch.tv/${twitchName}`;
+    const twitchURL = `https://www.twitch.tv/${twitchName}`;
+    const twitchGame = message.parsed[2];
+    const streamMessage = `Hey everyone! ${message.author.username} is going live playing ${twitchGame}!! Check him out at ${twitchURL}!`;
+    return streamMessage;
   }
 }
 module.exports = StreamerLiveController;
