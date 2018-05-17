@@ -9,9 +9,10 @@ Interested in learning how to use Max? See the [Usage documentation here](usage.
 - [Installation](#installation)
 - [Running the Bot](#running-the-bot)
 - [Style Guide](#style-guide)
-- [Debug Tool Documentation](debug-tool-documentation)
-- [Modules & Integrations](#modules-&-integrations)
+- [Debug Tool Documentation](#debug-tool-documentation)
+- [Modules & Integrations](#modules--integrations)
 - [Container Information](#container-information)
+- [Other Information](#other-information)
 
 # Installation
 
