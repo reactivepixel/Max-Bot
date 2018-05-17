@@ -11,16 +11,15 @@ class StreamerLiveController extends BaseController {
         '!twitchLive',
         '!twitchLive <twitch_name>',
         'Twitch Live',
-        'A quick easy way to ',
+        'A quick easy way to announce you are going live on Twitch.',
         this.addTwitchAction.bind(controller),
       ),
     ];
   }
   addTwitchAction() {
     const { message } = this;
-    const streamName = message.parsed[1];
-    const twitchClientID = '';
-    const nameList = {};
+    const twitchName = message.parsed[1];
+    const nameList = `https://www.twitch.tv/${twitchName}`;
   }
 }
 module.exports = StreamerLiveController;
