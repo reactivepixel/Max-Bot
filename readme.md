@@ -6,12 +6,12 @@ Interested in learning how to use Max? See the [Usage documentation here](usage.
 
 ### Table of Contents
 
-- [Installation](#Installation)
-- [Running the Bot](#Running-the-Bot)
-- [Style Guide](#Style-Guide)
-- [Debug Tool Documentation](Debug-Tool-Documentation)
-- [Modules & Integrations](#Modules-&-Integrations)
-- [Container Information](#Container-Information)
+- [Installation](#installation)
+- [Running the Bot](#running-the-bot)
+- [Style Guide](#style-guide)
+- [Debug Tool Documentation](debug-tool-documentation)
+- [Modules & Integrations](#modules-&-integrations)
+- [Container Information](#container-information)
 
 # Installation
 
