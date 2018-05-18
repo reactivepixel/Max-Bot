@@ -5,9 +5,9 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   help: {
-    en: 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**',
-    es: 'v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**',
-    al: 'v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**',
+    EN: 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**',
+    ES: 'v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**',
+    AL: 'v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**',
   },
 });
 myLocale.setLocale(process.env.LANG);
@@ -33,7 +33,6 @@ client.on('message', (message) => {
 
     // Build basic help string
     let helpString = myLocale.translate('help');
-    util.log('TEST', process.env, 0);
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {

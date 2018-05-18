@@ -5,14 +5,14 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   channel: {
-    en: 'List all available Armada channels.',
-    es: 'Enumera todos los canales de Armada disponibles.',
-    al: 'Fawjf akjwbg kejawbgkjw kajebg sjhgrg.',
+    EN: 'List all available Armada channels.',
+    ES: 'Enumera todos los canales de Armada disponibles.',
+    AL: 'Fawjf akjwbg kejawbgkjw kajebg sjhgrg.',
   },
   announce: {
-    en: 'Broadcast to multiple channels. Channels are case-sensitive.',
-    es: 'Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.',
-    al: 'Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg.',
+    EN: 'Broadcast to multiple channels. Channels are case-sensitive.',
+    ES: 'Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.',
+    AL: 'Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg.',
   },
 });
 myLocale.setLocale(process.env.LANG);

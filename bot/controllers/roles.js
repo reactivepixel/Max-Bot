@@ -5,34 +5,34 @@ const Localize = require('localize');
 
 const myLocale = new Localize({
   roles: {
-    en: 'List all available Armada roles.',
-    es: 'Enumera todos los roles de Armada disponibles.',
-    al: 'Aaskfjbaw awf akjebgkej akwjbf khchd.',
+    EN: 'List all available Armada roles.',
+    ES: 'Enumera todos los roles de Armada disponibles.',
+    AL: 'Aaskfjbaw awf akjebgkej akwjbf khchd.',
   },
   addRole: {
-    en: 'Add a single role to yourself. Role is case-sensitive.',
-    es: 'Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.',
-    al: 'Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg.',
+    EN: 'Add a single role to yourself. Role is case-sensitive.',
+    ES: 'Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.',
+    AL: 'Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg.',
   },
   addRoles: {
-    en: 'Add multiple roles to yourself. Rolea are case-sensitive.',
-    es: 'Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.',
-    al: 'Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav.',
+    EN: 'Add multiple roles to yourself. Rolea are case-sensitive.',
+    ES: 'Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.',
+    AL: 'Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav.',
   },
   removeRole: {
-    en: 'Remove a single role from yourself. Role is case-sensitive.',
-    es: 'Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.',
-    al: 'Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg.',
+    EN: 'Remove a single role from yourself. Role is case-sensitive.',
+    ES: 'Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.',
+    AL: 'Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg.',
   },
   addAllRoles: {
-    en: 'List all available Armada channels.',
-    es: 'Agrega todas las funciones del juego a ti mismo.',
-    al: 'Iakwjgb awli qowig liwfg alwglakwg.',
+    EN: 'List all available Armada channels.',
+    ES: 'Agrega todas las funciones del juego a ti mismo.',
+    AL: 'Iakwjgb awli qowig liwfg alwglakwg.',
   },
   removeAllRoles: {
-    en: 'Remove every game role from yourself.',
-    es: 'Elimina cada función del juego de ti mismo.',
-    al: 'Oalkwbg awkur ewgkj awkjbf wekhgv alsigf.',
+    EN: 'Remove every game role from yourself.',
+    ES: 'Elimina cada función del juego de ti mismo.',
+    AL: 'Oalkwbg awkur ewgkj awkjbf wekhgv alsigf.',
   },
 });
 myLocale.setLocale(process.env.LANG);
