@@ -32,7 +32,7 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 
 Create an ```.env``` file in the root directory with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
-```json
+```shell
 NODE_ENV=development
 DEBUG_MODE=3
 
