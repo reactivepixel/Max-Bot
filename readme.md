@@ -44,6 +44,8 @@ EMAIL_PASS=xxx
 
 > Update ```DISCORD_BOT_TOKEN``` with the token you receive from the next step.
 
+> Make sure ```LANGUAGE``` is set to ```en``` and is lowercase.
+
 
 
 
