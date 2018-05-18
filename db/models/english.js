@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Messages = sequelize.define('Messages', {
-    lang: DataTypes.STRING,
+  const English = sequelize.define('English', {
     msgtype: DataTypes.STRING,
     message: DataTypes.STRING,
   }, {
@@ -11,5 +10,5 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   });
-  return Messages;
+  return English;
 };
