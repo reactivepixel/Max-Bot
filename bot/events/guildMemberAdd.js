@@ -12,12 +12,23 @@ class GuildMemberAddEvent extends BaseController {
         this.name = 'welcomeGuildMember',
         this.action = this.welcomeAction.bind(controller),
       ),
+      new Event(
+        this.event = 'guildMemberAdd',
+        this.name = 'annoyNewGuildMember',
+        this.action = this.annoyAction.bind(controller),
+      ),
     ];
   }
 
   welcomeAction() {
-    // const { GuildMember } = this;
-    console.log('THE MEMBER IS: ', this.member);
+    const { eventObj } = this;
+    console.log('THE MEMBER IS: ', eventObj);
+    eventObj.user.send('Hello');
+  }
+
+  annoyAction() {
+    const { eventObj } = this;
+    eventObj.user.send('MUAHAHAHAHAHAAHAHA');
   }
 }
 
