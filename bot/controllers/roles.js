@@ -1,41 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
-const Localize = require('localize');
-
-const myLocale = new Localize({
-  roles: {
-    EN: 'List all available Armada roles.',
-    ES: 'Enumera todos los roles de Armada disponibles.',
-    AL: 'Aaskfjbaw awf akjebgkej akwjbf khchd.',
-  },
-  addRole: {
-    EN: 'Add a single role to yourself. Role is case-sensitive.',
-    ES: 'Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.',
-    AL: 'Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg.',
-  },
-  addRoles: {
-    EN: 'Add multiple roles to yourself. Rolea are case-sensitive.',
-    ES: 'Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.',
-    AL: 'Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav.',
-  },
-  removeRole: {
-    EN: 'Remove a single role from yourself. Role is case-sensitive.',
-    ES: 'Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.',
-    AL: 'Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg.',
-  },
-  addAllRoles: {
-    EN: 'List all available Armada channels.',
-    ES: 'Agrega todas las funciones del juego a ti mismo.',
-    AL: 'Iakwjgb awli qowig liwfg alwglakwg.',
-  },
-  removeAllRoles: {
-    EN: 'Remove every game role from yourself.',
-    ES: 'Elimina cada función del juego de ti mismo.',
-    AL: 'Oalkwbg awkur ewgkj awkjbf wekhgv alsigf.',
-  },
-});
-myLocale.setLocale(process.env.LANG);
+const msg = require('../locale/messages.json');
 
 class RoleController extends BaseController {
   constructor(message) {
@@ -51,7 +17,7 @@ class RoleController extends BaseController {
         '!roles',
         '!roles',
         'List All Roles',
-        myLocale.translate('roles'),
+        msg.roles[process.env.LANG],
         this.rolesAction.bind(controller),
         'dm',
       ),
@@ -59,35 +25,35 @@ class RoleController extends BaseController {
         '!addRole',
         '!addRole <role_name>',
         'Add Role',
-        myLocale.translate('addRole'),
+        msg.addRole[process.env.LANG],
         this.addRoleAction.bind(controller),
       ),
       new Command(
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
-        myLocale.translate('addRoles'),
+        msg.addRoles[process.env.LANG],
         this.addRolesAction.bind(controller),
       ),
       new Command(
         '!removeRole',
         '!removeRole <role_name>',
         'Remove Role',
-        myLocale.translate('removeRole'),
+        msg.removeRole[process.env.LANG],
         this.removeRoleAction.bind(controller),
       ),
       new Command(
         '!addAllRoles',
         '!addAllRoles',
         'Add All Roles',
-        myLocale.translate('addAllRoles'),
+        msg.addAllRoles[process.env.LANG],
         this.addAllRolesAction.bind(controller),
       ),
       new Command(
         '!removeAllRoles',
         '!removeAllRoles',
         'Remove All Roles',
-        myLocale.translate('removeAllRoles'),
+        msg.removeAllRoles[process.env.LANG],
         this.removeAllRolesAction.bind(controller),
       ),
     ];

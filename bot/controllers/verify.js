@@ -5,16 +5,7 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const { generateCode } = require('../botUtils.js');
-const Localize = require('localize');
-
-const myLocale = new Localize({
-  verify: {
-    EN: 'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
-    ES: 'Verifique su dirección de correo electrónico de Full Sail. Debe ser @student.fullsail.edu o @fullsail.com.',
-    AL: 'Eaiuwbg akwu alwkjg wakjg akwjf aqiuwy. qwoigb qw @wke.eiowbg.weg wy @wkjwlt.com.',
-  },
-});
-myLocale.setLocale(process.env.LANG);
+const msg = require('../locale/messages.json');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -30,7 +21,7 @@ class VerifyController extends BaseController {
         '!verify',
         '!verify <email_address>',
         'Verify Email Address',
-        myLocale.translate('verify'),
+        msg.verify[process.env.LANG],
         this.verifyAction.bind(controller),
       ),
     ];

@@ -1,21 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
-const Localize = require('localize');
-
-const myLocale = new Localize({
-  channel: {
-    EN: 'List all available Armada channels.',
-    ES: 'Enumera todos los canales de Armada disponibles.',
-    AL: 'Fawjf akjwbg kejawbgkjw kajebg sjhgrg.',
-  },
-  announce: {
-    EN: 'Broadcast to multiple channels. Channels are case-sensitive.',
-    ES: 'Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.',
-    AL: 'Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg.',
-  },
-});
-myLocale.setLocale(process.env.LANG);
+const msg = require('../locale/messages.json');
 
 class ChannelController extends BaseController {
   constructor(message) {
@@ -26,7 +12,7 @@ class ChannelController extends BaseController {
         '!channels',
         '!channels',
         'List All Channels',
-        myLocale.translate('channel'),
+        msg.channel[process.env.LANG],
         this.channelsAction.bind(controller),
         'dm',
       ),
@@ -34,7 +20,7 @@ class ChannelController extends BaseController {
         '!announce',
         '!announce <channel_name>,[channel_name] <message>',
         'Announce To Channels',
-        myLocale.translate('announce'),
+        msg.announce[process.env.LANG],
         this.announceAction.bind(controller),
         'reply',
         true,
