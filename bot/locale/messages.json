@@ -1,0 +1,52 @@
+{
+  "help": {
+    "en": "v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**",
+    "es": "v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**",
+    "al": "v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**"
+  },
+  "channel": {
+    "en": "List all available Armada channels.",
+    "es": "Enumera todos los canales de Armada disponibles.",
+    "al": "Fawjf akjwbg kejawbgkjw kajebg sjhgrg."
+  },
+  "announce": {
+    "en": "Broadcast to multiple channels. Channels are case-sensitive.",
+    "es": "Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.",
+    "al": "Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg."
+  },
+  "verify": {
+    "en": "Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.",
+    "es": "Verifique su dirección de correo electrónico de Full Sail. Debe ser @student.fullsail.edu o @fullsail.com.",
+    "al": "Eaiuwbg akwu alwkjg wakjg akwjf aqiuwy. qwoigb qw @wke.eiowbg.weg wy @wkjwlt.com."
+  },
+  "roles": {
+    "en": "List all available Armada roles.",
+    "es": "Enumera todos los roles de Armada disponibles.",
+    "al": "Aaskfjbaw awf akjebgkej akwjbf khchd."
+  },
+  "addRole": {
+    "en": "Add a single role to yourself. Role is case-sensitive.",
+    "es": "Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.",
+    "al": "Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg."
+  },
+  "addRoles": {
+    "en": "Add multiple roles to yourself. Roles are case-sensitive.",
+    "es": "Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.",
+    "al": "Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav."
+  },
+  "removeRole": {
+    "en": "Remove a single role from yourself. Role is case-sensitive.",
+    "es": "Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.",
+    "al": "Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg."
+  },
+  "addAllRoles": {
+    "en": "List all available Armada channels.",
+    "es": "Agrega todas las funciones del juego a ti mismo.",
+    "al": "Iakwjgb awli qowig liwfg alwglakwg."
+  },
+  "removeAllRoles": {
+    "en": "Remove every game role from yourself.",
+    "es": "Elimina cada función del juego de ti mismo.",
+    "al": "Oalkwbg awkur ewgkj awkjbf wekhgv alsigf."
+  }
+}
