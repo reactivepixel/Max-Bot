@@ -23,7 +23,7 @@ Create an ```.env``` file with the following sensitive information. Replace the 
 ```
 NODE_ENV=development
 DEBUG_MODE=3
-LANG=en
+LANGUAGE=en
 
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
