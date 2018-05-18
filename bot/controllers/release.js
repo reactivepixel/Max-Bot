@@ -26,7 +26,7 @@ class ReleaseController extends BaseController {
   }
 
   ReleaseAction() {
-    // Post Max Bot's Current Version Number
+    // Post Max Bot's Current Version Number from the Package.json version
     return `My Current Version is ${this.pjson.version}`;
   }
 }
