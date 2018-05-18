@@ -108,17 +108,13 @@ docker-compose up --build
 
 When running the bot locally ensure that you have followed the installation instructions above and have docker running.
 
-Use docker-compose to start the container with the bot client.
+Use Docker Copose to start and stop the container with the bot client.
 
 ```
-docker-compose up
+docker-compose down && docker-compose up --build
 ```
 
-Also use docker-compose to stop the container with the bot client.
-
-```
-docker-compose down
-```
+> `docker-compose down` stops the container while `docker-compose up` starts the container
 
 
 
