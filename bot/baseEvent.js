@@ -1,7 +1,8 @@
 class BaseEvent {
-  constructor(event, name, action) {
+  constructor(event, name, description, action) {
     this.event = event;
     this.name = name;
+    this.description = description;
     this.action = action;
   }
 }

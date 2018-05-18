@@ -20,7 +20,6 @@ class BaseController {
       return Object.assign(eventObj, eventObjContainer);
     }
     // EVENT OBJECT: MEMBER
-    console.log('MIDDLEWARE ', eventObj);
     return eventObj;
   }
 
@@ -75,7 +74,6 @@ class BaseController {
       });
     } else {
       // EVENT OBJECT: MEMBER
-      console.log('RUN COMMAND', this.events);
       Object.keys(this.events).map((key) => {
         this.events[key].action();
         return this.events[key];
