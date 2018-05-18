@@ -4,7 +4,11 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
+const Discord = require('discord.js');
+
+const client = new Discord.Client();
 const { generateCode } = require('../botUtils.js');
+
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -42,16 +46,21 @@ class VerifyController extends BaseController {
       const codeLength = 6;
       // code to equal value generated
       const code = generateCode(codeLength);
-
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
-      const collector = message.channel.createMessageCollector(
-
+      if (message.content === code) {
+        util.log('words');
+      }
+      const collector = client.author.message.createMessageCollector(
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
+        client.on('message', (message) => {
+          util.log(message.content);
+        });
         const verifyUser = 'Welcome aboard, Crewmate!';
-        const userAlredyOnSystem = 'This email has already been verified to a discord user.';
+        const userAlreadyOnSystem = 'This email has already been verified to a discord user.';
+
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
           if (matchedUserData === null) {
             // no existing record found
@@ -64,20 +73,21 @@ class VerifyController extends BaseController {
             // mapping guild roles to find the crew role id
             const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
             message.member.addRole(targetRole).catch(util.log);
-            message.author.sendMessage(verifyUser);
+            message.author.send(verifyUser);
           } else {
             // existing record found
-            message.author.sendMessage(userAlredyOnSystem);
+            message.author.send(userAlreadyOnSystem);
           }
         });
         util.log('Collected', m.content, 3);
       });
+
       collector.on('end', (collected) => {
         const verificationTimeout = `!verify timeout. Clap ${collected.author.username} in irons!  Let's see how well they dance on the plank!`;
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
-          message.reply(verificationTimeout);
+          message.author.send(verificationTimeout);
         }
       });
       // Set up Nodemailer to send emails through gmail
@@ -88,20 +98,21 @@ class VerifyController extends BaseController {
           pass: process.env.EMAIL_PASS,
         },
       });
-      // Nodemailer email recipient & message
-      // TODO: Build email template
+
+        // Nodemailer email recipient & message
+        // TODO: Build email template
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
         subject: 'Armada Verification Code',
         html: `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`,
       };
-      // Call sendMail on sendVerifyCode
-      // Pass mailOptions & callback function
+        // Call sendMail on sendVerifyCode
+        // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
         const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
         if (err) {
-          message.reply(errorMsg);
+          message.author.send(errorMsg);
           util.log('Email not sent', err, 3);
         } else {
           util.log('Email details', info, 3);
@@ -115,5 +126,4 @@ class VerifyController extends BaseController {
     }
   }
 }
-
 module.exports = VerifyController;
