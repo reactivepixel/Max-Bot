@@ -6,9 +6,16 @@ const { isAdmin } = require('./botUtils.js');
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
 
 const client = new Discord.Client();
-
+const channelId = '442034467482370052';
 // Pre-load controllers
 const controllers = require('./controllers')();
+
+// Sending the message to the user when they add
+client.on('guildMemberAdd', (member) => {
+  // Sending a direct message
+  member.send(`Welcome ${member.user.username} to the server.`);
+  client.channels.get(channelId).send(`Welcome ${member.user.username} to the server.`);
+});
 
 // Alert when ready
 client.on('ready', () => {
