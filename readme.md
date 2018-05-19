@@ -59,7 +59,6 @@ LANGUAGE=en
 
 > Make sure ```LANGUAGE``` is set to ```en``` and is lowercase.
 
-=======
 ### Setup Discord Server & Bot
 
 1. Go to the Discord Client and create a new Discord Server. Need Help Follow this [Guide](https://support.discordapp.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
