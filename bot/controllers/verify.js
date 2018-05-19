@@ -5,11 +5,8 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const Discord = require('discord.js');
-const fs = require('fs');
-const HandleBars = require('handlebars');
 const hbs = require('nodemailer-express-handlebars');
-const emailTemp = require('../../template/email.hbs');
-const path = require('path');
+
 
 const client = new Discord.Client();
 
@@ -108,9 +105,7 @@ class VerifyController extends BaseController {
           pass: process.env.EMAIL_PASS,
         },
       });
-      // const source = fs.readFileSync(path.join
-      // (__dirname, '../../ template/email.hbs'), 'utf8');
-      // const template = HandleBars.compile(source);
+      // using the email template
       sendVerifyCode.use('compile', hbs(options));
       // TODO: Build email template
       const mailOptions = {
@@ -120,7 +115,7 @@ class VerifyController extends BaseController {
         template: 'email',
         context: {
           code: `${code}`,
-          email: email,
+          userEmail: email,
         },
       };
         // Call sendMail on sendVerifyCode
