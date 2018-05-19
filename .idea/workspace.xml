@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65a8cd10-f073-405e-bcc0-51534dd75778" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot/controllers/verify.js" afterPath="$PROJECT_DIR$/bot/controllers/verify.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -17,36 +16,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="client.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bot/client.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="25" column="33" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="roles.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bot/controllers/roles.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="welcome.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bot/controllers/welcome.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="botUtils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot/botUtils.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -57,62 +26,42 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot/controllers/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="34" />
+            <state relative-caret-position="453">
+              <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="verify.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="verify.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot/controllers/verify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="73" column="88" lean-forward="true" selection-start-line="73" selection-start-column="88" selection-end-line="73" selection-end-column="88" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baseCommand.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bot/baseCommand.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="member.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/db/models/member.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="channels.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bot/controllers/channels.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="baseController.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bot/baseController.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="2140">
+              <caret line="107" column="64" lean-forward="false" selection-start-line="107" selection-start-column="64" selection-end-line="107" selection-end-column="64" />
+              <folding>
+                <marker date="1526690654079" expanded="true" signature="4163:4172" ph="{&quot;from&quot;: process.env.EMAIL_USERNAME...}" />
+                <marker date="1526690654079" expanded="true" signature="4163:4948" ph="{...}" />
+                <marker date="1526690654079" expanded="true" signature="4163:5044" ph="{...}" />
+                <marker date="1526690654079" expanded="true" signature="4163:5046" ph="{...}" />
+                <marker date="1526690654079" expanded="true" signature="4182:4264" ph="//..." />
+                <marker date="1526690654079" expanded="true" signature="4323:4660" ph="{...}" />
+                <marker date="1526690654079" expanded="true" signature="4491:4589" ph="{...}" />
+                <marker date="1526690654079" expanded="true" signature="4595:4652" ph="{...}" />
+                <marker date="1526690654079" expanded="true" signature="4954:5040" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -130,6 +79,7 @@
         <option value="$PROJECT_DIR$/bot/client.js" />
         <option value="$PROJECT_DIR$/bot/controllers/welcome.js" />
         <option value="$PROJECT_DIR$/bot/controllers/verify.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -180,7 +130,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -203,7 +153,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -259,29 +209,42 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21773000" />
+    <option name="totallyTimeSpent" value="21787000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="560" y="22" width="880" height="878" extended-state="0" />
+    <frame x="196" y="22" width="867" height="878" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1734575" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35933807" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1734575" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -317,14 +280,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bot/controllers/roles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bot/controllers/welcome.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="520">
@@ -361,7 +316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -385,7 +339,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1060">
           <caret line="53" column="65" lean-forward="true" selection-start-line="53" selection-start-column="65" selection-end-line="53" selection-end-column="65" />
-          <folding />
+          <folding>
+            <marker date="1526690654079" expanded="true" signature="4163:4172" ph="{&quot;from&quot;: process.env.EMAIL_USERNAME...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:4948" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5044" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5046" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4182:4264" ph="//..." />
+            <marker date="1526690654079" expanded="true" signature="4323:4660" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4491:4589" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4595:4652" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4954:5040" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -439,7 +403,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="28" />
-          <folding />
+          <folding>
+            <marker date="1526690654079" expanded="true" signature="4163:4172" ph="{&quot;from&quot;: process.env.EMAIL_USERNAME...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:4948" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5044" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5046" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4182:4264" ph="//..." />
+            <marker date="1526690654079" expanded="true" signature="4323:4660" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4491:4589" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4595:4652" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4954:5040" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -517,7 +491,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="28" />
-          <folding />
+          <folding>
+            <marker date="1526690654079" expanded="true" signature="4163:4172" ph="{&quot;from&quot;: process.env.EMAIL_USERNAME...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:4948" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5044" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5046" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4182:4264" ph="//..." />
+            <marker date="1526690654079" expanded="true" signature="4323:4660" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4491:4589" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4595:4652" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4954:5040" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -587,7 +571,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="14" column="28" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="28" />
-          <folding />
+          <folding>
+            <marker date="1526690654079" expanded="true" signature="4163:4172" ph="{&quot;from&quot;: process.env.EMAIL_USERNAME...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:4948" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5044" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5046" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4182:4264" ph="//..." />
+            <marker date="1526690654079" expanded="true" signature="4323:4660" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4491:4589" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4595:4652" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4954:5040" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -632,8 +626,8 @@
     <entry file="file://$PROJECT_DIR$/bot/controllers/hello.js" />
     <entry file="file://$PROJECT_DIR$/bot/controllers/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="34" />
+        <state relative-caret-position="453">
+          <caret line="23" column="5" lean-forward="false" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -642,7 +636,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -704,8 +697,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bot/controllers/verify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="73" column="88" lean-forward="true" selection-start-line="73" selection-start-column="88" selection-end-line="73" selection-end-column="88" />
+        <state relative-caret-position="2140">
+          <caret line="107" column="64" lean-forward="false" selection-start-line="107" selection-start-column="64" selection-end-line="107" selection-end-column="64" />
+          <folding>
+            <marker date="1526690654079" expanded="true" signature="4163:4172" ph="{&quot;from&quot;: process.env.EMAIL_USERNAME...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:4948" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5044" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4163:5046" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4182:4264" ph="//..." />
+            <marker date="1526690654079" expanded="true" signature="4323:4660" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4491:4589" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4595:4652" ph="{...}" />
+            <marker date="1526690654079" expanded="true" signature="4954:5040" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
