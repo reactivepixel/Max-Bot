@@ -32,7 +32,7 @@ class ChannelController extends BaseController {
     const { message } = this;
     const channels = [];
     message.guild.channels.map(channel => channels.push(channel.name));
-    return 'List of all Armada Channels: \n\n' + channels.join('\n');
+    return msg.channelMsg[process.env.LANGUAGE] + channels.join('\n');
   }
 
   announceAction() {
@@ -46,7 +46,7 @@ class ChannelController extends BaseController {
       util.log('Asking API for Channel', targetChannel, 4);
 
       if (targetChannel === null) {
-        return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)';
+        return '"' + channel + '" ' + msg.channelError[process.env.LANGUAGE];
       }
 
       // Set parsed value to 2 for message.
@@ -62,10 +62,10 @@ class ChannelController extends BaseController {
         preparedMessage += message.parsed[msgParsedIndex];
         msgParsedIndex += 1;
       }
-      return targetChannel.send(sender + ' has an announcment: ```' + preparedMessage + '```');
+      return targetChannel.send(sender + msg.announceMsg[process.env.LANGUAGE] + preparedMessage + '```');
     });
 
-    return 'Broadcast sent!';
+    return msg.announceMsgReturn[process.env.LANGUAGE];
   }
 }
 
