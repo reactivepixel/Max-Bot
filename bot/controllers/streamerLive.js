@@ -47,6 +47,7 @@ class StreamerLiveController extends BaseController {
     } else {
       return "I am sorry I couldn't find the proper channel.";
     }
+    return 'Message sent';
   }
 }
 module.exports = StreamerLiveController;
