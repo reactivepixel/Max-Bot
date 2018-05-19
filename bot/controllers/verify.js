@@ -120,6 +120,7 @@ class VerifyController extends BaseController {
         template: 'email',
         context: {
           code: `${code}`,
+          email: email,
         },
       };
         // Call sendMail on sendVerifyCode
