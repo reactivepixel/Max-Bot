@@ -24,9 +24,12 @@ class StreamerLiveController extends BaseController {
     const twitchURL = `https://www.twitch.tv/${twitchName}`;
     const twitchGame = message.parsed[2];
     const streamMessage = `Hey everyone! ${twitchName} is going live playing ${twitchGame}!! Check him out at ${twitchURL} !`;
-    const targetChannel = message.guild.channels.get('344970351098462218');
+    const targetChannel = message.guild.channels.find('name', 'twitch');
     const sender = message.author.username;
-    return targetChannel.send('```' + sender + ' has an announcment: ```' + streamMessage);
+    if (targetChannel) {
+      return targetChannel.send('```' + sender + ' has an announcment: ```' + streamMessage);
+    }
+    return 'Message sent';
   }
 }
 module.exports = StreamerLiveController;
