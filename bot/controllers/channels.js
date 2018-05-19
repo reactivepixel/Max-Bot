@@ -1,6 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
+const msg = require('../locale/messages.json');
 
 class ChannelController extends BaseController {
   constructor(message) {
@@ -11,7 +12,7 @@ class ChannelController extends BaseController {
         '!channels',
         '!channels',
         'List All Channels',
-        'List all available Armada channels.',
+        msg.channel[process.env.LANGUAGE],
         this.channelsAction.bind(controller),
         'dm',
       ),
@@ -19,7 +20,7 @@ class ChannelController extends BaseController {
         '!announce',
         '!announce <channel_name>,[channel_name] <message>',
         'Announce To Channels',
-        'Broadcast to multiple channels. Channels are case-sensitive.',
+        msg.announce[process.env.LANGUAGE],
         this.announceAction.bind(controller),
         'reply',
         true,
@@ -31,7 +32,7 @@ class ChannelController extends BaseController {
     const { message } = this;
     const channels = [];
     message.guild.channels.map(channel => channels.push(channel.name));
-    return 'List of all Armada Channels: \n\n' + channels.join('\n');
+    return msg.channelMsg[process.env.LANGUAGE] + channels.join('\n');
   }
 
   announceAction() {
@@ -45,7 +46,7 @@ class ChannelController extends BaseController {
       util.log('Asking API for Channel', targetChannel, 4);
 
       if (targetChannel === null) {
-        return '"' + channel + '" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)';
+        return '"' + channel + '" ' + msg.channelError[process.env.LANGUAGE];
       }
 
       // Set parsed value to 2 for message.
@@ -61,10 +62,10 @@ class ChannelController extends BaseController {
         preparedMessage += message.parsed[msgParsedIndex];
         msgParsedIndex += 1;
       }
-      return targetChannel.send(sender + ' has an announcment: ```' + preparedMessage + '```');
+      return targetChannel.send(sender + msg.announceMsg[process.env.LANGUAGE] + preparedMessage + '```');
     });
 
-    return 'Broadcast sent!';
+    return msg.announceMsgReturn[process.env.LANGUAGE];
   }
 }
 

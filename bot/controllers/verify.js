@@ -5,6 +5,7 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const { generateCode } = require('../botUtils.js');
+const msg = require('../locale/messages.json');
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -20,7 +21,7 @@ class VerifyController extends BaseController {
         '!verify',
         '!verify <email_address>',
         'Verify Email Address',
-        'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.',
+        msg.verify[process.env.LANGUAGE],
         this.verifyAction.bind(controller),
       ),
     ];
@@ -48,8 +49,8 @@ class VerifyController extends BaseController {
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
-        const verifyUser = 'Welcome aboard, Crewmate!';
-        const userAlredyOnSystem = 'This email has already been verified to a discord user.';
+        const verifyUser = msg.verifyUserMsg[process.env.LANGUAGE];
+        const userAlredyOnSystem = msg.userAlredyOnSystemMsg[process.env.LANGUAGE];
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
           if (matchedUserData === null) {
             // no existing record found
@@ -71,7 +72,7 @@ class VerifyController extends BaseController {
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
-        const verificationTimeout = `!verify timeout. Clap ${collected.author.username} in irons!  Let's see how well they dance on the plank!`;
+        const verificationTimeout = msg.verifyTimeoutMsgStart[process.env.LANGUAGE] + ` ${collected.author.username} ` + msg.verifyTimeoutMsgEnd[process.env.LANGUAGE];
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
@@ -91,13 +92,13 @@ class VerifyController extends BaseController {
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
-        subject: 'Armada Verification Code',
-        html: `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`,
+        subject: msg.verifyHtmlMsgSubject[process.env.LANGUAGE],
+        html: '<table><tr><td><p>' + msg.verifyHtmlMsgStart[process.env.LANGUAGE] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verifyHtmlMsgEnd[process.env.LANGUAGE] + `${code}</h2></td></tr></table>`,
       };
       // Call sendMail on sendVerifyCode
       // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
-        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
+        const errorMsg = msg.verifyErrorMsg[process.env.LANGUAGE];
         if (err) {
           message.reply(errorMsg);
           util.log('Email not sent', err, 3);
@@ -107,9 +108,9 @@ class VerifyController extends BaseController {
       });
 
       util.log('Code', code, 3);
-      return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
+      return msg.verifyEmailMsgStart[process.env.LANGUAGE] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verifyEmailMsgEnd[process.env.LANGUAGE];
     } else {
-      return 'Sorry, I can only verify Full Sail University email addresses.';
+      return msg.verifyEmailDenied[process.env.LANGUAGE];
     }
   }
 }
