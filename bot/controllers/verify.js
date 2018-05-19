@@ -5,11 +5,14 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const Discord = require('discord.js');
-const hbs = require('nodemailer-express-handlebars');
-const template = require('../../template/verifyEmail.hbs');
+const fs = require('fs');
 const HandleBars = require('handlebars');
+const hbs = require('nodemailer-express-handlebars');
+const emailTemp = require('../../template/email.hbs');
+const path = require('path');
 
 const client = new Discord.Client();
+
 const { generateCode } = require('../botUtils.js');
 
 
@@ -93,6 +96,10 @@ class VerifyController extends BaseController {
           message.author.send(verificationTimeout);
         }
       });
+      const options = {
+        viewPath: 'template',
+        extName: '.hbs',
+      };
       // Set up Nodemailer to send emails through gmail
       const sendVerifyCode = nodemailer.createTransport({
         service: 'gmail',
@@ -101,12 +108,19 @@ class VerifyController extends BaseController {
           pass: process.env.EMAIL_PASS,
         },
       });
+      // const source = fs.readFileSync(path.join
+      // (__dirname, '../../ template/email.hbs'), 'utf8');
+      // const template = HandleBars.compile(source);
+      sendVerifyCode.use('compile', hbs(options));
       // TODO: Build email template
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
         subject: 'Armada Verification Code',
-        html: HandleBars.compile('../../template/verifyEmail.hbs'),
+        template: 'email',
+        context: {
+          code: `${code}`,
+        },
       };
         // Call sendMail on sendVerifyCode
         // Pass mailOptions & callback function
@@ -121,7 +135,7 @@ class VerifyController extends BaseController {
       });
 
       util.log('Code', code, 3);
-      return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
+      return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur! Make sure to check your spam folder if you cannot find the email!`;
     } else {
       return 'Sorry, I can only verify Full Sail University email addresses.';
     }
