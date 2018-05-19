@@ -42,7 +42,7 @@ class BaseController {
 
   // Execute the command's functionality
   run() {
-    // EVENT OBJECT: MESSAGE
+    // Check if the incoming object is a message object
     if (this.eventObj.constructor.name.toLowerCase() === 'message') {
       // Loop through each command and map to key
       util.log('Looping through controller commands', 0);
@@ -73,7 +73,7 @@ class BaseController {
         return this.commands[key];
       });
     } else {
-      // EVENT OBJECT: MEMBER
+      // Loop through each event and map to key
       Object.keys(this.events).map((key) => {
         this.events[key].action();
         return this.events[key];

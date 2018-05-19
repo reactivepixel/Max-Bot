@@ -52,7 +52,7 @@ function eventPicker(eventObj) {
       eventObj.reply(helpString);
     }
   } else {
-    // Process message against every controller
+    // Process event against every controller
     Object.keys(events).forEach((key) => {
       // Instantiate the controller
       const eventInstance = new events[key](eventObj);

@@ -25,13 +25,13 @@ class GuildMemberAddEvent extends BaseController {
   // TESTING: Sends a hello message to the user
   welcomeAction() {
     const { eventObj } = this;
-    eventObj.user.send('Hello');
+    return eventObj.user.send('Hello');
   }
 
   // TESTING: Sends an annoying message to the user
   annoyAction() {
     const { eventObj } = this;
-    eventObj.user.send('MUAHAHAHAHAHAAHAHA');
+    return eventObj.user.send('MUAHAHAHAHAHAAHAHA');
   }
 }
 
