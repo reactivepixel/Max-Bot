@@ -35,6 +35,7 @@ Create an ```.env``` file in the root directory with the following sensitive inf
 ```shell
 NODE_ENV=development
 DEBUG_MODE=3
+LANGUAGE=en
 
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
@@ -51,10 +52,14 @@ BOT_PORT_GUEST=3000
 
 EMAIL_USERNAME=xxx
 EMAIL_PASS=xxx
+LANGUAGE=en
 ```
 
 > Update ```DISCORD_BOT_TOKEN``` with the token you receive from the next step.
 
+> Make sure ```LANGUAGE``` is set to ```en``` and is lowercase.
+
+=======
 ### Setup Discord Server & Bot
 
 1. Go to the Discord Client and create a new Discord Server. Need Help Follow this [Guide](https://support.discordapp.com/hc/en-us/articles/204849977-How-do-I-create-a-server-).
