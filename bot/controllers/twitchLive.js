@@ -1,6 +1,5 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-// const util = require('apex-util');
 
 class StreamerLiveController extends BaseController {
   constructor(message) {
@@ -11,7 +10,7 @@ class StreamerLiveController extends BaseController {
         '!twitchLive',
         '!twitchLive <twitch_name> <twitch_game>',
         'Twitch Live',
-        'A quick easy way to announce you are going live on Twitch.',
+        'A quick and easy way to announce you are going live on Twitch.',
         this.addTwitchAction.bind(controller),
         'reply',
         true,
