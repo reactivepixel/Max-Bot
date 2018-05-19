@@ -7,9 +7,9 @@ const nodemailer = require('nodemailer');
 const { generateCode } = require('../botUtils.js');
 
 class VerifyController extends BaseController {
-  constructor(message) {
+  constructor(eventObj) {
     // Call BaseController constructor
-    super(message);
+    super(eventObj);
 
     // Aliasing 'this' as controller to allow for binding in actions
     const controller = this;
@@ -28,11 +28,11 @@ class VerifyController extends BaseController {
 
   // Verifies Full Sail email addresses
   verifyAction() {
-    const { message } = this;
+    const { eventObj } = this;
     const targetVerifiedRoleName = 'Crew';
     const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
-    const email = message.parsed[1].toLowerCase();
+    const email = eventObj.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
 
     // We can set `codeLength` to whatever length we want the verif code to be.
@@ -44,7 +44,7 @@ class VerifyController extends BaseController {
 
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
-      const collector = message.channel.createMessageCollector(
+      const collector = eventObj.channel.createMessageCollector(
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
@@ -60,12 +60,12 @@ class VerifyController extends BaseController {
               verified: 1,
             });
             // mapping guild roles to find the crew role id
-            const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
-            message.member.addRole(targetRole).catch(util.log);
-            message.reply(verifyUser);
+            const targetRole = eventObj.guild.roles.find('name', targetVerifiedRoleName);
+            eventObj.member.addRole(targetRole).catch(util.log);
+            eventObj.reply(verifyUser);
           } else {
             // existing record found
-            message.reply(userAlredyOnSystem);
+            eventObj.reply(userAlredyOnSystem);
           }
         });
         util.log('Collected', m.content, 3);
@@ -75,7 +75,7 @@ class VerifyController extends BaseController {
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
-          message.reply(verificationTimeout);
+          eventObj.reply(verificationTimeout);
         }
       });
       // Set up Nodemailer to send emails through gmail
@@ -99,7 +99,7 @@ class VerifyController extends BaseController {
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
         const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
         if (err) {
-          message.reply(errorMsg);
+          eventObj.reply(errorMsg);
           util.log('Email not sent', err, 3);
         } else {
           util.log('Email details', info, 3);

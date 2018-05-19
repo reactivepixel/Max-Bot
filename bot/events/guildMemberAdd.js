@@ -19,17 +19,23 @@ class GuildMemberAddEvent extends BaseController {
         this.description = 'Sends an Annoying Message to New Members',
         this.action = this.annoyAction.bind(controller),
       ),
+      new Event(
+        this.event = 'guildMemberAdd',
+        this.name = 'SendNewMemberTOS',
+        this.description = 'Sends the New Member the TOS',
+        this.action = this.tosAction.bind(controller),
+      ),
     ];
   }
 
   welcomeAction() {
-    const member = this.eventObj;
-    member.user.send('Hello');
+    const { eventObj } = this;
+    eventObj.user.send('Hello');
   }
 
   annoyAction() {
-    const member = this.eventObj;
-    member.user.send('MUAHAHAHAHAHAAHAHA');
+    const { eventObj } = this;
+    eventObj.user.send('MUAHAHAHAHAHAAHAHA');
   }
 }
 

@@ -3,9 +3,9 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 
 class RoleController extends BaseController {
-  constructor(message) {
+  constructor(eventObj) {
     // Call BaseController constructor
-    super(message);
+    super(eventObj);
 
     // Aliasing 'this' as controller to allow for binding in actions
     const controller = this;
@@ -67,9 +67,9 @@ class RoleController extends BaseController {
 
   // Lists all roles
   rolesAction() {
-    const { message, disallowedRoles } = this;
+    const { eventObj, disallowedRoles } = this;
     const roles = [];
-    message.guild.roles.map((role) => {
+    eventObj.guild.roles.map((role) => {
       if (!disallowedRoles.includes(role.name.toLowerCase())) {
         return roles.push(role.name);
       }
@@ -80,36 +80,36 @@ class RoleController extends BaseController {
 
   // Adds a role to the user
   addRoleAction() {
-    const { message, disallowedRoles } = this;
-    const targetRole = message.guild.roles.find('name', message.parsed[1]);
+    const { eventObj, disallowedRoles } = this;
+    const targetRole = eventObj.guild.roles.find('name', eventObj.parsed[1]);
     if (targetRole === null) {
-      util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      util.log('No role matched', eventObj.parsed[1], 2);
+      return '"' + eventObj.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
     } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return 'You are not worthy of the role ' + message.parsed[1] + '.';
+      return 'You are not worthy of the role ' + eventObj.parsed[1] + '.';
     } else {
       util.log('Adding Role to user', targetRole.name, 2);
-      message.member.addRole(targetRole).catch(util.log);
+      eventObj.member.addRole(targetRole).catch(util.log);
       return 'Added the role "' + targetRole.name + '".';
     }
   }
 
   // Adds multiple roles to the user
   addRolesAction() {
-    const { message, disallowedRoles } = this;
-    const roles = message.parsed[1].split(',');
+    const { eventObj, disallowedRoles } = this;
+    const roles = eventObj.parsed[1].split(',');
     util.log('Multiple Roles Parsing', roles, 4);
 
     roles.map((role) => {
       if (!disallowedRoles.includes(role.toLowerCase())) {
-        const targetRole = message.guild.roles.find('name', role);
+        const targetRole = eventObj.guild.roles.find('name', role);
         util.log('Asking API for Role', targetRole, 4);
 
         if (targetRole === null) {
           return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
         }
-        return message.member.addRole(targetRole).catch(util.log);
+        return eventObj.member.addRole(targetRole).catch(util.log);
       }
       return role.name;
     });
@@ -119,11 +119,11 @@ class RoleController extends BaseController {
 
   // Removes role from user
   removeRoleAction() {
-    const { message, disallowedRoles } = this;
-    const targetRole = message.guild.roles.find('name', message.parsed[1]);
+    const { eventObj, disallowedRoles } = this;
+    const targetRole = eventObj.guild.roles.find('name', eventObj.parsed[1]);
     if (targetRole === null) {
-      util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      util.log('No role matched', eventObj.parsed[1], 2);
+      return '"' + eventObj.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
     }
     if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
@@ -131,16 +131,16 @@ class RoleController extends BaseController {
     }
 
     util.log('Removing role from user', targetRole.name, 2);
-    message.member.removeRole(targetRole).catch(util.log);
+    eventObj.member.removeRole(targetRole).catch(util.log);
     return targetRole.name + ' removed.';
   }
 
   // Adds all roles to user
   addAllRolesAction() {
-    const { message, disallowedRoles } = this;
-    message.guild.roles.map((role) => {
+    const { eventObj, disallowedRoles } = this;
+    eventObj.guild.roles.map((role) => {
       if (!disallowedRoles.includes(role.name.toLowerCase())) {
-        return message.member.addRole(role).catch(util.log);
+        return eventObj.member.addRole(role).catch(util.log);
       }
       return role.name;
     });
@@ -150,10 +150,10 @@ class RoleController extends BaseController {
 
   // Removes all roles from user
   removeAllRolesAction() {
-    const { message, disallowedRoles } = this;
-    message.guild.roles.map((role) => {
+    const { eventObj, disallowedRoles } = this;
+    eventObj.guild.roles.map((role) => {
       if (!disallowedRoles.includes(role.name.toLowerCase())) {
-        return message.member.removeRole(role).catch(util.log);
+        return eventObj.member.removeRole(role).catch(util.log);
       }
       return role.name;
     });
