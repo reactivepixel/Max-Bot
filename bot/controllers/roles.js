@@ -1,6 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
+const msg = require('../locale/messages.json');
 
 class RoleController extends BaseController {
   constructor(message) {
@@ -16,7 +17,7 @@ class RoleController extends BaseController {
         '!roles',
         '!roles',
         'List All Roles',
-        'List all available Armada roles.',
+        msg.roles[process.env.LANGUAGE],
         this.rolesAction.bind(controller),
         'dm',
       ),
@@ -24,35 +25,35 @@ class RoleController extends BaseController {
         '!addRole',
         '!addRole <role_name>',
         'Add Role',
-        'Add a single role to yourself. Role is case-sensitive.',
+        msg.addRole[process.env.LANGUAGE],
         this.addRoleAction.bind(controller),
       ),
       new Command(
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
-        'Add multiple roles to yourself. Rolea are case-sensitive.',
+        msg.addRoles[process.env.LANGUAGE],
         this.addRolesAction.bind(controller),
       ),
       new Command(
         '!removeRole',
         '!removeRole <role_name>',
         'Remove Role',
-        'Remove a single role from yourself. Role is case-sensitive.',
+        msg.removeRole[process.env.LANGUAGE],
         this.removeRoleAction.bind(controller),
       ),
       new Command(
         '!addAllRoles',
         '!addAllRoles',
         'Add All Roles',
-        'Add every game role to yourself.',
+        msg.addAllRoles[process.env.LANGUAGE],
         this.addAllRolesAction.bind(controller),
       ),
       new Command(
         '!removeAllRoles',
         '!removeAllRoles',
         'Remove All Roles',
-        'Remove every game role from yourself.',
+        msg.removeAllRoles[process.env.LANGUAGE],
         this.removeAllRolesAction.bind(controller),
       ),
     ];
@@ -75,7 +76,7 @@ class RoleController extends BaseController {
       }
       return role.name;
     });
-    return 'List of all Armada Roles: \n\n' + roles.join('\n');
+    return msg.rolesMsg[process.env.LANGUAGE] + roles.join('\n');
   }
 
   // Adds a role to the user
@@ -84,14 +85,14 @@ class RoleController extends BaseController {
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      return '"' + message.parsed[1] + '" ' + msg.addRoleError[process.env.LANGUAGE];
     } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return 'You are not worthy of the role ' + message.parsed[1] + '.';
+      return msg.addRoleDenied[process.env.LANGUAGE] + message.parsed[1] + '.';
     } else {
       util.log('Adding Role to user', targetRole.name, 2);
       message.member.addRole(targetRole).catch(util.log);
-      return 'Added the role "' + targetRole.name + '".';
+      return msg.addRoleSuccess[process.env.LANGUAGE] + '"' + targetRole.name + '".';
     }
   }
 
@@ -107,14 +108,14 @@ class RoleController extends BaseController {
         util.log('Asking API for Role', targetRole, 4);
 
         if (targetRole === null) {
-          return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+          return '"' + role + '" ' + msg.addRolesError[process.env.LANGUAGE];
         }
         return message.member.addRole(targetRole).catch(util.log);
       }
       return role.name;
     });
 
-    return 'All set!';
+    return msg.addRolesMsgReturn[process.env.LANGUAGE];
   }
 
   // Removes role from user
@@ -123,16 +124,16 @@ class RoleController extends BaseController {
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
+      return '"' + message.parsed[1] + '" ' + msg.removeRoleError[process.env.LANGUAGE];
     }
     if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return 'You have not the power or the will to control this power.';
+      return msg.removeRolesDenied[process.env.LANGUAGE];
     }
 
     util.log('Removing role from user', targetRole.name, 2);
     message.member.removeRole(targetRole).catch(util.log);
-    return targetRole.name + ' removed.';
+    return targetRole.name + msg.removeRolesMsgReturn[process.env.LANGUAGE];
   }
 
   // Adds all roles to user
@@ -145,7 +146,7 @@ class RoleController extends BaseController {
       return role.name;
     });
 
-    return 'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:';
+    return msg.addAllRolesMsgReturn[process.env.LANGUAGE];
   }
 
   // Removes all roles from user
@@ -158,7 +159,7 @@ class RoleController extends BaseController {
       return role.name;
     });
 
-    return 'Removing all roles. Back to basics.';
+    return msg.removeAllRolesMsgReturn[process.env.LANGUAGE];
   }
 }
 
