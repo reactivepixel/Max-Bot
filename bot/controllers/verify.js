@@ -5,6 +5,9 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const Discord = require('discord.js');
+const hbs = require('nodemailer-express-handlebars');
+const template = require('../../template/verifyEmail.hbs');
+const HandleBars = require('handlebars');
 
 const client = new Discord.Client();
 const { generateCode } = require('../botUtils.js');
@@ -51,7 +54,7 @@ class VerifyController extends BaseController {
       if (message.content === code) {
         util.log('words');
       }
-      const collector = client.author.message.createMessageCollector(
+      const collector = message.channel.createMessageCollector(
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
@@ -98,14 +101,12 @@ class VerifyController extends BaseController {
           pass: process.env.EMAIL_PASS,
         },
       });
-
-        // Nodemailer email recipient & message
-        // TODO: Build email template
+      // TODO: Build email template
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
         subject: 'Armada Verification Code',
-        html: `<table><tr><td><p>Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after ${(timeoutInMiliseconds / 1000) / 60} minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ${code}</h2></td></tr></table>`,
+        html: HandleBars.compile('../../template/verifyEmail.hbs'),
       };
         // Call sendMail on sendVerifyCode
         // Pass mailOptions & callback function
