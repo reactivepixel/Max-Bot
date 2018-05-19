@@ -12,14 +12,10 @@ const client = new Discord.Client();
 const controllers = require('./controllers')();
 const events = require('./events')();
 
-// Alert when ready
-client.on('ready', () => {
-  util.log('Bot Online and Ready', 0);
-});
-
-function eventPicker(event, eventObj) {
-  // Check for ! prefix on message to ensure it is a command
-  if (event === 'message' && eventObj.content.charAt(0) === '!') {
+// Sorts and runs events
+function eventPicker(eventObj) {
+  // Check if the eventObj is 'message', and for ! prefix on message to ensure it is a command
+  if (eventObj.constructor.name.toLowerCase() === 'message' && eventObj.content.charAt(0) === '!') {
     util.log('Command message received', eventObj.content, 0);
 
     // Build basic help string
@@ -55,9 +51,7 @@ function eventPicker(event, eventObj) {
     if (eventObj.content.toLowerCase() === '!help') {
       eventObj.reply(helpString);
     }
-  }
-
-  if (event === 'guildMemberAdd') {
+  } else {
     // Process message against every controller
     Object.keys(events).forEach((key) => {
       // Instantiate the controller
@@ -69,14 +63,19 @@ function eventPicker(event, eventObj) {
   }
 }
 
+// Alert when ready
+client.on('ready', () => {
+  util.log('Bot Online and Ready', 0);
+});
+
 // Create an event listener for new guild members
 client.on('guildMemberAdd', (member) => {
-  eventPicker('guildMemberAdd', member);
+  eventPicker(member);
 });
 
 // Listen for messages
 client.on('message', (message) => {
-  eventPicker('message', message);
+  eventPicker(message);
 });
 
 client.login(process.env.TOKEN);

@@ -10,7 +10,7 @@ class BaseController {
 
   // Add extra information to eventObj object
   static eventMiddleware(eventObj) {
-    // EVENT OBJECT: MESSAGE
+    // Check if the incoming object is a message
     if (eventObj.constructor.name.toLowerCase() === 'message') {
       // Creates an empty object container
       const eventObjContainer = {};
@@ -19,7 +19,7 @@ class BaseController {
       // Adds eventObj object to container
       return Object.assign(eventObj, eventObjContainer);
     }
-    // EVENT OBJECT: MEMBER
+    // Return the eventObj
     return eventObj;
   }
 
