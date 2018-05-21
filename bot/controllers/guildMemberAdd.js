@@ -1,7 +1,7 @@
 const BaseController = require('../baseController.js');
 const Event = require('../baseEvent.js');
 
-class GuildMemberAddEvent extends BaseController {
+class GuildMemberAddController extends BaseController {
   constructor(member) {
     super(member);
     const controller = this;
@@ -36,4 +36,4 @@ class GuildMemberAddEvent extends BaseController {
   }
 }
 
-module.exports = GuildMemberAddEvent;
+module.exports = GuildMemberAddController;

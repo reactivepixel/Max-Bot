@@ -72,14 +72,12 @@ class BaseController {
         }
         return this.commands[key];
       });
-    } else {
-      // Loop through each event and map to key
-      Object.keys(this.events).map((key) => {
-        this.events[key].action();
-        return this.events[key];
-      });
     }
-    return '';
+    // Loop through each event and map to key
+    Object.keys(this.events).map((key) => {
+      this.events[key].action();
+      return this.events[key];
+    });
   }
 }
 module.exports = BaseController;

@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -9,7 +8,7 @@ if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.en
 const client = new Discord.Client();
 
 // Pre-load controllers
-const events = require('./events')();
+const controllers = require('./controllers')();
 
 // Sorts and runs events
 function eventPicker(eventName, eventObj) {
@@ -17,13 +16,12 @@ function eventPicker(eventName, eventObj) {
   if (eventName === 'message' && eventObj.content.charAt(0) === '!') {
     util.log(`${eventName} event received`, 0);
     // Process message against every controller
-    Object.keys(events).forEach((key) => {
+    Object.keys(controllers).forEach((key) => {
       // Instantiate the controller
-      const eventInstance = new events[key](eventObj);
+      const eventInstance = new controllers[key](eventObj);
       util.log('Controller instance', eventInstance, 5);
       // Runs commands after constructor is called
       if (eventInstance.eventName.toLowerCase() === eventName.toLowerCase()) {
-        console.log('Fired');
         eventInstance.run();
       }
     });
@@ -31,9 +29,9 @@ function eventPicker(eventName, eventObj) {
   } else {
     util.log(`${eventName} event received`, 0);
     // Process event against every controller
-    Object.keys(events).forEach((key) => {
+    Object.keys(controllers).forEach((key) => {
       // Instantiate the controller
-      const eventInstance = new events[key](eventObj);
+      const eventInstance = new controllers[key](eventObj);
       util.log('Event instance', eventInstance, 5);
       // Runs commands after constructor is called
       if (eventInstance.eventName.toLowerCase() === eventName.toLowerCase()) {
@@ -54,8 +52,8 @@ client.on('guildMemberAdd', (member) => {
 });
 
 // Fire whenever a user's presence changes
-client.on('presence', (user) => {
-  eventPicker('presence', user);
+client.on('presenceUpdate', (user) => {
+  eventPicker('presenceUpdate', user);
 });
 
 // Listen for messages

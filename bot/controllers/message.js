@@ -6,7 +6,7 @@ const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const { generateCode, isAdmin } = require('../botUtils.js');
 
-class MessageEvent extends BaseController {
+class MessageController extends BaseController {
   constructor(eventObj) {
     // Call BaseController constructor
     super(eventObj);
@@ -32,12 +32,12 @@ class MessageEvent extends BaseController {
         this.verifyAction.bind(controller),
       ),
       new Command(
-          '!roles',
-          '!roles',
-          'List All Roles',
-          'List all available Armada roles.',
-          this.rolesAction.bind(controller),
-          'dm',
+        '!roles',
+        '!roles',
+        'List All Roles',
+        'List all available Armada roles.',
+        this.rolesAction.bind(controller),
+        'dm',
       ),
       new Command(
         '!addRole',
@@ -101,7 +101,7 @@ class MessageEvent extends BaseController {
     ];
   }
 
-  showCommandsAction() {  
+  showCommandsAction() {
     const { eventObj } = this;
     let helpString = 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
     // Loop through commands if help command and add to string
@@ -115,7 +115,7 @@ class MessageEvent extends BaseController {
           helpString += `\n\n \`${command.example}\` \n\t ${command.description}`;
         }
       }
-    })
+    });
     return eventObj.reply(helpString);
   }
 
@@ -275,7 +275,8 @@ class MessageEvent extends BaseController {
       // TODO: Set `time` prop to 600000 (10min)
       const collector = eventObj.channel.createMessageCollector(
         m => m.content.includes(code),
-        { time: timeoutInMiliseconds });
+        { time: timeoutInMiliseconds },
+      );
       collector.on('collect', (m) => {
         const verifyUser = 'Welcome aboard, Crewmate!';
         const userAlredyOnSystem = 'This email has already been verified to a discord user.';
@@ -343,4 +344,4 @@ class MessageEvent extends BaseController {
   }
 }
 
-module.exports = MessageEvent;
+module.exports = MessageController;
