@@ -16,6 +16,7 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
+
 // Listen for messages
 client.on('message', (message) => {
   // Check for ! prefix on message to ensure it is a command

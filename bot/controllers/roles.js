@@ -32,6 +32,7 @@ class RoleController extends BaseController {
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
+        'Add multiple roles to yourself. Roles are case-sensitive',
         msg.addRoles[process.env.LANGUAGE],
         this.addRolesAction.bind(controller),
       ),
