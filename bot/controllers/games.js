@@ -51,14 +51,23 @@ class GamesController extends BaseController {
   // Flip the coin
   coinFlipAction() {
     const { message } = this;
-    return '';
+    const flip = Math.floor(Math.random() * 2);
+    if (flip === 0) {
+      return 'You just flipped HEADS!';
+    } else {
+      return 'You just flipped TAILS!!';
+    }
   }
   // rolls the dice with the user set sides
   rollDiceAction() {
     const { message } = this;
     const sides = message.parsed[1];
     const roll = Math.floor(Math.random() * sides) + 1;
-    return `Look at that. ${message.author.username} just rolled a ${roll}`;
+    if (!isNaN(sides)) {
+      return `Look at that. ${message.author.username} just rolled a ${roll}`;
+    } else {
+      return `Sorry ${message.author.username}, It looks like you didn't enter a number.`;
+    }
   }
   // makes a simple API request to icanhazdadjoke.com for a random dad joke
   dadJokeAction() {
