@@ -1,47 +1,47 @@
 {
   "help": {
-    "helpMsg": {
+    "msg": {
       "en": "v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**",
       "es": "v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**",
       "al": "v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**"
     },
   },
   "channels": {
-    "channelHelpMsg": {
+    "helpMsg": {
       "en": "List all available Armada channels.",
       "es": "Enumera todos los canales de Armada disponibles.",
       "al": "Fawjf akjwbg kejawbgkjw kajebg sjhgrg."
     },
-    "channelMsg": {
+    "msg": {
       "en": "List of all Armada Channels: \n\n",
       "es": "Lista de todos los canales Armada: \n\n",
       "al": "Yakgsj ai akhjw awkjf skjbgjv: \n\n"
     },
-    "channelError": {
+    "errorMsg": {
       "en": "is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)",
       "es": "no es un canal conocido. Pruebe `!Channels` para obtener una lista de todos los canales (distinguen entre mayúsculas y minúsculas)",
       "al": "kdabj akwjb w awgrgs qkwbwqge. kqjwb `!akwjv` awgjkb rsh ew weh wiefv qjwv qkwuf (wgjb qjw kaf-akgvafkj)"
     },
   },
   "announce": {
-    "announceHelpMsg": {
+    "helpMsg": {
       "en": "Broadcast to multiple channels. Channels are case-sensitive.",
       "es": "Transmitir a múltiples canales. Los canales distinguen mayúsculas de minúsculas.",
       "al": "Kkeugbwekg aweg wegwegwe qwhjqf. qkjwbfkqjbg akqjwbfqre qkjb-qkwjbqkjwbg."
     },
-    "announceMsg": {
+    "msg": {
       "en": " has an announcement: ```",
       "es": " tiene un anuncio: ```",
       "al": " alebglk awf alwkb: ```"
     },
-    "announceMsgReturn": {
+    "msgReturn": {
       "en": "Broadcast sent!",
       "es": "¡Transmisión enviada!",
       "al": "Ukasjbg kawb!"
     },
   },
   "verify": {
-    "verifyHelpMsg": {
+    "helpMsg": {
       "en": "Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.",
       "es": "Verifique su dirección de correo electrónico de Full Sail. Debe ser @student.fullsail.edu o @fullsail.com.",
       "al": "Eaiuwbg akwu alwkjg wakjg akwjf aqiuwy. qwoigb qw @wke.eiowbg.weg wy @wkjwlt.com."
@@ -103,87 +103,97 @@
     },
   },
   "roles": {
-    "rolesHelpMsg": {
+    "helpMsg": {
       "en": "List all available Armada roles.",
       "es": "Enumera todos los roles de Armada disponibles.",
       "al": "Aaskfjbaw awf akjebgkej akwjbf khchd."
     },
-    "rolesMsg": {
+    "msg": {
       "en": "List of all Armada Roles: \n\n",
       "es": "Lista de todas las funciones de Armada: \n\n",
       "al": "Uaksbf awf ewg qwkjf akuwj: \n\n"
     },
-    "addRoleHelpMsg": {
+  },
+  "addRole": {
+    "helpMsg": {
       "en": "Add a single role to yourself. Role is case-sensitive.",
       "es": "Agregue una sola función para usted. El rol es sensible a mayúsculas y minúsculas.",
       "al": "Tlh jkb akjsfb lekjbg slekg akwjfb. awgjb ialwkgs akw-akwjbg."
     },
-    "addRoleError": {
+    "errorMsg": {
       "en": "is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)",
       "es": "no es un papel conocido. Pruebe `!Roles` para obtener una lista de todos los Roles (distinguen entre mayúsculas y minúsculas)",
       "al": "fw awf rg seg wkqjf. akwjb `!akwjf` ajw aw sg wkjbf alwf agjk shkjrb (geb gaelk gj-wleghr)"
     },
-    "addRoleDenied": {
+    "deniedMsg": {
       "en": "You are not worthy of the role ",
       "es": "No eres digno del papel ",
       "al": "Iaiuw awbuf afjw awbsg akbjwf lawbf akw "
     },
-    "addRoleSuccess": {
+    "successMsg": {
       "en": "Added the role ",
       "es": "Se agregó el rol ",
       "al": "Takjsf akjbw awkjbf "
     },
-    "addRolesHelpMsg": {
+  },
+  "addRoles": {
+    "helpMsg": {
       "en": "Add multiple roles to yourself. Roles are case-sensitive.",
       "es": "Agregue múltiples roles a usted mismo. Rolea distingue entre mayúsculas y minúsculas.",
       "al": "Hakj alwkbg akwbg takejg akgjwb. alwbg alwbg kajwv-kjwav."
     },
-    "addRolesError": {
+    "errorMsg": {
       "en": "is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)",
       "es": "no es un papel conocido. Pruebe `!Roles` para obtener una lista de todos los Roles (distinguen entre mayúsculas y minúsculas)",
       "al": "jk kjg eg wegl erkgj. jkegw `!kewjb` wfkjbq afjkbw awf ajkwb bjawk awkjg gekj (akjwb aw weg-fwkjba)"
     },
-    "addRolesMsgReturn": {
+    "msgReturn": {
       "en": "All set!",
       "es": "¡Todo listo!",
       "al": "Iaf abw!"
     },
-    "removeRoleHelpMsg": {
+  },
+  "removeRole": {
+    "helpMsg": {
       "en": "Remove a single role from yourself. Role is case-sensitive.",
       "es": "Elimina una sola función de ti mismo. El rol es sensible a mayúsculas y minúsculas.",
       "al": "Kiuwegb awgjh aklwbg kaejgh akjg akwjfv. akwjfb akwufv awkjg-akwjg."
     },
-    "removeRoleError": {
+    "errorMsg": {
       "en": "is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)",
       "es": "no es un papel conocido. Pruebe `!Roles` para obtener una lista de todos los Roles (distinguen entre mayúsculas y minúsculas)",
       "al": "akjbf awg er rhwe qwfl. qkjwb `!qwlb` weg whe we qgwlb weg jkbwq wekjb (wbeg wk ge weg-qwfjbk)"
     },
-    "removeRoleDenied": {
+    "deniedMsg": {
       "en": "You have not the power or the will to control this power.",
       "es": "No tienes el poder o la voluntad para controlar este poder.",
       "al": "blf nkelg klnwe welg wljkbe wekln weg wehhrt jkbewf wejkb weh wfjk."
     },
-    "removeRoleMsgReturn": {
+    "msgReturn": {
       "en": " removed.",
       "es": " remoto.",
       "al": " ajbgklg."
     },
-    "addAllRolesHelpMsg": {
+  },
+  "addAllRoles": {
+    "helpMsg": {
       "en": "List all available Armada channels.",
       "es": "Agrega todas las funciones del juego a ti mismo.",
       "al": "Iakwjgb awli qowig liwfg alwglakwg."
     },
-    "addAllRolesMsgReturn": {
+    "msgReturn": {
       "en": "Adding you to all Roles. You're going to be drinking from the firehose :sob:",
       "es": "Te agrego a todos los Roles. Vas a estar bebiendo de la manguera :sob:",
       "al": "Uajkg ejkb afw ajklwf awkjlb. awkj ajkebg rwhkln wej wljkeb kwjebg wkjebg kwejg :sob:"
     },
-    "removeAllRolesHelpMsg": {
+  },
+  "removeAllRoles": {
+    "helpMsg": {
       "en": "Remove every game role from yourself.",
       "es": "Elimina cada función del juego de ti mismo.",
       "al": "Oalkwbg awkur ewgkj awkjbf wekhgv alsigf."
     },
-    "removeAllRolesMsgReturn": {
+    "msgReturn": {
       "en": "Removing all roles. Back to basics.",
       "es": "Eliminando todos los roles. Volver a lo básico.",
       "al": "Ikjeg wenlkf wegh. wjkeb weg webllk."
