@@ -23,7 +23,7 @@ client.on('message', (message) => {
     util.log('Command message received', message.content, 0);
 
     // Build basic help string
-    let helpString = msg.help.helpMsg[process.env.LANGUAGE];
+    let helpString = msg.help.msg[process.env.LANGUAGE];
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {
