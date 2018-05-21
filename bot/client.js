@@ -11,34 +11,19 @@ const client = new Discord.Client();
 const controllers = require('./controllers')();
 
 // Sorts and runs events
-function eventPicker(eventName, eventObj) {
-  // Check if the event is a message event, and for ! prefix on message to ensure it is a command
-  if (eventName === 'message' && eventObj.content.charAt(0) === '!') {
-    util.log(`${eventName} event received`, 0);
-    // Process message against every controller
-    Object.keys(controllers).forEach((key) => {
-      // Instantiate the controller
-      const eventInstance = new controllers[key](eventObj);
-      util.log('Controller instance', eventInstance, 5);
-      // Runs commands after constructor is called
-      if (eventInstance.eventName.toLowerCase() === eventName.toLowerCase()) {
-        eventInstance.run();
-      }
-    });
-  // If not a message event, treat as a normal event
-  } else {
-    util.log(`${eventName} event received`, 0);
-    // Process event against every controller
-    Object.keys(controllers).forEach((key) => {
-      // Instantiate the controller
-      const eventInstance = new controllers[key](eventObj);
-      util.log('Event instance', eventInstance, 5);
-      // Runs commands after constructor is called
-      if (eventInstance.eventName.toLowerCase() === eventName.toLowerCase()) {
-        eventInstance.run();
-      }
-    });
-  }
+function controllerPicker(eventName, eventObj) {
+  util.log(`${eventName} event received`, 0);
+  // Process event against every controller
+  Object.keys(controllers).forEach((key) => {
+    // Instantiate the controller
+    const controllerInstance = new controllers[key](eventObj);
+    // console.log(Object.keys(controllerInstance));
+    util.log('Controller instance', controllerInstance, 5);
+    // Runs commands after constructor is called
+    if (controllerInstance.eventName.toLowerCase() === eventName.toLowerCase()) {
+      controllerInstance.run();
+    }
+  });
 }
 
 // Alert when ready
@@ -48,17 +33,20 @@ client.on('ready', () => {
 
 // Create an event listener for new guild members
 client.on('guildMemberAdd', (member) => {
-  eventPicker('guildMemberAdd', member);
+  controllerPicker('guildMemberAdd', member);
 });
 
 // Fire whenever a user's presence changes
 client.on('presenceUpdate', (user) => {
-  eventPicker('presenceUpdate', user);
+  controllerPicker('presenceUpdate', user);
 });
 
 // Listen for messages
 client.on('message', (message) => {
-  eventPicker('message', message);
+  // Make sure that a message object has an !
+  if (message.content.charAt(0) === '!') {
+    controllerPicker('message', message);
+  }
 });
 
 client.login(process.env.TOKEN);
