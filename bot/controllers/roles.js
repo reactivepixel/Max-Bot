@@ -17,7 +17,7 @@ class RoleController extends BaseController {
         '!roles',
         '!roles',
         'List All Roles',
-        msg.roles[process.env.LANGUAGE],
+        msg.roles.rolesHelpMsg[process.env.LANGUAGE],
         this.rolesAction.bind(controller),
         'dm',
       ),
@@ -25,35 +25,35 @@ class RoleController extends BaseController {
         '!addRole',
         '!addRole <role_name>',
         'Add Role',
-        msg.addRole[process.env.LANGUAGE],
+        msg.addRole.addRoleHelpMsg[process.env.LANGUAGE],
         this.addRoleAction.bind(controller),
       ),
       new Command(
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
-        msg.addRoles[process.env.LANGUAGE],
+        msg.addRoles.addRolesHelpMsg[process.env.LANGUAGE],
         this.addRolesAction.bind(controller),
       ),
       new Command(
         '!removeRole',
         '!removeRole <role_name>',
         'Remove Role',
-        msg.removeRole[process.env.LANGUAGE],
+        msg.removeRole.removeRolesHelpMsg[process.env.LANGUAGE],
         this.removeRoleAction.bind(controller),
       ),
       new Command(
         '!addAllRoles',
         '!addAllRoles',
         'Add All Roles',
-        msg.addAllRoles[process.env.LANGUAGE],
+        msg.addAllRoles.addAllRolesHelpMsg[process.env.LANGUAGE],
         this.addAllRolesAction.bind(controller),
       ),
       new Command(
         '!removeAllRoles',
         '!removeAllRoles',
         'Remove All Roles',
-        msg.removeAllRoles[process.env.LANGUAGE],
+        msg.removeAllRoles.removeAllRolesHelpMsg[process.env.LANGUAGE],
         this.removeAllRolesAction.bind(controller),
       ),
     ];
@@ -76,7 +76,7 @@ class RoleController extends BaseController {
       }
       return role.name;
     });
-    return msg.rolesMsg[process.env.LANGUAGE] + roles.join('\n');
+    return msg.roles.rolesMsg[process.env.LANGUAGE] + roles.join('\n');
   }
 
   // Adds a role to the user
@@ -85,14 +85,14 @@ class RoleController extends BaseController {
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" ' + msg.addRoleError[process.env.LANGUAGE];
+      return '"' + message.parsed[1] + '" ' + msg.addRole.addRoleError[process.env.LANGUAGE];
     } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return msg.addRoleDenied[process.env.LANGUAGE] + message.parsed[1] + '.';
+      return msg.addRole.addRoleDenied[process.env.LANGUAGE] + message.parsed[1] + '.';
     } else {
       util.log('Adding Role to user', targetRole.name, 2);
       message.member.addRole(targetRole).catch(util.log);
-      return msg.addRoleSuccess[process.env.LANGUAGE] + '"' + targetRole.name + '".';
+      return msg.addRole.addRoleSuccess[process.env.LANGUAGE] + '"' + targetRole.name + '".';
     }
   }
 
@@ -108,14 +108,14 @@ class RoleController extends BaseController {
         util.log('Asking API for Role', targetRole, 4);
 
         if (targetRole === null) {
-          return '"' + role + '" ' + msg.addRolesError[process.env.LANGUAGE];
+          return '"' + role + '" ' + msg.addRoles.addRolesError[process.env.LANGUAGE];
         }
         return message.member.addRole(targetRole).catch(util.log);
       }
       return role.name;
     });
 
-    return msg.addRolesMsgReturn[process.env.LANGUAGE];
+    return msg.addRoles.addRolesMsgReturn[process.env.LANGUAGE];
   }
 
   // Removes role from user
@@ -124,16 +124,16 @@ class RoleController extends BaseController {
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" ' + msg.removeRoleError[process.env.LANGUAGE];
+      return '"' + message.parsed[1] + '" ' + msg.removeRole.removeRoleError[process.env.LANGUAGE];
     }
     if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return msg.removeRolesDenied[process.env.LANGUAGE];
+      return msg.removeRole.removeRoleDenied[process.env.LANGUAGE];
     }
 
     util.log('Removing role from user', targetRole.name, 2);
     message.member.removeRole(targetRole).catch(util.log);
-    return targetRole.name + msg.removeRolesMsgReturn[process.env.LANGUAGE];
+    return targetRole.name + msg.removeRole.removeRoleMsgReturn[process.env.LANGUAGE];
   }
 
   // Adds all roles to user
@@ -146,7 +146,7 @@ class RoleController extends BaseController {
       return role.name;
     });
 
-    return msg.addAllRolesMsgReturn[process.env.LANGUAGE];
+    return msg.addAllRoles.addAllRolesMsgReturn[process.env.LANGUAGE];
   }
 
   // Removes all roles from user
@@ -159,7 +159,7 @@ class RoleController extends BaseController {
       return role.name;
     });
 
-    return msg.removeAllRolesMsgReturn[process.env.LANGUAGE];
+    return msg.removeAllRoles.removeAllRolesMsgReturn[process.env.LANGUAGE];
   }
 }
 
