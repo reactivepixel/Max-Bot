@@ -6,6 +6,7 @@ const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const { generateCode } = require('../botUtils.js');
 const msg = require('../locale/messages.json');
+const { messages: { verify } } = require('../locale/verifyMsgs.js');
 
 const lang = process.env.LANGUAGE;
 
@@ -33,7 +34,7 @@ class VerifyController extends BaseController {
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
+    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com', 'gmail.com'];
     const timeoutInMiliseconds = 600000;
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
@@ -44,6 +45,7 @@ class VerifyController extends BaseController {
       const codeLength = 6;
       // code to equal value generated
       const code = generateCode(codeLength);
+      const timeout = (timeoutInMiliseconds / 1000) / 60;
 
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
@@ -74,7 +76,8 @@ class VerifyController extends BaseController {
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
-        const verificationTimeout = msg.verify.verifyTimeoutMsgStart[lang] + ` ${collected.author.username} ` + msg.verify.verifyTimeoutMsgEnd[lang];
+        const username = collected.author.username;
+        const verificationTimeout = verify.timeoutMsg[lang](username);
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
@@ -95,7 +98,7 @@ class VerifyController extends BaseController {
         from: process.env.EMAIL_USERNAME,
         to: email,
         subject: msg.verify.verifyHtmlMsgSubject[lang],
-        html: '<table><tr><td><p>' + msg.verify.verifyHtmlMsgStart[lang] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verify.verifyHtmlMsgEnd[lang] + `${code}</h2></td></tr></table>`,
+        html: verify.htmlMsg[lang](timeout, code),
       };
       // Call sendMail on sendVerifyCode
       // Pass mailOptions & callback function
@@ -110,7 +113,7 @@ class VerifyController extends BaseController {
       });
 
       util.log('Code', code, 3);
-      return msg.verify.verifyEmailMsgStart[lang] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verify.verifyEmailMsgEnd[lang];
+      return verify.emailMsg[lang](timeout);
     } else {
       return msg.verify.verifyEmailDenied[lang];
     }
