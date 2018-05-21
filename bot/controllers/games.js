@@ -45,17 +45,41 @@ class GamesController extends BaseController {
     const { message } = this;
     // this is all of the responses the magic 8 ball can give
     const answers = [
+      'It is certian',
+      'It is decidedly so',
+      'Without a doubt',
+      'Yes definitely',
+      'You may rely on it',
+      'You can count on it',
+      'As I see it, yes',
+      'Most likely',
+      'Outlook good',
+      'Yes',
+      'Signs point to yes',
+      'Absolutely',
+      'Reply hazy try again',
+      'Ask again later',
+      'Better not tell you now',
+      'Cannot predict now',
+      'Concentrate and ask again',
+      'Don\'t count on it',
+      'My reply is no',
+      'My sources say no',
+      'Outlook not so good',
+      'Very doubtful',
+      'Chances aren\'t good',
     ];
-    return '';
+    const shake = Math.floor(Math.random() * answers.length);
+    return message.author.username + ' shakes the 8 ball and gets: ```' + answers[shake] + '```';
   }
   // Flip the coin
   coinFlipAction() {
     const { message } = this;
     const flip = Math.floor(Math.random() * 2);
     if (flip === 0) {
-      return 'You just flipped HEADS!';
+      return `You just flipped HEADS! Way to go ${message.author.username}`;
     } else {
-      return 'You just flipped TAILS!!';
+      return `You just flipped TAILS!! Way to go ${message.author.username}`;
     }
   }
   // rolls the dice with the user set sides
