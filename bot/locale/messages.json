@@ -56,45 +56,15 @@
       "es": "Este correo electrónico ya ha sido verificado por un usuario de discordia.",
       "al": "Ijsgk rshwe wefhw kwjebf wekl wkjebg twefo aweg lwelwge akjwbg."
     },
-    "verifyTimeoutMsgStart": {
-      "en": "!verify timeout. Clap",
-      "es": "!verifica el tiempo de espera. Aplaudir",
-      "al": "!wkjeb kqwjfb. qwkljgb"
-    },
-    "verifyTimeoutMsgEnd": {
-      "en": "in irons!  Let's see how well they dance on the plank!",
-      "es": "¡en planchas! ¡Veamos qué bien bailan en el tablón!",
-      "al": "ewkj weewh!  wejgk's weg wklne wme welkng agskjj weg erh wehwdj!"
-    },
     "verifyHtmlMsgSubject": {
       "en": "Armada Verification Code",
       "es": "Código de verificación de Armada",
       "al": "Eselgn Iakjsbg Wksjdbg"
     },
-    "verifyHtmlMsgStart": {
-      "en": "Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after",
-      "es": "Ingrese el código a continuación en Discord, en el mismo canal en el Servidor Armada. La verificación caducará después de",
-      "al": "Usdg agawg wajkbf awjbk injkawbfto akhjwg, awg ajkwb awbj ajkwbf awgjk aw jakwb kajwg. lakgweh wklejbg wlkebh elknh"
-    },
-    "verifyHtmlMsgEnd": {
-      "en": "minutes from first entering the !verify command.</p></td></tr><tr><td><h2>Verification Code: ",
-      "es": "minutos desde la primera vez que ingresa el comando !verify.</p></td></tr><tr><td><h2>Código de verificación: ",
-      "al": "lksebg wlkhb wklenh alfghwr eklg !ljkaebg oaiwbgkne.</p></td></tr><tr><td><h2>lkqewgwrh wlkeg: "
-    },
     "verifyErrorMsg": {
       "en": "Oops, looks like the email can not be sent. It's not you, it's me. Please reach out to a moderator to help you verify.",
       "es": "Vaya, parece que el correo electrónico no se puede enviar. No eres tu, soy yo. Comuníquese con un moderador para ayudarlo a verificar.",
       "al": "lwekn, welkjg wlke wlekng wlekh weet erh hweh wjkbeh. wejs nkreg wehjk, wkjebg erhw. ksjebgk skjehb wjelhb wjkbe ewrha lkwegh wkleg wjelkbh wkle wlekg."
-    },
-    "verifyEmailMsgStart": {
-      "en": "...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within",
-      "es": "...¿Cuál es el código de acceso? \n\n *ojos sospechosamente*\n\n Acabo de enviarlo a su correo electrónico, simplemente responda de nuevo a este canal dentro de",
-      "al": "...wklgn's wklen wlekbg? \n\n *wlrh wegj wkebg*\n\n erh wjebkg nkleht rej jfweg wkejb wegk, wejkb lkwebg kwje kbjwef wkjebg wlekbg lqewkg"
-    },
-    "verifyEmailMsgEnd": {
-      "en": "minutes, with the code, and I won't treat you like a scurvy cur!",
-      "es": "minutos, con el código, ¡y no te trataré como un escorbuto!",
-      "al": "lwkegn, weg ewj wljkeg, wegk e wkejg't kwjebg whe wlqkjb ae wlkebg wkejgb!"
     },
     "verifyEmailDenied": {
       "en": "Sorry, I can only verify Full Sail University email addresses.",
