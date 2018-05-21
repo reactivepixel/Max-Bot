@@ -21,7 +21,7 @@
       "en": "is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)",
       "es": "no es un canal conocido. Pruebe `!Channels` para obtener una lista de todos los canales (distinguen entre mayúsculas y minúsculas)",
       "al": "kdabj akwjb w awgrgs qkwbwqge. kqjwb `!akwjv` awgjkb rsh ew weh wiefv qjwv qkwuf (wgjb qjw kaf-akgvafkj)"
-    },
+    }
   },
   "announce": {
     "helpMsg": {
@@ -38,7 +38,7 @@
       "en": "Broadcast sent!",
       "es": "¡Transmisión enviada!",
       "al": "Ukasjbg kawb!"
-    },
+    }
   },
   "verify": {
     "helpMsg": {
@@ -100,7 +100,7 @@
       "en": "Sorry, I can only verify Full Sail University email addresses.",
       "es": "Lo siento, solo puedo verificar las direcciones de correo electrónico de Full Sail University.",
       "al": "Okwjeg, wehg ewkjbf wegwh wkjebg wkeg wlbej woeubkjwe qwiuvg beiquwgb."
-    },
+    }
   },
   "roles": {
     "helpMsg": {
@@ -112,7 +112,7 @@
       "en": "List of all Armada Roles: \n\n",
       "es": "Lista de todas las funciones de Armada: \n\n",
       "al": "Uaksbf awf ewg qwkjf akuwj: \n\n"
-    },
+    }
   },
   "addRole": {
     "helpMsg": {
@@ -134,7 +134,7 @@
       "en": "Added the role ",
       "es": "Se agregó el rol ",
       "al": "Takjsf akjbw awkjbf "
-    },
+    }
   },
   "addRoles": {
     "helpMsg": {
@@ -151,7 +151,7 @@
       "en": "All set!",
       "es": "¡Todo listo!",
       "al": "Iaf abw!"
-    },
+    }
   },
   "removeRole": {
     "helpMsg": {
@@ -173,7 +173,7 @@
       "en": " removed.",
       "es": " remoto.",
       "al": " ajbgklg."
-    },
+    }
   },
   "addAllRoles": {
     "helpMsg": {
@@ -185,7 +185,7 @@
       "en": "Adding you to all Roles. You're going to be drinking from the firehose :sob:",
       "es": "Te agrego a todos los Roles. Vas a estar bebiendo de la manguera :sob:",
       "al": "Uajkg ejkb afw ajklwf awkjlb. awkj ajkebg rwhkln wej wljkeb kwjebg wkjebg kwejg :sob:"
-    },
+    }
   },
   "removeAllRoles": {
     "helpMsg": {
