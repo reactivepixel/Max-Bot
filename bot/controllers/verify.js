@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const { generateCode } = require('../botUtils.js');
 const msg = require('../locale/messages.json');
 
-const LANGUAGE = process.env.LANGUAGE;
+const lang = process.env.LANGUAGE;
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -23,7 +23,7 @@ class VerifyController extends BaseController {
         '!verify',
         '!verify <email_address>',
         'Verify Email Address',
-        msg.verify.helpMsg[LANGUAGE],
+        msg.verify.helpMsg[lang],
         this.verifyAction.bind(controller),
       ),
     ];
@@ -51,8 +51,8 @@ class VerifyController extends BaseController {
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
-        const verifyUser = msg.verify.verifyUserMsg[LANGUAGE];
-        const userAlredyOnSystem = msg.verify.userAlredyOnSystemMsg[LANGUAGE];
+        const verifyUser = msg.verify.verifyUserMsg[lang];
+        const userAlredyOnSystem = msg.verify.userAlredyOnSystemMsg[lang];
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
           if (matchedUserData === null) {
             // no existing record found
@@ -74,7 +74,7 @@ class VerifyController extends BaseController {
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
-        const verificationTimeout = msg.verify.verifyTimeoutMsgStart[LANGUAGE] + ` ${collected.author.username} ` + msg.verify.verifyTimeoutMsgEnd[LANGUAGE];
+        const verificationTimeout = msg.verify.verifyTimeoutMsgStart[lang] + ` ${collected.author.username} ` + msg.verify.verifyTimeoutMsgEnd[lang];
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
@@ -94,13 +94,13 @@ class VerifyController extends BaseController {
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
-        subject: msg.verify.verifyHtmlMsgSubject[LANGUAGE],
-        html: '<table><tr><td><p>' + msg.verify.verifyHtmlMsgStart[LANGUAGE] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verify.verifyHtmlMsgEnd[LANGUAGE] + `${code}</h2></td></tr></table>`,
+        subject: msg.verify.verifyHtmlMsgSubject[lang],
+        html: '<table><tr><td><p>' + msg.verify.verifyHtmlMsgStart[lang] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verify.verifyHtmlMsgEnd[lang] + `${code}</h2></td></tr></table>`,
       };
       // Call sendMail on sendVerifyCode
       // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
-        const errorMsg = msg.verify.verifyErrorMsg[LANGUAGE];
+        const errorMsg = msg.verify.verifyErrorMsg[lang];
         if (err) {
           message.reply(errorMsg);
           util.log('Email not sent', err, 3);
@@ -110,9 +110,9 @@ class VerifyController extends BaseController {
       });
 
       util.log('Code', code, 3);
-      return msg.verify.verifyEmailMsgStart[LANGUAGE] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verify.verifyEmailMsgEnd[LANGUAGE];
+      return msg.verify.verifyEmailMsgStart[lang] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verify.verifyEmailMsgEnd[lang];
     } else {
-      return msg.verify.verifyEmailDenied[LANGUAGE];
+      return msg.verify.verifyEmailDenied[lang];
     }
   }
 }

@@ -3,7 +3,7 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 const msg = require('../locale/messages.json');
 
-const LANGUAGE = process.env.LANGUAGE;
+const lang = process.env.LANGUAGE;
 
 class RoleController extends BaseController {
   constructor(message) {
@@ -19,7 +19,7 @@ class RoleController extends BaseController {
         '!roles',
         '!roles',
         'List All Roles',
-        msg.roles.helpMsg[LANGUAGE],
+        msg.roles.helpMsg[lang],
         this.rolesAction.bind(controller),
         'dm',
       ),
@@ -27,35 +27,35 @@ class RoleController extends BaseController {
         '!addRole',
         '!addRole <role_name>',
         'Add Role',
-        msg.addRole.helpMsg[LANGUAGE],
+        msg.addRole.helpMsg[lang],
         this.addRoleAction.bind(controller),
       ),
       new Command(
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
-        msg.addRoles.helpMsg[LANGUAGE],
+        msg.addRoles.helpMsg[lang],
         this.addRolesAction.bind(controller),
       ),
       new Command(
         '!removeRole',
         '!removeRole <role_name>',
         'Remove Role',
-        msg.removeRole.helpMsg[LANGUAGE],
+        msg.removeRole.helpMsg[lang],
         this.removeRoleAction.bind(controller),
       ),
       new Command(
         '!addAllRoles',
         '!addAllRoles',
         'Add All Roles',
-        msg.addAllRoles.helpMsg[LANGUAGE],
+        msg.addAllRoles.helpMsg[lang],
         this.addAllRolesAction.bind(controller),
       ),
       new Command(
         '!removeAllRoles',
         '!removeAllRoles',
         'Remove All Roles',
-        msg.removeAllRoles.helpMsg[LANGUAGE],
+        msg.removeAllRoles.helpMsg[lang],
         this.removeAllRolesAction.bind(controller),
       ),
     ];
@@ -78,7 +78,7 @@ class RoleController extends BaseController {
       }
       return role.name;
     });
-    return msg.roles.msg[LANGUAGE] + roles.join('\n');
+    return msg.roles.msg[lang] + roles.join('\n');
   }
 
   // Adds a role to the user
@@ -87,14 +87,14 @@ class RoleController extends BaseController {
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" ' + msg.addRole.errorMsg[LANGUAGE];
+      return '"' + message.parsed[1] + '" ' + msg.addRole.errorMsg[lang];
     } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return msg.addRole.deniedMsg[LANGUAGE] + message.parsed[1] + '.';
+      return msg.addRole.deniedMsg[lang] + message.parsed[1] + '.';
     } else {
       util.log('Adding Role to user', targetRole.name, 2);
       message.member.addRole(targetRole).catch(util.log);
-      return msg.addRole.successMsg[LANGUAGE] + '"' + targetRole.name + '".';
+      return msg.addRole.successMsg[lang] + '"' + targetRole.name + '".';
     }
   }
 
@@ -110,14 +110,14 @@ class RoleController extends BaseController {
         util.log('Asking API for Role', targetRole, 4);
 
         if (targetRole === null) {
-          return '"' + role + '" ' + msg.addRoles.errorMsg[LANGUAGE];
+          return '"' + role + '" ' + msg.addRoles.errorMsg[lang];
         }
         return message.member.addRole(targetRole).catch(util.log);
       }
       return role.name;
     });
 
-    return msg.addRoles.msgReturn[LANGUAGE];
+    return msg.addRoles.msgReturn[lang];
   }
 
   // Removes role from user
@@ -126,16 +126,16 @@ class RoleController extends BaseController {
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
-      return '"' + message.parsed[1] + '" ' + msg.removeRole.errorMsg[LANGUAGE];
+      return '"' + message.parsed[1] + '" ' + msg.removeRole.errorMsg[lang];
     }
     if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
-      return msg.removeRole.deniedMsg[LANGUAGE];
+      return msg.removeRole.deniedMsg[lang];
     }
 
     util.log('Removing role from user', targetRole.name, 2);
     message.member.removeRole(targetRole).catch(util.log);
-    return targetRole.name + msg.removeRole.msgReturn[LANGUAGE];
+    return targetRole.name + msg.removeRole.msgReturn[lang];
   }
 
   // Adds all roles to user
@@ -148,7 +148,7 @@ class RoleController extends BaseController {
       return role.name;
     });
 
-    return msg.addAllRoles.msgReturn[LANGUAGE];
+    return msg.addAllRoles.msgReturn[lang];
   }
 
   // Removes all roles from user
@@ -161,7 +161,7 @@ class RoleController extends BaseController {
       return role.name;
     });
 
-    return msg.removeAllRoles.msgReturn[LANGUAGE];
+    return msg.removeAllRoles.msgReturn[lang];
   }
 }
 

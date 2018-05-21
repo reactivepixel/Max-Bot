@@ -3,7 +3,7 @@ const Command = require('../baseCommand.js');
 const util = require('apex-util');
 const msg = require('../locale/messages.json');
 
-const LANGUAGE = process.env.LANGUAGE;
+const lang = process.env.LANGUAGE;
 
 class ChannelController extends BaseController {
   constructor(message) {
@@ -14,7 +14,7 @@ class ChannelController extends BaseController {
         '!channels',
         '!channels',
         'List All Channels',
-        msg.channels.helpMsg[LANGUAGE],
+        msg.channels.helpMsg[lang],
         this.channelsAction.bind(controller),
         'dm',
       ),
@@ -22,7 +22,7 @@ class ChannelController extends BaseController {
         '!announce',
         '!announce <channel_name>,[channel_name] <message>',
         'Announce To Channels',
-        msg.announce.helpMsg[LANGUAGE],
+        msg.announce.helpMsg[lang],
         this.announceAction.bind(controller),
         'reply',
         true,
@@ -34,7 +34,7 @@ class ChannelController extends BaseController {
     const { message } = this;
     const channels = [];
     message.guild.channels.map(channel => channels.push(channel.name));
-    return msg.channels.msg[LANGUAGE] + channels.join('\n');
+    return msg.channels.msg[lang] + channels.join('\n');
   }
 
   announceAction() {
@@ -48,7 +48,7 @@ class ChannelController extends BaseController {
       util.log('Asking API for Channel', targetChannel, 4);
 
       if (targetChannel === null) {
-        return '"' + channel + '" ' + msg.channels.errorMsg[LANGUAGE];
+        return '"' + channel + '" ' + msg.channels.errorMsg[lang];
       }
 
       // Set parsed value to 2 for message.
@@ -64,10 +64,10 @@ class ChannelController extends BaseController {
         preparedMessage += message.parsed[msgParsedIndex];
         msgParsedIndex += 1;
       }
-      return targetChannel.send(sender + msg.announce.msg[LANGUAGE] + preparedMessage + '```');
+      return targetChannel.send(sender + msg.announce.msg[lang] + preparedMessage + '```');
     });
 
-    return msg.announce.msgReturn[LANGUAGE];
+    return msg.announce.msgReturn[lang];
   }
 }
 

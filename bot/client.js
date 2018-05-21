@@ -3,7 +3,7 @@ const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
 const msg = require('./locale/messages.json');
 
-const LANGUAGE = process.env.LANGUAGE;
+const lang = process.env.LANGUAGE;
 
 // If production server, set default debug mode to production setting
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
@@ -25,7 +25,7 @@ client.on('message', (message) => {
     util.log('Command message received', message.content, 0);
 
     // Build basic help string
-    let helpString = msg.help.msg[LANGUAGE];
+    let helpString = msg.help.msg[lang];
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {
