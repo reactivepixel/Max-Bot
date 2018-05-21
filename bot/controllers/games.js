@@ -1,6 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const https = require('https');
+const fetch = require('node-fetch');
 // const util = require('apex-util');
 
 class GamesController extends BaseController {
@@ -97,27 +98,20 @@ class GamesController extends BaseController {
   dadJokeAction() {
     const { message } = this;
     let joke = '';
-    const jokeStore = [];
     // this holds the url for the api get request
     const options = {
-      host: 'icanhazdadjoke.com',
-      path: '/',
       method: 'GET',
       headers: {
-        accept: 'application/json',
+        accept: 'text/plain',
       },
     };
-    const req = https.request(options, (res) => {
-      res.on('data', (data) => {
-        // parse the data returned
-        const body = JSON.parse(JSON.stringify(data));
-        // push the joke into the variable
-        jokeStore.push(body);
+    fetch('https://icanhazdadjoke.com/', options)
+      .then((res) => {
+        res.text();
+      })
+      .then((body) => {
+        return `Here is your joke ${message.author.username}!! ${body}`;
       });
-    });
-    req.end();
-    joke = jokeStore[0];
-    return `Here is your joke ${message.author.username}!! ${joke}`;
   }
 }
 
