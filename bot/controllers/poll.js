@@ -15,8 +15,8 @@ class PollController extends BaseController {
       new Command(
         '!poll',
         '!poll <ask-a-question> <option_1> <option_2> <option_3>',
-        'Posts a Question users can vote on',
-        'Posts a Question users can vote on, use "-" to separate words in your question',
+        'Posts a Poll users can vote on',
+        'Posts a Poll users can vote on, use "-" to separate words in your question',
         this.pollAction.bind(controller),
       ),
     ];
