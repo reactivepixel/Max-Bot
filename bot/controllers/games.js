@@ -97,7 +97,6 @@ class GamesController extends BaseController {
   // makes a simple API request to icanhazdadjoke.com for a random dad joke
   dadJokeAction() {
     const { message } = this;
-    let joke = '';
     // this holds the url for the api get request
     const options = {
       method: 'GET',
@@ -106,12 +105,8 @@ class GamesController extends BaseController {
       },
     };
     fetch('https://icanhazdadjoke.com/', options)
-      .then((res) => {
-        res.text();
-      })
-      .then((body) => {
-        return `Here is your joke ${message.author.username}!! ${body}`;
-      });
+      .then(res => res.text())
+      .then(body => message.reply(`Here is your joke ${message.author.username}!! ${body}`));
   }
 }
 
