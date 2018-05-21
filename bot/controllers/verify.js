@@ -21,7 +21,7 @@ class VerifyController extends BaseController {
         '!verify',
         '!verify <email_address>',
         'Verify Email Address',
-        msg.verify.verifyHelpMsg[process.env.LANGUAGE],
+        msg.verify.helpMsg[process.env.LANGUAGE],
         this.verifyAction.bind(controller),
       ),
     ];
