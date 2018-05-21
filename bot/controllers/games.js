@@ -75,13 +75,13 @@ class GamesController extends BaseController {
     const req = https.request(options, (res) => {
       res.on('data', (data) => {
         // parse the data returned
-        const body = JSON.parse(data);
+        const body = JSON.parse(data.joke);
         // push the joke into the variable
-        joke.push(body.joke);
+        joke.push(body);
       });
     });
     req.end();
-    return `Here is your joke ${message.author.username}: ${joke}`;
+    return `Here is your joke ${message.author.username}: ${JSON.stringify(joke[0])}`;
   }
 }
 
