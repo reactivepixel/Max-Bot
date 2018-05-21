@@ -35,7 +35,6 @@ Create an ```.env``` file in the root directory with the following sensitive inf
 ```shell
 NODE_ENV=development
 DEBUG_MODE=3
-LANGUAGE=en
 
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
