@@ -31,16 +31,6 @@ client.on('ready', () => {
   util.log('Bot Online and Ready', 0);
 });
 
-// Create an event listener for new guild members
-client.on('guildMemberAdd', (member) => {
-  controllerPicker('guildMemberAdd', member);
-});
-
-// Fire whenever a user's presence changes
-client.on('presenceUpdate', (user) => {
-  controllerPicker('presenceUpdate', user);
-});
-
 // Listen for messages
 client.on('message', (message) => {
   // Make sure that a message object has an !
