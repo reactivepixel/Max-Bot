@@ -77,7 +77,7 @@ As an authorized user of the bot you will need to add it to a server.
 
 1. Copy the Client ID under App Details.
 
-1. Add your Client ID to the following URL and Acces the page.
+1. Add your Client ID to the following URL and Access the page.
 
     https://discordapp.com/oauth2/authorize?client_id=CLIENT_ID_HERE&scope=bot&permissions=0
 
@@ -94,7 +94,7 @@ Max uses [Nodemailer](https://nodemailer.com/about/) to send verification emails
 
 ### Build
 
-Install all the necessary dev dependencies 
+Install all the necessary dev dependencies
 
 ```
 npm install
@@ -113,7 +113,7 @@ docker-compose up --build
 
 When running the bot locally ensure that you have followed the installation instructions above and have docker running.
 
-Use Docker Copose to start and stop the container with the bot client.
+Use Docker Compose to start and stop the container with the bot client.
 
 ```
 docker-compose down && docker-compose up --build
@@ -205,7 +205,7 @@ You can find more information about the config file `db/config/config.json`
 
 ## Node Container
 
-[Officical Node](https://hub.docker.com/_/node/) Container used.
+[Official Node](https://hub.docker.com/_/node/) Container used.
 
 # Other Information
 
