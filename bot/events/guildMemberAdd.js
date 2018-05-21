@@ -5,6 +5,7 @@ class GuildMemberAddEvent extends BaseController {
   constructor(member) {
     super(member);
     const controller = this;
+    this.eventName = 'guildMemberAdd';
     // Array of Events to fire
     this.events = [
       new Event(
