@@ -20,7 +20,7 @@ gulp.task('pm2', () => {
   const config = {
     apps: [{
       name: 'max',
-      script: './bot/client.js',
+      script: './bot/eventName.js',
       env: {
         TOKEN: process.env.DISCORD_BOT_TOKEN,
         DEBUG_MODE: process.env.DEBUG_MODE,

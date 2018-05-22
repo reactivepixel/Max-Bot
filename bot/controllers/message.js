@@ -5,10 +5,14 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const { generateCode, isAdmin } = require('../botUtils.js');
+const { fetch } = require('node-fetch');
+const Discord = require('discord.js');
+const hbs = require('nodemailer-express-handlebars');
 const msg = require('../locale/messages.json');
 const { messages: { verify } } = require('../locale/verifyMsgs.js');
 
 const lang = process.env.LANGUAGE;
+const client = new Discord.Client();
 
 class MessageController extends BaseController {
   constructor(eventObj) {
@@ -108,6 +112,34 @@ class MessageController extends BaseController {
         'Post a Question users can vote on',
         msg.question.helpMsg[lang],
         this.pollAction.bind(controller),
+      ),
+      new Command(
+        '!8ball',
+        '!8ball <question>',
+        'Shakes 8 Ball',
+        'Ask the 8ball a question and get the answer you have always seeked',
+        this.magic8ballAction.bind(controller),
+      ),
+      new Command(
+        '!coinFlip',
+        '!coinFlip',
+        'Flip Coin',
+        'Flip a coin.',
+        this.coinFlipAction.bind(controller),
+      ),
+      new Command(
+        '!rollDice',
+        '!rollDice <sides_of_the_dice>',
+        'Roll Dice',
+        'Roll a dice with sides of your choosing.',
+        this.rollDiceAction.bind(controller),
+      ),
+      new Command(
+        '!dadJoke',
+        '!dadJoke',
+        'Dad Joke',
+        'Get a random dad joke.',
+        this.dadJokeAction.bind(controller),
       ),
     ];
 
@@ -276,14 +308,14 @@ class MessageController extends BaseController {
 
   // Verifies Full Sail email addresses
   verifyAction() {
-    const { eventObj } = this;
+    const { message } = this;
     const targetVerifiedRoleName = 'Crew';
     const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
     const timeoutInMiliseconds = 600000;
-    const email = eventObj.parsed[1].toLowerCase();
+    const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
 
-    // We can set `codeLength` to whatever length we want the verif code to be.
+    // We can set `codeLength` to whatever length we want the verify code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
@@ -293,11 +325,17 @@ class MessageController extends BaseController {
 
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
-      const collector = eventObj.channel.createMessageCollector(
+      if (message.content === code) {
+        util.log('words');
+      }
+      const collector = message.channel.createMessageCollector(
         m => m.content.includes(code),
         { time: timeoutInMiliseconds },
       );
       collector.on('collect', (m) => {
+        client.on('message', (message) => {
+          util.log(message.content);
+        });
         const verifyUser = msg.verify.verifyUserMsg[lang];
         const userAlredyOnSystem = msg.verify.userAlredyOnSystemMsg[lang];
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
@@ -310,25 +348,30 @@ class MessageController extends BaseController {
               verified: 1,
             });
             // mapping guild roles to find the crew role id
-            const targetRole = eventObj.guild.roles.find('name', targetVerifiedRoleName);
-            eventObj.member.addRole(targetRole).catch(util.log);
-            eventObj.reply(verifyUser);
+            const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
+            message.member.addRole(targetRole).catch(util.log);
+            message.author.send(verifyUser);
           } else {
             // existing record found
-            eventObj.reply(userAlredyOnSystem);
+            message.author.send(userAlreadyOnSystem);
           }
         });
         util.log('Collected', m.content, 3);
       });
+
       collector.on('end', (collected) => {
         const username = collected.author.username;
         const verificationTimeout = verify.timeoutMsg[lang](username);
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
-          eventObj.reply(verificationTimeout);
+          message.author.send(verificationTimeout);
         }
       });
+      const options = {
+        viewPath: 'template',
+        extName: '.hbs',
+      };
       // Set up Nodemailer to send emails through gmail
       const sendVerifyCode = nodemailer.createTransport({
         service: 'gmail',
@@ -337,20 +380,25 @@ class MessageController extends BaseController {
           pass: process.env.EMAIL_PASS,
         },
       });
-      // Nodemailer email recipient & message
+      // using the email template
+      sendVerifyCode.use('compile', hbs(options));
       // TODO: Build email template
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
         subject: msg.verify.verifyHtmlMsgSubject[lang],
-        html: verify.htmlMsg[lang](timeout, code),
+        template: 'email',
+        context: {
+          code: `${code}`,
+          userEmail: email,
+        },
       };
-      // Call sendMail on sendVerifyCode
-      // Pass mailOptions & callback function
+        // Call sendMail on sendVerifyCode
+        // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
         const errorMsg = msg.verify.verifyErrorMsg[lang];
         if (err) {
-          eventObj.reply(errorMsg);
+          message.author.send(errorMsg);
           util.log('Email not sent', err, 3);
         } else {
           util.log('Email details', info, 3);
@@ -444,6 +492,74 @@ class MessageController extends BaseController {
         util.error('questionAction reaction failed');
       });
     return msg.question.msgReturn[lang];
+  }
+  // Shakes the 8 ball
+  magic8ballAction() {
+    const { eventObj } = this;
+    // this is all of the responses the magic 8 ball can give
+    const answers = [
+      'It is certian',
+      'It is decidedly so',
+      'Without a doubt',
+      'Yes definitely',
+      'You may rely on it',
+      'You can count on it',
+      'As I see it, yes',
+      'Most likely',
+      'Outlook good',
+      'Yes',
+      'Signs point to yes',
+      'Absolutely',
+      'Reply hazy try again',
+      'Ask again later',
+      'Better not tell you now',
+      'Cannot predict now',
+      'Concentrate and ask again',
+      'Don\'t count on it',
+      'My reply is no',
+      'My sources say no',
+      'Outlook not so good',
+      'Very doubtful',
+      'Chances aren\'t good',
+    ];
+    const shake = Math.floor(Math.random() * answers.length);
+    return eventObj.author.username + ' shakes the 8 ball and gets: ```' + answers[shake] + '```';
+  }
+  // Flip the coin
+  coinFlipAction() {
+    const { eventObj } = this;
+    const flip = Math.floor(Math.random() * 2);
+    if (flip === 0) {
+      return `You just flipped HEADS! Way to go ${eventObj.author.username}`;
+    } else {
+      return `You just flipped TAILS!! Way to go ${eventObj.author.username}`;
+    }
+  }
+  // rolls the dice with the user set sides
+  rollDiceAction() {
+    const { eventObj } = this;
+    const sides = eventObj.parsed[1];
+    const roll = Math.floor(Math.random() * sides) + 1;
+    if (!isNaN(sides)) {
+      return `Look at that. ${eventObj.author.username} just rolled a ${roll}`;
+    } else {
+      return `Sorry ${eventObj.author.username}, It looks like you didn't enter a number.`;
+    }
+  }
+  // makes a simple API request to icanhazdadjoke.com for a random dad joke
+  dadJokeAction() {
+    const { eventObj } = this;
+    // this holds the url for the api get request
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'text/plain',
+      },
+    };
+    fetch('https://icanhazdadjoke.com/', options)
+      .then(res => res.text())
+      .then(body => eventObj.channel.send(`Here is your joke ${eventObj.author.username}!! ${body}`));
+    return 'Want to hear a joke?';
   }
 }
 
