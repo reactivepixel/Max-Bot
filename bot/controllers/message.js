@@ -8,7 +8,6 @@ const { generateCode, isAdmin } = require('../botUtils.js');
 const { fetch } = require('node-fetch');
 const Discord = require('discord.js');
 const hbs = require('nodemailer-express-handlebars');
-const { generateCode } = require('../botUtils.js');
 
 const client = new Discord.Client();
 
