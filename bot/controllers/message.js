@@ -105,9 +105,6 @@ class MessageController extends BaseController {
         'Post a Question users can vote on, use "-" to separate words in your question',
         this.pollAction.bind(controller),
       ),
-      
-      
-      
     ];
 
     // User roles commands cannot change
@@ -360,7 +357,7 @@ class MessageController extends BaseController {
       return 'Sorry, I can only verify Full Sail University email addresses.';
     }
   }
-  
+
   pollAction() {
     const { eventObj } = this;
     const question = eventObj.parsed[1];
@@ -399,7 +396,7 @@ class MessageController extends BaseController {
     const query = `"${questionSpaced}" \r ${options}`;
     eventObj.channel
       .send(query)
-      .then(eventObj => {
+      .then((eventObj) => {
         for (let i = 2; i < count; i += 1) {
           if (i === 2) {
             eventObj.react('\u0031\u20E3');
