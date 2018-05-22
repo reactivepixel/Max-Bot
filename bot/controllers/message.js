@@ -362,7 +362,7 @@ class MessageController extends BaseController {
     const { eventObj } = this;
     const question = eventObj.parsed[1];
     const questionSpaced = question.split('-').join(' ');
-    const content = eventObj.content;
+    const { content } = eventObj;
     const count = content.split(' ').length;
 
     let options = '';
