@@ -5,6 +5,7 @@ const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
 const { generateCode, isAdmin } = require('../botUtils.js');
+const { fetch } = require('node-fetch');
 
 class MessageController extends BaseController {
   constructor(eventObj) {
