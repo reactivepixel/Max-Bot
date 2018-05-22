@@ -3,6 +3,9 @@ const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
 const msg = require('./locale/messages.json');
 
+// If language is blank, set default language to en
+if (process.env.LANGUAGE === '') process.env.LANGUAGE = 'en';
+
 const lang = process.env.LANGUAGE;
 
 // If production server, set default debug mode to production setting
