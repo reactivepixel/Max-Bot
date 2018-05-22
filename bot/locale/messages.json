@@ -1,9 +1,43 @@
 {
   "help": {
+    "helpMsg": {
+      "en": "Shows a list of all available commands in the discord bot",
+      "es": "Muestra una lista de todos los comandos disponibles en el bot discordia",
+      "al": "Yakj eg wekjb wfen wg qwjk qwgjk wrh wfjkb awfkjb ehrj"
+    },
     "msg": {
       "en": "v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**",
       "es": "v1.4.0 Comandos descubiertos:\n\n\t** <> - Artículo requerido\t\t[] - Artículo opcional**",
       "al": "v1.4.0 lakwnd awkjjbz:\n\n\t** <> - yfigijgkjg jhckjfiuf\t\t[] - hvkjfnkfcjh yfifkjvk**"
+    }
+  },
+  "poll": {
+    "helpMsg": {
+      "en": "Posts a Poll users can vote on, use '-' to separate words in your question",
+      "es": "Publicaciones en las que los usuarios de la encuesta pueden votar, use '-' para separar palabras en su pregunta",
+      "al": "Wej weg sjkb wkln wfkejb kbjwe wh, whj '-' wh4 erlwhi wei weigo webg weoih"
+    },
+    "errorMsg": {
+      "en": "The poll can not expect 0 or more than 9 options",
+      "es": "La encuesta no puede esperar 0 o más de 9 opciones",
+      "al": "Jaf wafjb egseh qwj ajwkb 0 wagor awfkjb awj 9 akjwbf"
+    },
+    "msgReturn": {
+      "en": " wants to know.",
+      "es": " quiere saber.",
+      "al": " biufw ewb kwehvg."
+    }
+  },
+  "question": {
+    "helpMsg": {
+      "en": "Posts a Question users can vote on, use '-' to separate words in your question",
+      "es": "Publicaciones en las que los usuarios pueden votar, use '-' para separar palabras en su pregunta",
+      "al": "Iwjkg awge qwfkb qwfjkb wegjk erhjk awg, qwjkb '-' wqgbjk erh awfk ajgkb ent kjbqfw"
+    },
+    "msgReturn": {
+      "en": " wants to know.",
+      "es": " quiere saber.",
+      "al": " biufw ewb kwehvg."
     }
   },
   "channels": {
