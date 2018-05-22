@@ -337,7 +337,7 @@ class MessageController extends BaseController {
           util.log(message.content);
         });
         const verifyUser = msg.verify.verifyUserMsg[lang];
-        const userAlredyOnSystem = msg.verify.userAlredyOnSystemMsg[lang];
+        const userAlreadyOnSystem = msg.verify.userAlredyOnSystemMsg[lang];
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
           if (matchedUserData === null) {
             // no existing record found
