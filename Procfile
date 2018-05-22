@@ -1,1 +1,1 @@
-worker: node bot/client.js
+worker: node bot/eventName.js
