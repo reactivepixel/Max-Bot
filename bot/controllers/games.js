@@ -12,7 +12,7 @@ class GamesController extends BaseController {
         '!8ball',
         '!8ball <question>',
         'Shakes 8 Ball',
-        '',
+        'Ask the 8ball a question and get the answer you have always seeked',
         this.magic8ballAction.bind(controller),
       ),
       new Command(
