@@ -84,7 +84,7 @@ class MessageController extends BaseController {
       ),
       new Command(
         '!announce',
-        '!announce <channel_name>,[channel_name] <eventObj>',
+        '!announce <channel_name>,[channel_name] <message>',
         'Announce To Channels',
         'Broadcast to multiple channels. Channels are case-sensitive.',
         this.announceAction.bind(controller),
@@ -116,7 +116,7 @@ class MessageController extends BaseController {
         }
       }
     });
-    return eventObj.reply(helpString);
+    return helpString;
   }
 
   // Lists all roles
