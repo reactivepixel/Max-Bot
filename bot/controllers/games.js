@@ -1,8 +1,6 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
-const https = require('https');
 const fetch = require('node-fetch');
-// const util = require('apex-util');
 
 class GamesController extends BaseController {
   constructor(message) {
