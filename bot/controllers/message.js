@@ -101,6 +101,7 @@ class MessageController extends BaseController {
     ];
   }
 
+  // Display a list of all available commands to the user
   showCommandsAction() {
     const { eventObj } = this;
     let helpString = 'v1.4.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
