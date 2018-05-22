@@ -105,6 +105,34 @@ class MessageController extends BaseController {
         'Post a Question users can vote on, use "-" to separate words in your question',
         this.pollAction.bind(controller),
       ),
+      new Command(
+        '!8ball',
+        '!8ball <question>',
+        'Shakes 8 Ball',
+        'Ask the 8ball a question and get the answer you have always seeked',
+        this.magic8ballAction.bind(controller),
+      ),
+      new Command(
+        '!coinFlip',
+        '!coinFlip',
+        'Flip Coin',
+        'Flip a coin.',
+        this.coinFlipAction.bind(controller),
+      ),
+      new Command(
+        '!rollDice',
+        '!rollDice <sides_of_the_dice>',
+        'Roll Dice',
+        'Roll a dice with sides of your choosing.',
+        this.rollDiceAction.bind(controller),
+      ),
+      new Command(
+        '!dadJoke',
+        '!dadJoke',
+        'Dad Joke',
+        'Get a random dad joke.',
+        this.dadJokeAction.bind(controller),
+      ),
     ];
 
     // User roles commands cannot change
@@ -438,6 +466,74 @@ class MessageController extends BaseController {
         util.error('questionAction reaction failed');
       });
     return ' wants to know.';
+  }
+  // Shakes the 8 ball
+  magic8ballAction() {
+    const { eventObj } = this;
+    // this is all of the responses the magic 8 ball can give
+    const answers = [
+      'It is certian',
+      'It is decidedly so',
+      'Without a doubt',
+      'Yes definitely',
+      'You may rely on it',
+      'You can count on it',
+      'As I see it, yes',
+      'Most likely',
+      'Outlook good',
+      'Yes',
+      'Signs point to yes',
+      'Absolutely',
+      'Reply hazy try again',
+      'Ask again later',
+      'Better not tell you now',
+      'Cannot predict now',
+      'Concentrate and ask again',
+      'Don\'t count on it',
+      'My reply is no',
+      'My sources say no',
+      'Outlook not so good',
+      'Very doubtful',
+      'Chances aren\'t good',
+    ];
+    const shake = Math.floor(Math.random() * answers.length);
+    return eventObj.author.username + ' shakes the 8 ball and gets: ```' + answers[shake] + '```';
+  }
+  // Flip the coin
+  coinFlipAction() {
+    const { eventObj } = this;
+    const flip = Math.floor(Math.random() * 2);
+    if (flip === 0) {
+      return `You just flipped HEADS! Way to go ${eventObj.author.username}`;
+    } else {
+      return `You just flipped TAILS!! Way to go ${eventObj.author.username}`;
+    }
+  }
+  // rolls the dice with the user set sides
+  rollDiceAction() {
+    const { eventObj } = this;
+    const sides = eventObj.parsed[1];
+    const roll = Math.floor(Math.random() * sides) + 1;
+    if (!isNaN(sides)) {
+      return `Look at that. ${eventObj.author.username} just rolled a ${roll}`;
+    } else {
+      return `Sorry ${eventObj.author.username}, It looks like you didn't enter a number.`;
+    }
+  }
+  // makes a simple API request to icanhazdadjoke.com for a random dad joke
+  dadJokeAction() {
+    const { eventObj } = this;
+    // this holds the url for the api get request
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'text/plain',
+      },
+    };
+    fetch('https://icanhazdadjoke.com/', options)
+      .then(res => res.text())
+      .then(body => eventObj.channel.send(`Here is your joke ${eventObj.author.username}!! ${body}`));
+    return 'Want to hear a joke?';
   }
 }
 
