@@ -34,23 +34,23 @@ class PollController extends BaseController {
     if (count >= 2 && count <= 11) {
       for (let i = 2; i < count; i += 1) {
         if (i === 2) {
-          options += `\r \u0031\u20E3${message.parsed[i]}`;
+          options += `\r \u0031\u20E3 ${message.parsed[i]}`;
         } else if (i === 3) {
-          options += `\r \u0032\u20E3${message.parsed[i]}`;
+          options += `\r \u0032\u20E3 ${message.parsed[i]}`;
         } else if (i === 4) {
-          options += `\r \u0033\u20E3${message.parsed[i]}`;
+          options += `\r \u0033\u20E3 ${message.parsed[i]}`;
         } else if (i === 5) {
-          options += `\r \u0034\u20E3${message.parsed[i]}`;
+          options += `\r \u0034\u20E3 ${message.parsed[i]}`;
         } else if (i === 6) {
-          options += `\r \u0035\u20E3${message.parsed[i]}`;
+          options += `\r \u0035\u20E3 ${message.parsed[i]}`;
         } else if (i === 7) {
-          options += `\r \u0036\u20E3${message.parsed[i]}`;
+          options += `\r \u0036\u20E3 ${message.parsed[i]}`;
         } else if (i === 8) {
-          options += `\r \u0037\u20E3${message.parsed[i]}`;
+          options += `\r \u0037\u20E3 ${message.parsed[i]}`;
         } else if (i === 9) {
-          options += `\r \u0038\u20E3${message.parsed[i]}`;
+          options += `\r \u0038\u20E3 ${message.parsed[i]}`;
         } else if (i === 10) {
-          options += `\r ️\u0039\u20E3${message.parsed[i]}`;
+          options += `\r ️\u0039\u20E3 ${message.parsed[i]}`;
         }
       }
     } else {
