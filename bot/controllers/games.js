@@ -104,7 +104,8 @@ class GamesController extends BaseController {
     };
     fetch('https://icanhazdadjoke.com/', options)
       .then(res => res.text())
-      .then(body => message.reply(`Here is your joke ${message.author.username}!! ${body}`));
+      .then(body => message.channel.send(`Here is your joke ${message.author.username}!! ${body}`));
+    return 'Want to hear a joke?';
   }
 }
 
