@@ -4,8 +4,15 @@ const util = require('apex-util');
 const models = require('../../db/models');
 const uuidv4 = require('uuid/v4');
 const nodemailer = require('nodemailer');
+const Discord = require('discord.js');
+const hbs = require('nodemailer-express-handlebars');
+
+
+const client = new Discord.Client();
+
 const { generateCode } = require('../botUtils.js');
 const msg = require('../locale/messages.json');
+
 
 class VerifyController extends BaseController {
   constructor(message) {
@@ -23,6 +30,7 @@ class VerifyController extends BaseController {
         'Verify Email Address',
         msg.verify[process.env.LANGUAGE],
         this.verifyAction.bind(controller),
+        'dm',
       ),
     ];
   }
@@ -36,21 +44,28 @@ class VerifyController extends BaseController {
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
 
-    // We can set `codeLength` to whatever length we want the verif code to be.
+    // We can set `codeLength` to whatever length we want the verify code to be.
     // Recommend ngt 8 digits.
     if (validDomains.includes(emailDomain)) {
       const codeLength = 6;
       // code to equal value generated
       const code = generateCode(codeLength);
-
       util.log('code', code, 3);
       // TODO: Set `time` prop to 600000 (10min)
+      if (message.content === code) {
+        util.log('words');
+      }
       const collector = message.channel.createMessageCollector(
         m => m.content.includes(code),
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
-        const verifyUser = msg.verifyUserMsg[process.env.LANGUAGE];
-        const userAlredyOnSystem = msg.userAlredyOnSystemMsg[process.env.LANGUAGE];
+feature-verify-email-template
+        client.on('message', (message) => {
+          util.log(message.content);
+        });
+        const verifyUser = 'Welcome aboard, Crewmate!';
+        const userAlreadyOnSystem = 'This email has already been verified to a discord user.';
+
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
           if (matchedUserData === null) {
             // no existing record found
@@ -63,22 +78,27 @@ class VerifyController extends BaseController {
             // mapping guild roles to find the crew role id
             const targetRole = message.guild.roles.find('name', targetVerifiedRoleName);
             message.member.addRole(targetRole).catch(util.log);
-            message.reply(verifyUser);
+            message.author.send(verifyUser);
           } else {
             // existing record found
-            message.reply(userAlredyOnSystem);
+            message.author.send(userAlreadyOnSystem);
           }
         });
         util.log('Collected', m.content, 3);
       });
+
       collector.on('end', (collected) => {
         const verificationTimeout = msg.verifyTimeoutMsgStart[process.env.LANGUAGE] + ` ${collected.author.username} ` + msg.verifyTimeoutMsgEnd[process.env.LANGUAGE];
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
-          message.reply(verificationTimeout);
+          message.author.send(verificationTimeout);
         }
       });
+      const options = {
+        viewPath: 'template',
+        extName: '.hbs',
+      };
       // Set up Nodemailer to send emails through gmail
       const sendVerifyCode = nodemailer.createTransport({
         service: 'gmail',
@@ -87,20 +107,26 @@ class VerifyController extends BaseController {
           pass: process.env.EMAIL_PASS,
         },
       });
-      // Nodemailer email recipient & message
+      // using the email template
+      sendVerifyCode.use('compile', hbs(options));
       // TODO: Build email template
       const mailOptions = {
         from: process.env.EMAIL_USERNAME,
         to: email,
-        subject: msg.verifyHtmlMsgSubject[process.env.LANGUAGE],
-        html: '<table><tr><td><p>' + msg.verifyHtmlMsgStart[process.env.LANGUAGE] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verifyHtmlMsgEnd[process.env.LANGUAGE] + `${code}</h2></td></tr></table>`,
+feature-verify-email-template
+        subject: 'Armada Verification Code',
+        template: 'email',
+        context: {
+          code: `${code}`,
+          userEmail: email,
+        },
       };
-      // Call sendMail on sendVerifyCode
-      // Pass mailOptions & callback function
+        // Call sendMail on sendVerifyCode
+        // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
         const errorMsg = msg.verifyErrorMsg[process.env.LANGUAGE];
         if (err) {
-          message.reply(errorMsg);
+          message.author.send(errorMsg);
           util.log('Email not sent', err, 3);
         } else {
           util.log('Email details', info, 3);
@@ -108,11 +134,11 @@ class VerifyController extends BaseController {
       });
 
       util.log('Code', code, 3);
-      return msg.verifyEmailMsgStart[process.env.LANGUAGE] + ` ${(timeoutInMiliseconds / 1000) / 60} ` + msg.verifyEmailMsgEnd[process.env.LANGUAGE];
+feature-verify-email-template
+      return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur! Make sure to check your spam folder if you cannot find the email!`;
     } else {
       return msg.verifyEmailDenied[process.env.LANGUAGE];
     }
   }
 }
-
 module.exports = VerifyController;
