@@ -27,6 +27,11 @@ class ChannelController extends BaseController {
     ];
   }
 
+  channelTosAction() {
+    const { message } = this;
+    return message.author.send('Glad to have you, here are the Terms of Service.');
+  }
+
   channelsAction() {
     const { message } = this;
     const channels = [];
