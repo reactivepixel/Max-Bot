@@ -14,17 +14,14 @@ class DetailsController extends BaseController {
                 '!terms',
                 'Resend the Terms of Service',
                 'Resend the Terms of Service in direct message.',
-                this.channel_terms.bind(controller),
+                this.channelTerms.bind(controller),
                 'dm',
             ),
         ];
     }
-    
-    channel_terms() {
+    channelTerms() {
         const { username } = this.message.author;
         return 'Hi ' + username + ', here are those terms of service you were looking for!';
     }
-    
 }
-
 module.exports = DetailsController;

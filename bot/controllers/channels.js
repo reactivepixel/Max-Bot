@@ -29,15 +29,15 @@ class ChannelController extends BaseController {
           '!rules',
           'Server Rules and Regulations',
           'Generally speaking, just be nice to everyone, please!',
-          this.channel_terms.bind(controller),
+          this.channelTerms.bind(controller),
           'reply',
           true,
       ),
     ];
   }
 
-  channel_terms(){
-    const{message} = this;
+  channelTerms() {
+    const { message } = this;
     return message.author.send('Please take the time to read our terms of service, it is important!.');
   }
 
