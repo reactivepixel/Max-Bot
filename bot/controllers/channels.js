@@ -24,13 +24,23 @@ class ChannelController extends BaseController {
         'reply',
         true,
       ),
+      new Command(
+          '!rules',
+          '!rules',
+          'Server Rules and Regulations',
+          'Generally speaking, just be nice to everyone, please!',
+          this.channel_terms.bind(controller),
+          'reply',
+          true,
+      ),
     ];
   }
 
-  channelTosAction() {
-    const { message } = this;
-    return message.author.send('Glad to have you, here are the Terms of Service.');
+  channel_terms(){
+    const{message} = this;
+    return message.author.send('Please take the time to read our terms of service, it is important!.');
   }
+
 
   channelsAction() {
     const { message } = this;
