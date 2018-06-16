@@ -14,12 +14,25 @@ class DetailsController extends BaseController {
         this.channelTosAction.bind(controller),
         'dm',
       ),
+      new Command(
+        '!say',
+        '!say',
+        'Say Last Message',
+        'Read Out the Last Message (in Browsers)',
+        this.channelReadAction.bind(controller),
+      ),
     ];
   }
 
   channelTosAction() {
     const { username } = this.message.author;
     return 'Hello ' + username + ', here are the Terms of Service.';
+  }
+
+  channelReadAction() {
+    const { content } = this.message;
+    const newStr = content.replace('!say', '');
+    return newStr;
   }
 }
 
