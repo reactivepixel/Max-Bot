@@ -6,13 +6,15 @@ const { isAdmin } = require('./botUtils.js');
 if (process.env.NODE_ENV === 'production' && !process.env.DEBUG_MODE) process.env.DEBUG_MODE = 0;
 
 const client = new Discord.Client();
+let toggle = false;
+let interval = 0;
 
 // Pre-load controllers
 const controllers = require('./controllers')();
 
 // Alert when ready
 client.on('ready', () => {
-  util.log('Bot Online and Ready', 0);
+  util.log('Bot Online and Ready and willing to go!', 0);
 });
 
 // Listen for messages
@@ -20,7 +22,7 @@ client.on('message', (message) => {
 
   // Create a ToS message for new members
   const newMessage = message;
-  newMessage.content = message.type === 'GUILD_MEMBER_JOIN' ? '!terms' : new_message.content;
+  newMessage.content = message.type === 'GUILD_MEMBER_JOIN' ? '!terms' : newMessage.content;
 
   // Check for ! prefix on message to ensure it is a command
   if (newMessage.content.charAt(0) === '!') {
@@ -60,6 +62,42 @@ client.on('message', (message) => {
       newMessage.reply(helpString);
     }
   }
+
+  // Listens for the $loop command and repeats a message every X seconds
+  if (newMessage.content.startsWith("!loop")) {
+    // Grab the message string and dissect it for the time, in seconds, and string to be repeated
+    let result = newMessage.content.substr(newMessage.content.indexOf(" ") + 1);
+    let result2 = result.substr(result.indexOf(" ") + 1);
+    result = result.split(" ");
+    result = Number(result[0]);
+    util.log(result);
+    util.log(result2);
+
+    // Check if the pre-existing toggle is true or false
+    // If the toggle is true, then set the toggle to false and turn off the loop
+    if (toggle !== false) {
+      clearInterval(interval);
+      newMessage.channel.send("Loop is off");
+      toggle = false;
+    } else if (toggle !== true) {
+      // If the toggle is false, set it to true and check that the criteria for the command
+      // is correct.
+      if ((typeof result == 'number') && (result >= 5)) {
+        if (result2.length > 0) {
+          interval = setInterval(function () {
+            newMessage.channel.send(result2)
+          }, (result * 1000));
+          newMessage.channel.send("Loop is now on");
+          toggle = true;
+        } else {
+          newMessage.channel.send("please enter a message");
+        }
+      } else {
+        newMessage.channel.send("please input a time in seconds and make it greater than or equal to 5");
+      }
+    }
+  }
+
 });
 
 // Listen out for new users to the discord
@@ -75,5 +113,7 @@ client.on('guildMemberRemove', (member) => {
   const mainChannel = member.guild.channels.find('name', 'general');
   mainChannel.send(`${member} has left... it was nice knowing you! ;-;`);
 });
+
+
 
 client.login(process.env.TOKEN);
