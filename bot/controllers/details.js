@@ -18,8 +18,22 @@ class DetailsController extends BaseController {
         '!say',
         '!say',
         'Say Last Message',
-        'Read Out the Last Message (in Browsers)',
+        'Make the Bot say something.',
         this.channelReadAction.bind(controller),
+      ),
+      new Command(
+        '!cat',
+        '!cat',
+        'Show a Cat',
+        'Display an image of a Cat.',
+        this.channelCatAction.bind(controller),
+      ),
+      new Command(
+        '!number',
+        '!number',
+        'Random Number',
+        'Generate a random number.',
+        this.channelNumberAction.bind(controller),
       ),
     ];
   }
@@ -33,6 +47,16 @@ class DetailsController extends BaseController {
     const { content } = this.message;
     const newStr = content.replace('!say', '');
     return newStr;
+  }
+
+  channelCatAction() {
+    const { channel } = this.message;
+    return channel.send('Cat.', { files: ['https://i.imgur.com/znLN4AQ.jpg'] });
+  }
+
+  channelNumberAction() {
+    const { channel } = this.message;
+    return channel.send(Math.floor(Math.random() * 1000000));
   }
 }
 
