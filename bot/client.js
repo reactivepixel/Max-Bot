@@ -66,8 +66,7 @@ client.on('guildMemberAdd', (member) => {
     channel.send(`Everybody say hello to ${member.user.username}!`); // Send welcome message
 
     // Send member a welcome message with terms
-    member.createDM();
-    member.sendMessage(`Welcome to the server ${member.user.username}!\r\nYou can view our terms of service here!`);
+    member.send(`Welcome to the server ${member.user.username}!\r\nYou can view our terms of service here!`);
   }
 });
 

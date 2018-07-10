@@ -19,7 +19,7 @@ class WelcomeController extends BaseController {
 
   welcomeAction() {
     const { message } = this;
-    return message.member.send(`Welcome to the server ${message.member}!\r\nYou can view the terms here!`);
+    return `Welcome to the server ${message.member}!\r\nYou can view the terms here!`;
   }
 }
 module.exports = WelcomeController;
