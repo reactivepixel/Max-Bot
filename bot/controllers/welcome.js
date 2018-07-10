@@ -19,8 +19,7 @@ class WelcomeController extends BaseController {
 
   resendWelcomeMessage() {
     const { message } = this;
-    message.member.send(`Welcome to our server ${message.member}!`);
-    return 'Done.';
+    return `Welcome to our server ${message.member}!`;
   }
 }
 
