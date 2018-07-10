@@ -7,17 +7,17 @@ class WelcomeController extends BaseController {
     const controller = this;
     this.commands = [
       new Command(
-        '!terms',
-        '!terms',
-        'Message Terms of Service',
-        'Sends a direct message to the user with the terms of service.',
-        this.termsAction.bind(controller),
+        '!resendWelcome',
+        '!resendWelcome',
+        'Resend Welcome Message',
+        'Sends a direct message to the user with the original welcome message.',
+        this.welcomeAction.bind(controller),
         'dm',
       ),
     ];
   }
 
-  termsAction() {
+  welcomeAction() {
     const { message } = this;
     return message.member.send(`Welcome to the server ${message.member}!\r\nYou can view the terms here!`);
   }
