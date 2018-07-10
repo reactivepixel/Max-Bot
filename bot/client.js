@@ -57,4 +57,14 @@ client.on('message', (message) => {
   }
 });
 
+client.on('guildMemberAdd', (member) => {
+  // Send dm to user
+  member.createDM();
+  member.sendMessage(`Welcome to our server ${member}!`);
+  // Send message to general channel
+  const channel = member.guild.channels.find('name', 'general');
+  if (!channel) return;
+  channel.send(`Welcome to the server ${member}!`);
+});
+
 client.login(process.env.TOKEN);
