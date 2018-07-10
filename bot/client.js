@@ -57,4 +57,18 @@ client.on('message', (message) => {
   }
 });
 
+client.on('guildMemberAdd', (member) => {
+  // Announce member in general channel
+  const channel = member.guild.channels.find('name', 'general'); // Find & assign channel
+  if (!channel) {
+    util.log('Invalid Channel', channel, 3); // Log no channel found
+  } else {
+    channel.send(`Everybody say hello to ${member.user.username}!`); // Send welcome message
+
+    // Send member a welcome message with terms
+    member.createDM();
+    member.sendMessage(`Welcome to the server ${member.user.username}!\r\nYou can view our terms of service here!`);
+  }
+});
+
 client.login(process.env.TOKEN);
