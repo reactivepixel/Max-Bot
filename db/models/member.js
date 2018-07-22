@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     uuid: DataTypes.STRING,
     verified: DataTypes.BOOLEAN,
+    receiveerrors: DataTypes.BOOLEAN,
   }, {
     classMethods: {
       associate: (models) => {
