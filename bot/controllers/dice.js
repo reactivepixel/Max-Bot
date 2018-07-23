@@ -79,11 +79,12 @@ class DiceController extends BaseController {
       return diceString;
     });
 
-    // Return an embedded message to the user in their dms
-    return message.member.send({ embed: {
+    // Send an embedded message to the user in their dms
+    message.member.send({ embed: {
       color: 0x9d0a0e,
       description: diceString,
     } });
+    return 'Use this information wisely!';
   }
 }
 
