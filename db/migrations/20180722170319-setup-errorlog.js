@@ -1,7 +1,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('ErrorLog', {
+    const response = queryInterface.createTable('ErrorLogs', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,8 +25,11 @@ module.exports = {
         defaultValue: Sequelize.fn('now'),
       },
     });
+
+    return response;
   },
   down: (queryInterface) => {
-    return queryInterface.dropTable('ErrorLog');
+    const response = queryInterface.dropTable('ErrorLogs');
+    return response;
   },
 };

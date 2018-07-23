@@ -1,5 +1,6 @@
 const util = require('apex-util');
 const { isAdmin } = require('./botUtils.js');
+const models = require('../db/models');
 
 class BaseController {
   constructor(message) {
@@ -31,8 +32,20 @@ class BaseController {
     return false;
   }
 
-  onError(errorMessage = 'I Broke... Beep...Boop...Beep') {
-    return this.message.reply(errorMessage);
+  onError(errorMessage, userId = 'system') {
+    try {
+      models.ErrorLog.create({
+        errormessage: errorMessage,
+        errorTriggeredBy: userId,
+      });
+
+      this.message.reply('An error occurred and was logged.');
+
+      return 'Error logged.';
+    } catch (e) {
+      util.log(errorMessage);
+      return this.message.reply('An error occurred but was not logged due to an issue with the underlying database.');
+    }
   }
 
   // Execute the command's functionality
@@ -60,7 +73,7 @@ class BaseController {
         if (commandResponse) {
           this.onSuccess(commandResponse, this.commands[key]);
         } else {
-          this.onError();
+          this.onError('A system-level error occurred.', 'system');
         }
       }
       return this.commands[key];

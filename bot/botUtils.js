@@ -30,3 +30,9 @@ exports.isAdmin = (member) => {
   }
   return false;
 };
+
+// Checks if person is an actual server admin
+exports.isServerAdmin = (message) => {
+  const isAdmin = message.member.hasPermission('ADMINISTRATOR');
+  return isAdmin;
+};

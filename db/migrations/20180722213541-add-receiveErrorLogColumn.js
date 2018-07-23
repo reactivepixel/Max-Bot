@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const response = queryInterface.addColumn('Members', 'processed', {
+    const response = queryInterface.addColumn('Members', 'receiveErrors', {
       type: Sequelize.BOOLEAN,
       defaultValue: 0,
       allowNull: false,
@@ -10,8 +10,7 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    const response = queryInterface.removeColumn('Members', 'processed');
-
+    const response = queryInterface.removeColumn('Members', 'receiveErrors');
     return response;
   },
 };
