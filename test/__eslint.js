@@ -5,6 +5,7 @@ const lint = require('mocha-eslint');
 // matches a glob pattern
 const paths = [
   'bot',
+  'bot/**/*.js',
   'test/**/*.js',
 ];
 
