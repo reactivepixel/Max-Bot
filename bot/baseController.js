@@ -1,5 +1,5 @@
 const util = require('apex-util');
-const { isAdmin } = require('./botUtils.js');
+const { isInElevatedRole } = require('./botUtils.js');
 const models = require('../db/models');
 
 class BaseController {
@@ -63,7 +63,7 @@ class BaseController {
         }
 
         // If non-admin enters admin command
-        if (this.commands[key].adminOnly && !isAdmin(this.message.member)) {
+        if (this.commands[key].adminOnly && !isInElevatedRole(this.message.member)) {
           return this.onError('You don\'t have permissions to run this command.');
         }
 

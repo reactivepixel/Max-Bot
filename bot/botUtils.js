@@ -20,12 +20,12 @@ exports.generateCode = (n) => {
 };
 
 // Checks if person is an admin user, use GuildMember object
-exports.isAdmin = (member) => {
-  const adminRoles = [
+exports.isInElevatedRole = (member) => {
+  const elevatedRoles = [
     'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
     'Moderator', 'Tester',
   ];
-  if (adminRoles.some(role => member.roles.find('name', role))) {
+  if (elevatedRoles.some(role => member.roles.find('name', role))) {
     return true;
   }
   return false;
