@@ -14,18 +14,10 @@ class DiceController extends BaseController {
     this.commands = [
       new Command(
         '!roll',
-        '!roll <die_type>',
+        '!roll <roll_count><die_type>,[roll_count][die_type]',
         'Rolls the dice',
-        'Rolls a die based on the user input',
+        'Rolls dice based on the user input. Must be in #D# format. Example: 1D20 rolls a single D20.',
         this.rollAction.bind(controller),
-      ),
-      new Command(
-        '!listDice',
-        '!listDice',
-        'Lists All Dice',
-        'Sends the user a dm containing a list of all the dice available.',
-        this.listDice.bind(controller),
-        'dm',
       ),
     ];
   }
@@ -33,58 +25,34 @@ class DiceController extends BaseController {
   // Perform the rolling of the dice
   rollAction() {
     const { message } = this;
-    const dice = message.parsed[1].split(',');
-    util.log('Parsed message: ', dice, 4);
-    let results = 'You rolled a ';
+    const diceCommand = message.parsed[1].split(',');
+    util.log('Parsed message: ', diceCommand, 4);
+    let total = 0;
+    let rollsString = '';
 
-    // Decide what equation to run based on the dice type
-    switch (dice.toString()) {
-      case 'D4':
-        results += Math.floor((Math.random() * 4) + 1);
-        break;
-      case 'D6':
-        results += Math.floor((Math.random() * 6) + 1);
-        break;
-      case 'D8':
-        results += Math.floor((Math.random() * 8) + 1);
-        break;
-      case 'D10':
-        results += Math.floor((Math.random() * 10) + 1);
-        break;
-      case 'D12':
-        results += Math.floor((Math.random() * 12) + 1);
-        break;
-      case 'D20':
-        results += Math.floor((Math.random() * 20) + 1);
-        break;
-      default:
-        // Return an error if user didn't input a supported die type
-        results = 'You rolled an unidentified die, please use `!listDice` to see all available dice!';
-        break;
-    }
+    diceCommand.map((singleDie) => {
+      // Get the specifics of the roll based on the location of the 'd'
+      let rollCount = singleDie.toLowerCase().substr(0, singleDie.indexOf('d'));
+      const sides = singleDie.toLowerCase().substr(singleDie.indexOf('d') + 1);
+      const dieName = 'D' + sides; // Name of the current dice
+
+      // Loop for the amount of rolls needed
+      while (rollCount !== 0) {
+        // Perform the random number selection
+        const rollNumber = Math.floor((Math.random() * sides) + 1);
+        rollsString += dieName + ': ' + rollNumber + '\n';
+        rollCount -= 1;
+
+        // Add roll to the total
+        total += rollNumber;
+      }
+      return rollsString;
+    });
+    // Create the results string
+    const results = 'here are your results! \n' + rollsString + '\n**Total: ' + total + '!**';
 
     // Return results
     return results;
-  }
-
-  // List all the dice
-  listDice() {
-    const { message } = this;
-    const dice = ['D4', 'D6', 'D8', 'D10', 'D12', 'D20']; // Dice array
-    let diceString = 'Here is a list of all available dice:';
-
-    // Map the dice array and add it to the string to return
-    dice.map((val) => {
-      diceString += '\n' + val;
-      return diceString;
-    });
-
-    // Send an embedded message to the user in their dms
-    message.member.send({ embed: {
-      color: 0x9d0a0e,
-      description: diceString,
-    } });
-    return 'Use this information wisely!';
   }
 }
 
