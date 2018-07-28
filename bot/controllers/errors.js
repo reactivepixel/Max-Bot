@@ -101,13 +101,10 @@ class ErrorController extends BaseController {
     let errorCount = 10;
     // Set errorCount if one was provided
     if (params[0] !== undefined && params[0] !== null && params[0] !== '') {
-      if (parseInt(params[0], 10) !== null) {
+      if (!isNaN(parseInt(params[0], 10))) {
         errorCount = parseInt(params[0], 10);
       }
     }
-
-    util.log('Typeof Params0: ', typeof params[0]);
-    util.log('Typeof Params1: ', typeof params[1]);
 
     const username = params[1];
 
