@@ -32,7 +32,7 @@ exports.isInElevatedRole = (member) => {
 };
 
 // Checks if person is an actual server admin
-exports.isServerAdmin = (message) => {
-  const isAdmin = message.member.hasPermission('ADMINISTRATOR');
+exports.isServerAdmin = (member) => {
+  const isAdmin = member.hasPermission('ADMINISTRATOR');
   return isAdmin;
 };

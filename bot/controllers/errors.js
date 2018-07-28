@@ -39,7 +39,7 @@ class ErrorController extends BaseController {
     const { message } = this;
 
     // Server Admin function only
-    if (isServerAdmin(message)) {
+    if (isServerAdmin(message.member)) {
       models.Member.findOne({ where: { discorduser: message.member.id } })
         .then((user) => {
           if (!user) {
@@ -79,7 +79,7 @@ class ErrorController extends BaseController {
           members.forEach((member) => {
             const adminUser = message.member.guild.members.get(member.discorduser);
             // Make sure the user that's about to receive the error message is still an admin
-            if (adminUser.hasPermissions('ADMINISTRATOR')) {
+            if (isServerAdmin(adminUser)) {
               adminUser.send(`User ${displayName} triggered the following error: \n\n Command: ${messageContent} \n Error: ${errorMessage}`);
             }
           });
@@ -107,7 +107,7 @@ class ErrorController extends BaseController {
 
     const username = params[1];
 
-    if (isServerAdmin(message)) {
+    if (isServerAdmin(message.member)) {
       // Get the id from the username
       const members = message.guild.members;
       const member = username ? members.find('displayName', username) : undefined;
