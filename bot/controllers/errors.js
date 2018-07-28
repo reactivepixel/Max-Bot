@@ -78,7 +78,11 @@ class ErrorController extends BaseController {
       .then((members) => {
         if (members.length > 0) {
           members.forEach((member) => {
-            message.member.guild.members.get(member.discorduser).send(`User ${displayName} triggered the following error: \n\n Command: ${messageContent} \n Error: ${errorMessage}`);
+            const adminUser = message.member.guild.members.get(member.discorduser);
+            // Make sure the user that's about to receive the error message is still an admin
+            if (adminUser.hasPermissions('ADMINISTRATOR')) {
+              adminUser.send(`User ${displayName} triggered the following error: \n\n Command: ${messageContent} \n Error: ${errorMessage}`);
+            }
           });
         }
       });
