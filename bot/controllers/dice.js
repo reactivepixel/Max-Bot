@@ -25,14 +25,15 @@ class DiceController extends BaseController {
   // Perform the rolling of the dice
   rollAction() {
     const { message } = this;
-    const diceCommand = message.parsed[1].split(',');
-    util.log('Parsed message: ', diceCommand, 4);
+    const commandParams = 1;
+    const diceCommands = message.parsed[commandParams].split(',');
+    util.log('Parsed message: ', diceCommands, 4);
     let total = 0;
     let rollsString = '';
     let invalidDie = false;
     const diceFormat = /(\d*)?d(?:(\d+|F))(?:([+-]\d*))?/; // Regex to verify correct dice format
 
-    diceCommand.map((singleDie) => {
+    diceCommands.map((singleDie) => {
       // Convert string to lowercase
       const singleDieLowercase = singleDie.toLowerCase();
 
