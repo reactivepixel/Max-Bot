@@ -21,6 +21,7 @@ class ErrorController extends BaseController {
         'Toggle Show/Hide Bot Errors',
         'If enabled, bot errors will be sent to you via dm.',
         this.toggleErrors.bind(controller),
+        'dm',
       ),
       new Command(
         '!fetchErrors',
@@ -38,79 +39,120 @@ class ErrorController extends BaseController {
   toggleErrors() {
     const { message } = this;
 
+    // Server Admin function only
     if (isServerAdmin(message)) {
       models.Member.findOne({ where: { discorduser: message.member.id } })
         .then((user) => {
-          util.log('Member query finished');
           if (!user) {
-            util.log('User not found');
+            // User has not verified their email yet.
             message.member.send('You must verify your email before using this feature!.');
             return 'Fail on find user';
           }
+          // Toggle receiveerrors field in DB for user
           user.update({ receiveerrors: !user.receiveerrors });
           return user.get();
         })
         .then((user) => {
-          util.log(user.receiveErrors);
-          util.log('Update finished');
-          const message = 'what';// `receiveErrors set to ${user.receiveErrors}`;
-          return message;
+          if (user.receiveerrors === false) {
+            message.member.send('You are no longer receiving error messages');
+            return false;
+          }
+          message.member.send('You are now receiving error messages');
+          return true;
         });
 
       return 'OK';
     } else {
-      this.onError(`User ${message.member.displayName} tried to perform an admin function but wasn't an admin.`, message.member.id);
+      // Log devious action!
+      this.onError(`User ${message.member.displayName} tried to perform an admin function (${message}) but wasn't an admin.`, message.member.id, message);
       return 'You must be in a role that\'s marked as an administrator to use this feature!';
     }
+  }
+
+  // Sends error DMs to any admins with toggleErrors set to true
+  sendErrors(errorMessage, displayName, messageContent) {
+    const { message } = this;
+
+    // Check if any admins are set to receive errors
+    models.Member.findAll({ where: { receiveerrors: true } })
+      .then((members) => {
+        if (members.length > 0) {
+          members.forEach((member) => {
+            message.member.guild.members.get(member.discorduser).send(`User ${displayName} triggered the following error: \n\n Command: ${messageContent} \n Error: ${errorMessage}`);
+          });
+        }
+      });
+    return true;
   }
 
   // Fetches last X errors logged
   fetchErrors() {
     const { message } = this;
-    const params = message.parsed[1].split(',');
-    let errorCount = 10;
+    let params = [];
 
-    if (params[0] !== undefined && params[0] !== null && params[0] !== '') {
-      errorCount = parseInt(params[0], 10);
+    if (message.parsed[1] !== undefined) {
+      params = message.parsed[1].split(',');
     }
+
+    let errorCount = 10;
+    // Set errorCount if one was provided
+    if (params[0] !== undefined && params[0] !== null && params[0] !== '') {
+      if (parseInt(params[0], 10) !== null) {
+        errorCount = parseInt(params[0], 10);
+      }
+    }
+
+    util.log('Typeof Params0: ', typeof params[0]);
+    util.log('Typeof Params1: ', typeof params[1]);
 
     const username = params[1];
 
     if (isServerAdmin(message)) {
+      // Get the id from the username
+      const members = message.guild.members;
+      const member = username ? members.find('displayName', username) : undefined;
+
+      const replc = [];
+
       let query = 'SELECT max.ErrorLogs.id, errormessage, errorTriggeredBy, max.ErrorLogs.createdAt FROM max.ErrorLogs';
       // Is there a username?
       if (username) {
-        // Get the id from the username
-        const members = message.guild.members;
-        const member = members.find('displayName', username);
-
         if (!member) {
           return `Member ${username} not found.`;
         }
 
         query += ' JOIN max.Members ON max.ErrorLogs.errorTriggeredBy = max.Members.discorduser' +
-                 ` AND max.Members.discorduser = ${member.id}`;
+                 ' AND max.Members.discorduser = ?';
+
+        replc.push(member.id);
       }
 
-      query += ` ORDER BY max.ErrorLogs.createdAt DESC LIMIT ${errorCount}`;
+      query += ' ORDER BY max.ErrorLogs.createdAt DESC LIMIT ?';
+
+      replc.push(errorCount);
 
       let errorLog = '';
 
-      models.sequelize.query(query, { type: Sequelize.QueryTypes.SELECT })
+      models.sequelize.query(query, { replacements: replc, type: Sequelize.QueryTypes.SELECT })
         .then((errors) => {
           errors.forEach((error) => {
             errorLog += `${error.createdAt} - ${error.errormessage} \n`;
           });
+          if (errorLog.length > 2000) {
+            message.member.send('Character limit of 2000 exceeded. Please reduce the number of error messages returned (discord limitation)');
+            return false;
+          }
           if (username) {
-            message.member.send(`Last 10 errors for user ${username}`);
+            message.member.send(`Last ${errorCount} errors for user ${username}`);
           } else {
-            message.member.send('Last 10 errors received');
+            message.member.send(`Last ${errorCount} errors received`);
           }
           message.member.send(errorLog);
+          return true;
         });
       return 'Complete';
     } else {
-      this.onError(`User ${message.member.displayName} tried to perform an admin function (${message}) but wasn't an admin.`, message.member.id);
+      this.onError(`User ${message.member.displayName} tried to perform an admin function (${message}) but wasn't an admin.`, message.member.id, message);
       return 'You must be in a role that\'s marked as an administrator to use this feature!';
     }
   }

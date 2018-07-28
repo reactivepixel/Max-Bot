@@ -32,7 +32,13 @@ class BaseController {
     return false;
   }
 
-  onError(errorMessage, userId = 'system') {
+  onError(errorMessage, userId = 'system', message) {
+    const ErrorController = require('./controllers/errors');
+
+    const ec = new ErrorController(message);
+
+    ec.sendErrors(errorMessage, message.member.displayName, message.content);
+
     try {
       models.ErrorLog.create({
         errormessage: errorMessage,
@@ -59,12 +65,12 @@ class BaseController {
 
         // If user messages the bot a channel-only command
         if (!this.commands[key].allowInDM && !this.message.guild) {
-          return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
+          return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:', this.message.member.id, this.message);
         }
 
         // If non-admin enters admin command
         if (this.commands[key].adminOnly && !isInElevatedRole(this.message.member)) {
-          return this.onError('You don\'t have permissions to run this command.');
+          return this.onError('You don\'t have permissions to run this command.', this.message.member.id, this.message);
         }
 
         // Execute command's action
@@ -73,7 +79,7 @@ class BaseController {
         if (commandResponse) {
           this.onSuccess(commandResponse, this.commands[key]);
         } else {
-          this.onError('A system-level error occurred.', 'system');
+          this.onError('A system-level error occurred.', this.message.member.id, this.message);
         }
       }
       return this.commands[key];
