@@ -3,7 +3,6 @@ const Command = require('../baseCommand.js');
 const { isServerAdmin } = require('../botUtils.js');
 const models = require('../../db/models');
 const Sequelize = require('sequelize');
-const util = require('apex-util');
 
 class ErrorController extends BaseController {
   constructor(message) {

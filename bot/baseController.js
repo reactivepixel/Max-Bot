@@ -35,23 +35,24 @@ class BaseController {
   onError(errorMessage, userId = 'system', message) {
     const ErrorController = require('./controllers/errors');
 
-    const ec = new ErrorController(message);
+    if (message !== undefined) {
+      const ec = new ErrorController(message);
+      ec.sendErrors(errorMessage, message.member.displayName, message.content);
 
-    ec.sendErrors(errorMessage, message.member.displayName, message.content);
+      try {
+        models.ErrorLog.create({
+          errormessage: errorMessage,
+          errorTriggeredBy: userId,
+        });
+        this.message.reply('An error occurred and was logged.');
 
-    try {
-      models.ErrorLog.create({
-        errormessage: errorMessage,
-        errorTriggeredBy: userId,
-      });
-
-      this.message.reply('An error occurred and was logged.');
-
-      return 'Error logged.';
-    } catch (e) {
-      util.log(errorMessage);
-      return this.message.reply('An error occurred but was not logged due to an issue with the underlying database.');
+        return 'Error logged.';
+      } catch (e) {
+        util.log(errorMessage);
+        return this.message.reply('An error occurred but was not logged due to an issue with the underlying database.');
+      }
     }
+    return this.message.reply(errorMessage);
   }
 
   // Execute the command's functionality
@@ -65,12 +66,12 @@ class BaseController {
 
         // If user messages the bot a channel-only command
         if (!this.commands[key].allowInDM && !this.message.guild) {
-          return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:', this.message.member.id, this.message);
+          return this.onError('Please don\'t use this command directly. Instead use it in a channel on a server. :beers:');
         }
 
         // If non-admin enters admin command
         if (this.commands[key].adminOnly && !isInElevatedRole(this.message.member)) {
-          return this.onError('You don\'t have permissions to run this command.', this.message.member.id, this.message);
+          return this.onError('You don\'t have permissions to run this command.');
         }
 
         // Execute command's action
