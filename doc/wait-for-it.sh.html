@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>wait-for-it.sh</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "wait-for-it.sh";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>wait-for-it.sh</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh"><span class="hljs-meta">#!/usr/bin/env bash
+</span></pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Use this script to test if a given TCP host/port are available</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh">
+cmdname=$(basename <span class="hljs-variable">$0</span>)
+
+<span class="hljs-function"><span class="hljs-title">echoerr</span></span>() { <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$QUIET</span> -ne 1 ]]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$@</span>"</span> 1&gt;&amp;2; <span class="hljs-keyword">fi</span> }
+
+<span class="hljs-function"><span class="hljs-title">usage</span></span>()
+{
+    cat &lt;&lt; USAGE &gt;&amp;2
+Usage:
+    <span class="hljs-variable">$cmdname</span> host:port [-s] [-t timeout] [-- <span class="hljs-built_in">command</span> args]
+    -h HOST | --host=HOST       Host or IP under <span class="hljs-built_in">test</span>
+    -p PORT | --port=PORT       TCP port under <span class="hljs-built_in">test</span>
+                                Alternatively, you specify the host and port as host:port
+    -s | --strict               Only execute subcommand <span class="hljs-keyword">if</span> the <span class="hljs-built_in">test</span> succeeds
+    -q | --quiet                Don<span class="hljs-string">'t output any status messages
+    -t TIMEOUT | --timeout=TIMEOUT
+                                Timeout in seconds, zero for no timeout
+    -- COMMAND ARGS             Execute command with args after the test finishes
+USAGE
+    exit 1
+}
+
+wait_for()
+{
+    if [[ $TIMEOUT -gt 0 ]]; then
+        echoerr "$cmdname: waiting $TIMEOUT seconds for $HOST:$PORT"
+    else
+        echoerr "$cmdname: waiting for $HOST:$PORT without a timeout"
+    fi
+    start_ts=$(date +%s)
+    while :
+    do
+        if [[ $ISBUSY -eq 1 ]]; then
+            nc -z $HOST $PORT
+            result=$?
+        else
+            (echo &gt; /dev/tcp/$HOST/$PORT) &gt;/dev/null 2&gt;&amp;1
+            result=$?
+        fi
+        if [[ $result -eq 0 ]]; then
+            end_ts=$(date +%s)
+            echoerr "$cmdname: $HOST:$PORT is available after $((end_ts - start_ts)) seconds"
+            break
+        fi
+        sleep 1
+    done
+    return $result
+}
+
+wait_for_wrapper()
+{
+</span></pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>In order to support SIGINT during timeout: http://unix.stackexchange.com/a/57692</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh">    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$QUIET</span> -eq 1 ]]; <span class="hljs-keyword">then</span>
+        timeout <span class="hljs-variable">$BUSYTIMEFLAG</span> <span class="hljs-variable">$TIMEOUT</span> <span class="hljs-variable">$0</span> --quiet --child --host=<span class="hljs-variable">$HOST</span> --port=<span class="hljs-variable">$PORT</span> --timeout=<span class="hljs-variable">$TIMEOUT</span> &amp;
+    <span class="hljs-keyword">else</span>
+        timeout <span class="hljs-variable">$BUSYTIMEFLAG</span> <span class="hljs-variable">$TIMEOUT</span> <span class="hljs-variable">$0</span> --child --host=<span class="hljs-variable">$HOST</span> --port=<span class="hljs-variable">$PORT</span> --timeout=<span class="hljs-variable">$TIMEOUT</span> &amp;
+    <span class="hljs-keyword">fi</span>
+    PID=$!
+    <span class="hljs-built_in">trap</span> <span class="hljs-string">"kill -INT -<span class="hljs-variable">$PID</span>"</span> INT
+    <span class="hljs-built_in">wait</span> <span class="hljs-variable">$PID</span>
+    RESULT=$?
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$RESULT</span> -ne 0 ]]; <span class="hljs-keyword">then</span>
+        echoerr <span class="hljs-string">"<span class="hljs-variable">$cmdname</span>: timeout occurred after waiting <span class="hljs-variable">$TIMEOUT</span> seconds for <span class="hljs-variable">$HOST</span>:<span class="hljs-variable">$PORT</span>"</span>
+    <span class="hljs-keyword">fi</span>
+    <span class="hljs-built_in">return</span> <span class="hljs-variable">$RESULT</span>
+}
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>process arguments</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh"><span class="hljs-keyword">while</span> [[ <span class="hljs-variable">$#</span> -gt 0 ]]
+<span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">case</span> <span class="hljs-string">"<span class="hljs-variable">$1</span>"</span> <span class="hljs-keyword">in</span>
+        *:* )
+        hostport=(<span class="hljs-variable">${1//:/ }</span>)
+        HOST=<span class="hljs-variable">${hostport[0]}</span>
+        PORT=<span class="hljs-variable">${hostport[1]}</span>
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        --child)
+        CHILD=1
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        -q | --quiet)
+        QUIET=1
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        -s | --strict)
+        STRICT=1
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        -h)
+        HOST=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>
+        <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$HOST</span> == <span class="hljs-string">""</span> ]]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">break</span>; <span class="hljs-keyword">fi</span>
+        <span class="hljs-built_in">shift</span> 2
+        ;;
+        --host=*)
+        HOST=<span class="hljs-string">"<span class="hljs-variable">${1#*=}</span>"</span>
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        -p)
+        PORT=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>
+        <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$PORT</span> == <span class="hljs-string">""</span> ]]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">break</span>; <span class="hljs-keyword">fi</span>
+        <span class="hljs-built_in">shift</span> 2
+        ;;
+        --port=*)
+        PORT=<span class="hljs-string">"<span class="hljs-variable">${1#*=}</span>"</span>
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        -t)
+        TIMEOUT=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>
+        <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$TIMEOUT</span> == <span class="hljs-string">""</span> ]]; <span class="hljs-keyword">then</span> <span class="hljs-built_in">break</span>; <span class="hljs-keyword">fi</span>
+        <span class="hljs-built_in">shift</span> 2
+        ;;
+        --timeout=*)
+        TIMEOUT=<span class="hljs-string">"<span class="hljs-variable">${1#*=}</span>"</span>
+        <span class="hljs-built_in">shift</span> 1
+        ;;
+        --)
+        <span class="hljs-built_in">shift</span>
+        CLI=(<span class="hljs-string">"<span class="hljs-variable">$@</span>"</span>)
+        <span class="hljs-built_in">break</span>
+        ;;
+        --<span class="hljs-built_in">help</span>)
+        usage
+        ;;
+        *)
+        echoerr <span class="hljs-string">"Unknown argument: <span class="hljs-variable">$1</span>"</span>
+        usage
+        ;;
+    <span class="hljs-keyword">esac</span>
+<span class="hljs-keyword">done</span>
+
+<span class="hljs-keyword">if</span> [[ <span class="hljs-string">"<span class="hljs-variable">$HOST</span>"</span> == <span class="hljs-string">""</span> || <span class="hljs-string">"<span class="hljs-variable">$PORT</span>"</span> == <span class="hljs-string">""</span> ]]; <span class="hljs-keyword">then</span>
+    echoerr <span class="hljs-string">"Error: you need to provide a host and port to test."</span>
+    usage
+<span class="hljs-keyword">fi</span>
+
+TIMEOUT=<span class="hljs-variable">${TIMEOUT:-15}</span>
+STRICT=<span class="hljs-variable">${STRICT:-0}</span>
+CHILD=<span class="hljs-variable">${CHILD:-0}</span>
+QUIET=<span class="hljs-variable">${QUIET:-0}</span>
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>check to see if timeout is from busybox?
+check to see if timeout is from busybox?</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh">TIMEOUT_PATH=$(realpath $(<span class="hljs-built_in">which</span> timeout))
+<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$TIMEOUT_PATH</span> =~ <span class="hljs-string">"busybox"</span> ]]; <span class="hljs-keyword">then</span>
+        ISBUSY=1
+        BUSYTIMEFLAG=<span class="hljs-string">"-t"</span>
+<span class="hljs-keyword">else</span>
+        ISBUSY=0
+        BUSYTIMEFLAG=<span class="hljs-string">""</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$CHILD</span> -gt 0 ]]; <span class="hljs-keyword">then</span>
+    wait_for
+    RESULT=$?
+    <span class="hljs-built_in">exit</span> <span class="hljs-variable">$RESULT</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$TIMEOUT</span> -gt 0 ]]; <span class="hljs-keyword">then</span>
+        wait_for_wrapper
+        RESULT=$?
+    <span class="hljs-keyword">else</span>
+        wait_for
+        RESULT=$?
+    <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">fi</span>
+
+<span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$CLI</span> != <span class="hljs-string">""</span> ]]; <span class="hljs-keyword">then</span>
+    <span class="hljs-keyword">if</span> [[ <span class="hljs-variable">$RESULT</span> -ne 0 &amp;&amp; <span class="hljs-variable">$STRICT</span> -eq 1 ]]; <span class="hljs-keyword">then</span>
+        echoerr <span class="hljs-string">"<span class="hljs-variable">$cmdname</span>: strict mode, refusing to execute subprocess"</span>
+        <span class="hljs-built_in">exit</span> <span class="hljs-variable">$RESULT</span>
+    <span class="hljs-keyword">fi</span>
+    <span class="hljs-built_in">exec</span> <span class="hljs-string">"<span class="hljs-variable">${CLI[@]}</span>"</span>
+<span class="hljs-keyword">else</span>
+    <span class="hljs-built_in">exit</span> <span class="hljs-variable">$RESULT</span>
+<span class="hljs-keyword">fi</span>
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

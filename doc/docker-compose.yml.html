@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>docker-compose.yml</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "docker-compose.yml";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>docker-compose.yml</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">"3"</span>
+<span class="hljs-attr">services:</span>
+<span class="hljs-attr">  bot:</span>
+<span class="hljs-attr">    build:</span> <span class="hljs-string">.</span>
+<span class="hljs-attr">    volumes:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-string">/usr/src/app/node_modules</span>
+<span class="hljs-attr">    restart:</span> <span class="hljs-string">always</span>
+<span class="hljs-attr">    ports:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-string">"$BOT_PORT_HOST:$BOT_PORT_GUEST"</span>
+<span class="hljs-attr">    command:</span> <span class="hljs-string">["./wait-for-it.sh",</span> <span class="hljs-string">"mysql:3306"</span><span class="hljs-string">,</span> <span class="hljs-string">"--"</span><span class="hljs-string">,</span> <span class="hljs-string">"db/first_run.sh"</span><span class="hljs-string">]</span>
+
+<span class="hljs-attr">  mysql:</span>
+<span class="hljs-attr">    container_name:</span> <span class="hljs-string">mariadb</span>
+<span class="hljs-attr">    restart:</span> <span class="hljs-string">always</span>
+<span class="hljs-attr">    image:</span> <span class="hljs-attr">mariadb:latest</span>
+<span class="hljs-attr">    environment:</span>
+<span class="hljs-attr">      MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">$MYSQL_ROOT_PASSWORD</span>
+<span class="hljs-attr">      MYSQL_USER:</span> <span class="hljs-string">$MYSQL_USER</span>
+<span class="hljs-attr">      MYSQL_PASS:</span> <span class="hljs-string">$MYSQL_PASS</span>
+<span class="hljs-attr">      MYSQL_DATABASE:</span> <span class="hljs-string">$MYSQL_DATABASE</span>
+<span class="hljs-attr">    volumes:</span>
+<span class="hljs-attr">      - my-datavolume:</span><span class="hljs-string">/var/lib/mysql</span>
+<span class="hljs-attr">    ports:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-string">"$DB_PORT_HOST:$DB_PORT_GUEST"</span>
+<span class="hljs-attr">volumes:</span>
+<span class="hljs-attr">  my-datavolume:</span>
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

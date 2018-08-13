@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>first_run.sh</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "db/first_run.sh";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>first_run.sh</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh"><span class="hljs-meta">#!/bin/bash
+</span>
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Generating Sequelize config from .env file"</span>
+gulp db
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Generating PM2 config from .env file"</span>
+gulp pm2
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Migrating"</span>
+sequelize db:migrate --config db/config/config.json --migrations-path db/migrations/
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"Seeding"</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>TODO: Seed based upon Environment
+sequelize db:seed:undo:all --config db/config/config.json --migrations-path db/migrations/ --seeders-path db/seeders
+sequelize db:seed:all --config db/config/config.json --migrations-path db/migrations/ --seeders-path db/seeders</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="sh"><span class="hljs-built_in">echo</span> <span class="hljs-string">"Running PM2"</span>
+pm2 start max.config.js --no-daemon
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "db/models/index.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>index.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> Sequelize = <span class="hljs-built_in">require</span>(<span class="hljs-string">'sequelize'</span>);
+
+<span class="hljs-keyword">const</span> basename = path.basename(<span class="hljs-built_in">module</span>.filename);
+<span class="hljs-keyword">const</span> env = process.env.NODE_ENV || <span class="hljs-string">'development'</span>;
+<span class="hljs-keyword">const</span> config = <span class="hljs-built_in">require</span>(path.join(__dirname, <span class="hljs-string">'/../config/config.json'</span>))[env];
+
+<span class="hljs-keyword">const</span> db = {};
+
+<span class="hljs-keyword">let</span> sequelize;
+
+<span class="hljs-keyword">if</span> (config.use_env_variable) {
+  sequelize = <span class="hljs-keyword">new</span> Sequelize(process.env[config.use_env_variable]);
+} <span class="hljs-keyword">else</span> {
+  sequelize = <span class="hljs-keyword">new</span> Sequelize(config.database, config.username, config.password, config);
+}
+
+fs
+  .readdirSync(__dirname)
+  .filter(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> (file.indexOf(<span class="hljs-string">'.'</span>) !== <span class="hljs-number">0</span>) &amp;&amp; (file !== basename) &amp;&amp; (file.slice(<span class="hljs-number">-3</span>) === <span class="hljs-string">'.js'</span>);
+  })
+  .forEach(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> {
+    <span class="hljs-keyword">const</span> model = sequelize.import(path.join(__dirname, file));
+    db[model.name] = model;
+  });
+
+<span class="hljs-built_in">Object</span>.keys(db).forEach(<span class="hljs-function">(<span class="hljs-params">modelName</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+
+<span class="hljs-built_in">module</span>.exports = db;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

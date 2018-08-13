@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>channels.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "bot/controllers/channels.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>channels.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> BaseController = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../baseController.js'</span>);
+<span class="hljs-keyword">const</span> Command = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../baseCommand.js'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'apex-util'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChannelController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseController</span> </span>{
+  <span class="hljs-keyword">constructor</span>(message) {
+    <span class="hljs-keyword">super</span>(message);
+    <span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">this</span>.commands = [
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!channels'</span>,
+        <span class="hljs-string">'!channels'</span>,
+        <span class="hljs-string">'List All Channels'</span>,
+        <span class="hljs-string">'List all available Armada channels.'</span>,
+        <span class="hljs-keyword">this</span>.channelsAction.bind(controller),
+        <span class="hljs-string">'dm'</span>,
+      ),
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!announce'</span>,
+        <span class="hljs-string">'!announce &lt;channel_name&gt;,[channel_name] &lt;message&gt;'</span>,
+        <span class="hljs-string">'Announce To Channels'</span>,
+        <span class="hljs-string">'Broadcast to multiple channels. Channels are case-sensitive.'</span>,
+        <span class="hljs-keyword">this</span>.announceAction.bind(controller),
+        <span class="hljs-string">'reply'</span>,
+        <span class="hljs-literal">true</span>,
+      ),
+    ];
+  }
+
+  channelsAction() {
+    <span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> channels = [];
+    message.guild.channels.map(<span class="hljs-function"><span class="hljs-params">channel</span> =&gt;</span> channels.push(channel.name));
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'List of all Armada Channels: \n\n'</span> + channels.join(<span class="hljs-string">'\n'</span>);
+  }
+
+  announceAction() {
+    <span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> channels = message.parsed[<span class="hljs-number">1</span>].split(<span class="hljs-string">','</span>);
+    util.log(<span class="hljs-string">'Multiple Channels Parsing'</span>, channels, <span class="hljs-number">4</span>);
+
+    channels.map(<span class="hljs-function">(<span class="hljs-params">channel</span>) =&gt;</span> {
+      <span class="hljs-keyword">const</span> targetChannel = message.guild.channels.find(<span class="hljs-string">'name'</span>, channel);
+      <span class="hljs-keyword">const</span> sender = message.author.username;
+      util.log(<span class="hljs-string">'Asking API for Channel'</span>, targetChannel, <span class="hljs-number">4</span>);
+
+      <span class="hljs-keyword">if</span> (targetChannel === <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'"'</span> + channel + <span class="hljs-string">'" is not a known channel. Try `!channels` to get a list of all Channels (They are case-sensitive)'</span>;
+      }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Set parsed value to 2 for message.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">let</span> msgParsedIndex = <span class="hljs-number">2</span>;
+      <span class="hljs-keyword">let</span> preparedMessage = <span class="hljs-string">''</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Loop through/join user message by space until end.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">while</span> (msgParsedIndex &lt; message.parsed.length) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Add spaces after first word</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">if</span> (msgParsedIndex !== <span class="hljs-number">2</span>) {
+          preparedMessage += <span class="hljs-string">' '</span>;
+        }
+        preparedMessage += message.parsed[msgParsedIndex];
+        msgParsedIndex += <span class="hljs-number">1</span>;
+      }
+      <span class="hljs-keyword">return</span> targetChannel.send(sender + <span class="hljs-string">' has an announcment: ```'</span> + preparedMessage + <span class="hljs-string">'```'</span>);
+    });
+
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Broadcast sent!'</span>;
+  }
+}
+
+<span class="hljs-built_in">module</span>.exports = ChannelController;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

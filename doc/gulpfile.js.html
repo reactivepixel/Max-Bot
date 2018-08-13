@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>gulpfile.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "gulpfile.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>gulpfile.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> gulp = <span class="hljs-built_in">require</span>(<span class="hljs-string">'gulp'</span>);
+<span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+gulp.task(<span class="hljs-string">'db'</span>, () =&gt; {
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config();
+  <span class="hljs-keyword">const</span> config = {
+    <span class="hljs-attr">development</span>: {
+      <span class="hljs-attr">username</span>: <span class="hljs-string">'root'</span>,
+      <span class="hljs-attr">password</span>: process.env.MYSQL_ROOT_PASSWORD,
+      <span class="hljs-attr">database</span>: process.env.MYSQL_DATABASE,
+      <span class="hljs-attr">host</span>: process.env.MYSQL_HOST,
+      <span class="hljs-attr">dialect</span>: <span class="hljs-string">'mysql'</span>,
+    },
+  };
+  fs.writeFileSync(<span class="hljs-string">'./db/config/config.json'</span>, <span class="hljs-built_in">JSON</span>.stringify(config));
+});
+
+gulp.task(<span class="hljs-string">'pm2'</span>, () =&gt; {
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config();
+  <span class="hljs-keyword">const</span> config = {
+    <span class="hljs-attr">apps</span>: [{
+      <span class="hljs-attr">name</span>: <span class="hljs-string">'max'</span>,
+      <span class="hljs-attr">script</span>: <span class="hljs-string">'./bot/client.js'</span>,
+      <span class="hljs-attr">env</span>: {
+        <span class="hljs-attr">TOKEN</span>: process.env.DISCORD_BOT_TOKEN,
+        <span class="hljs-attr">DEBUG_MODE</span>: process.env.DEBUG_MODE,
+        <span class="hljs-attr">EMAIL_USERNAME</span>: process.env.EMAIL_USERNAME,
+        <span class="hljs-attr">EMAIL_PASS</span>: process.env.EMAIL_PASS,
+        <span class="hljs-attr">NODE_ENV</span>: process.env.NODE_ENV,
+      },
+    }],
+  };
+  fs.writeFileSync(<span class="hljs-string">'./max.config.js'</span>, <span class="hljs-string">'module.exports = '</span> + <span class="hljs-built_in">JSON</span>.stringify(config));
+});
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

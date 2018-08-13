@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>config.yml</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = ".circleci/config.yml";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>config.yml</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+<p>Javascript Node CircleCI 2.0 configuration file</p>
+<p>Check https://circleci.com/docs/2.0/language-javascript/ for more details</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-attr">version:</span> <span class="hljs-number">2</span>
+<span class="hljs-attr">jobs:</span>
+<span class="hljs-attr">  build:</span>
+<span class="hljs-attr">    docker:</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>specify the version you desire here</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-attr">      - image:</span> <span class="hljs-string">circleci/node:8.8.1</span>
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Specify service dependencies here if necessary
+CircleCI maintains a library of pre-built images
+documented at https://circleci.com/docs/2.0/circleci-images/</p>
+<ul>
+<li>image: circleci/mongo:3.4.4</li>
+</ul>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml">
+<span class="hljs-attr">    working_directory:</span> <span class="hljs-string">~/repo</span>
+
+<span class="hljs-attr">    steps:</span>
+<span class="hljs-bullet">      -</span> <span class="hljs-string">checkout</span>
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Download and cache dependencies</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-attr">      - restore_cache:</span>
+<span class="hljs-attr">          keys:</span>
+<span class="hljs-bullet">          -</span> <span class="hljs-string">v1-dependencies-{{</span> <span class="hljs-string">checksum</span> <span class="hljs-string">"package.json"</span> <span class="hljs-string">}}</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>fallback to using the latest cache if no exact match is found</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-bullet">          -</span> <span class="hljs-string">v1-dependencies-</span>
+
+<span class="hljs-attr">      - run:</span> <span class="hljs-string">yarn</span> <span class="hljs-string">install</span>
+
+<span class="hljs-attr">      - save_cache:</span>
+<span class="hljs-attr">          paths:</span>
+<span class="hljs-bullet">            -</span> <span class="hljs-string">node_modules</span>
+<span class="hljs-attr">          key:</span> <span class="hljs-string">v1-dependencies-{{</span> <span class="hljs-string">checksum</span> <span class="hljs-string">"package.json"</span> <span class="hljs-string">}}</span>
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>run tests!</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="yaml"><span class="hljs-attr">      - run:</span> <span class="hljs-string">yarn</span> <span class="hljs-string">test</span>
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

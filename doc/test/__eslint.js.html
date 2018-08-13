@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>__eslint.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "test/__eslint.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>__eslint.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> lint = <span class="hljs-built_in">require</span>(<span class="hljs-string">'mocha-eslint'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Array of paths to lint
+Note: a seperate Mocha test will be run for each path and each file which
+matches a glob pattern</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> paths = [
+  <span class="hljs-string">'bot'</span>,
+  <span class="hljs-string">'test/**/*.js'</span>,
+];
+
+<span class="hljs-keyword">const</span> options = {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Specify style of output
+Defaults to <code>stylish</code></p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  formatter: <span class="hljs-string">'compact'</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Only display warnings if a test is failing
+Defaults to <code>true</code>, always show warnings</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  alwaysWarn: <span class="hljs-literal">true</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Increase the timeout of the test if linting takes to long
+Defaults to the global mocha <code>timeout</code> option</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  timeout: <span class="hljs-number">5000</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Increase the time until a test is marked as slow
+Defaults to the global mocha <code>slow</code> option</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  slow: <span class="hljs-number">2000</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Consider linting warnings as errors and return failure
+Defaults to <code>false</code>, only notify the warnings</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  strict: <span class="hljs-literal">true</span>,
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Specify the mocha context in which to run tests
+Defaults to <code>eslint</code>, but can be any string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  contextName: <span class="hljs-string">'AirBnB Style Guide Adhearance - eslint'</span>,
+};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Run the tests</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">lint(paths, options);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

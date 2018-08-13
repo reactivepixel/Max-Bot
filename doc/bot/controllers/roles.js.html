@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>roles.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "bot/controllers/roles.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>roles.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> BaseController = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../baseController.js'</span>);
+<span class="hljs-keyword">const</span> Command = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../baseCommand.js'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'apex-util'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RoleController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseController</span> </span>{
+  <span class="hljs-keyword">constructor</span>(message) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Call BaseController constructor</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">super</span>(message);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Aliasing 'this' as controller to allow for binding in actions</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">this</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Array of all commands, see baseCommand.js for prototype</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">this</span>.commands = [
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!roles'</span>,
+        <span class="hljs-string">'!roles'</span>,
+        <span class="hljs-string">'List All Roles'</span>,
+        <span class="hljs-string">'List all available Armada roles.'</span>,
+        <span class="hljs-keyword">this</span>.rolesAction.bind(controller),
+        <span class="hljs-string">'dm'</span>,
+      ),
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!addRole'</span>,
+        <span class="hljs-string">'!addRole &lt;role_name&gt;'</span>,
+        <span class="hljs-string">'Add Role'</span>,
+        <span class="hljs-string">'Add a single role to yourself. Role is case-sensitive.'</span>,
+        <span class="hljs-keyword">this</span>.addRoleAction.bind(controller),
+      ),
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!addRoles'</span>,
+        <span class="hljs-string">'!addRoles &lt;role_name&gt;,[role_name]'</span>,
+        <span class="hljs-string">'Add Multiple Roles'</span>,
+        <span class="hljs-string">'Add multiple roles to yourself. Rolea are case-sensitive.'</span>,
+        <span class="hljs-keyword">this</span>.addRolesAction.bind(controller),
+      ),
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!removeRole'</span>,
+        <span class="hljs-string">'!removeRole &lt;role_name&gt;'</span>,
+        <span class="hljs-string">'Remove Role'</span>,
+        <span class="hljs-string">'Remove a single role from yourself. Role is case-sensitive.'</span>,
+        <span class="hljs-keyword">this</span>.removeRoleAction.bind(controller),
+      ),
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!addAllRoles'</span>,
+        <span class="hljs-string">'!addAllRoles'</span>,
+        <span class="hljs-string">'Add All Roles'</span>,
+        <span class="hljs-string">'Add every game role to yourself.'</span>,
+        <span class="hljs-keyword">this</span>.addAllRolesAction.bind(controller),
+      ),
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!removeAllRoles'</span>,
+        <span class="hljs-string">'!removeAllRoles'</span>,
+        <span class="hljs-string">'Remove All Roles'</span>,
+        <span class="hljs-string">'Remove every game role from yourself.'</span>,
+        <span class="hljs-keyword">this</span>.removeAllRolesAction.bind(controller),
+      ),
+    ];
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>User roles commands cannot change</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">this</span>.disallowedRoles = [
+      <span class="hljs-string">'admin'</span>, <span class="hljs-string">'armada officers'</span>, <span class="hljs-string">'armada officer'</span>,
+      <span class="hljs-string">'moderator'</span>, <span class="hljs-string">'privateers'</span>, <span class="hljs-string">'privateer'</span>,
+      <span class="hljs-string">'tester'</span>, <span class="hljs-string">'crew'</span>, <span class="hljs-string">'fleet officer'</span>, <span class="hljs-string">'@everyone'</span>,
+    ];
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Lists all roles</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  rolesAction() {
+    <span class="hljs-keyword">const</span> { message, disallowedRoles } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> roles = [];
+    message.guild.roles.map(<span class="hljs-function">(<span class="hljs-params">role</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (!disallowedRoles.includes(role.name.toLowerCase())) {
+        <span class="hljs-keyword">return</span> roles.push(role.name);
+      }
+      <span class="hljs-keyword">return</span> role.name;
+    });
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'List of all Armada Roles: \n\n'</span> + roles.join(<span class="hljs-string">'\n'</span>);
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Adds a role to the user</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  addRoleAction() {
+    <span class="hljs-keyword">const</span> { message, disallowedRoles } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> targetRole = message.guild.roles.find(<span class="hljs-string">'name'</span>, message.parsed[<span class="hljs-number">1</span>]);
+    <span class="hljs-keyword">if</span> (targetRole === <span class="hljs-literal">null</span>) {
+      util.log(<span class="hljs-string">'No role matched'</span>, message.parsed[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'"'</span> + message.parsed[<span class="hljs-number">1</span>] + <span class="hljs-string">'" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)'</span>;
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+      util.log(<span class="hljs-string">'User Tried to add a restricted/dissalowed role'</span>, targetRole.name, <span class="hljs-number">2</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'You are not worthy of the role '</span> + message.parsed[<span class="hljs-number">1</span>] + <span class="hljs-string">'.'</span>;
+    } <span class="hljs-keyword">else</span> {
+      util.log(<span class="hljs-string">'Adding Role to user'</span>, targetRole.name, <span class="hljs-number">2</span>);
+      message.member.addRole(targetRole).catch(util.log);
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'Added the role "'</span> + targetRole.name + <span class="hljs-string">'".'</span>;
+    }
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Adds multiple roles to the user</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  addRolesAction() {
+    <span class="hljs-keyword">const</span> { message, disallowedRoles } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> roles = message.parsed[<span class="hljs-number">1</span>].split(<span class="hljs-string">','</span>);
+    util.log(<span class="hljs-string">'Multiple Roles Parsing'</span>, roles, <span class="hljs-number">4</span>);
+
+    roles.map(<span class="hljs-function">(<span class="hljs-params">role</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (!disallowedRoles.includes(role.toLowerCase())) {
+        <span class="hljs-keyword">const</span> targetRole = message.guild.roles.find(<span class="hljs-string">'name'</span>, role);
+        util.log(<span class="hljs-string">'Asking API for Role'</span>, targetRole, <span class="hljs-number">4</span>);
+
+        <span class="hljs-keyword">if</span> (targetRole === <span class="hljs-literal">null</span>) {
+          <span class="hljs-keyword">return</span> <span class="hljs-string">'"'</span> + role + <span class="hljs-string">'" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)'</span>;
+        }
+        <span class="hljs-keyword">return</span> message.member.addRole(targetRole).catch(util.log);
+      }
+      <span class="hljs-keyword">return</span> role.name;
+    });
+
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'All set!'</span>;
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Removes role from user</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  removeRoleAction() {
+    <span class="hljs-keyword">const</span> { message, disallowedRoles } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> targetRole = message.guild.roles.find(<span class="hljs-string">'name'</span>, message.parsed[<span class="hljs-number">1</span>]);
+    <span class="hljs-keyword">if</span> (targetRole === <span class="hljs-literal">null</span>) {
+      util.log(<span class="hljs-string">'No role matched'</span>, message.parsed[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'"'</span> + message.parsed[<span class="hljs-number">1</span>] + <span class="hljs-string">'" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)'</span>;
+    }
+    <span class="hljs-keyword">if</span> (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+      util.log(<span class="hljs-string">'User Tried to add a restricted/dissalowed role'</span>, targetRole.name, <span class="hljs-number">2</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'You have not the power or the will to control this power.'</span>;
+    }
+
+    util.log(<span class="hljs-string">'Removing role from user'</span>, targetRole.name, <span class="hljs-number">2</span>);
+    message.member.removeRole(targetRole).catch(util.log);
+    <span class="hljs-keyword">return</span> targetRole.name + <span class="hljs-string">' removed.'</span>;
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Adds all roles to user</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  addAllRolesAction() {
+    <span class="hljs-keyword">const</span> { message, disallowedRoles } = <span class="hljs-keyword">this</span>;
+    message.guild.roles.map(<span class="hljs-function">(<span class="hljs-params">role</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (!disallowedRoles.includes(role.name.toLowerCase())) {
+        <span class="hljs-keyword">return</span> message.member.addRole(role).catch(util.log);
+      }
+      <span class="hljs-keyword">return</span> role.name;
+    });
+
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Adding you to all Roles. You\'re going to be drinking from the firehose :sob:'</span>;
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Removes all roles from user</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  removeAllRolesAction() {
+    <span class="hljs-keyword">const</span> { message, disallowedRoles } = <span class="hljs-keyword">this</span>;
+    message.guild.roles.map(<span class="hljs-function">(<span class="hljs-params">role</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (!disallowedRoles.includes(role.name.toLowerCase())) {
+        <span class="hljs-keyword">return</span> message.member.removeRole(role).catch(util.log);
+      }
+      <span class="hljs-keyword">return</span> role.name;
+    });
+
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Removing all roles. Back to basics.'</span>;
+  }
+}
+
+<span class="hljs-built_in">module</span>.exports = RoleController;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

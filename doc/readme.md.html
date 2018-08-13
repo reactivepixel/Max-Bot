@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>readme.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "readme.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#max-bot">Max Bot</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#the-official-bot-of-the-full-sail-armada">The Official Bot of the Full Sail Armada</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#installation">Installation</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#prerequisites">Prerequisites</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#clone-the-codebase">Clone the Codebase.</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#env-vars">ENV Vars</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#bot-token">Bot Token</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#adding-the-bot-to-a-server">Adding the Bot to a Server</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#configure-email-functionality">Configure Email Functionality</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#running-the-bot">Running the Bot</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#local">Local</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#style-guide">Style Guide</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#atom-configuration">Atom Configuration</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#confirm-linting-works">Confirm Linting Works</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#debug-tool-documentation">Debug Tool Documentation</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#example-of-usage">Example of Usage</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#title-string">title: String</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#output-object">output: Object</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#level-integer">level: Integer</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#debug-level-chart">Debug Level Chart</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#modules-and-integrations">Modules &amp;amp; integrations</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#database">Database</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#how-to-connect-using-sequel-pro">How to connect using Sequel Pro</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#container-information">Container Information</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#node-container">Node Container</a>
+      </div>
+
+      <div class="heading h1">
+        <a href="#other-information">Other Information</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#change-log">Change Log</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="max-bot">
+  <h1>
+    <a href="#max-bot" name="max-bot" class="pilcrow"></a>
+Max Bot
+  </h1>
+</div>
+<div class="pilwrap" id="the-official-bot-of-the-full-sail-armada">
+  <h2>
+    <a href="#the-official-bot-of-the-full-sail-armada" name="the-official-bot-of-the-full-sail-armada" class="pilcrow"></a>
+The Official Bot of the Full Sail Armada
+  </h2>
+</div>
+<p>Interested in learning how to use Max? See the <a href="usage.md.html">Usage documentation here</a>.</p>
+<div class="pilwrap" id="installation">
+  <h1>
+    <a href="#installation" name="installation" class="pilcrow"></a>
+Installation
+  </h1>
+</div>
+<div class="pilwrap" id="prerequisites">
+  <h3>
+    <a href="#prerequisites" name="prerequisites" class="pilcrow"></a>
+Prerequisites
+  </h3>
+</div>
+<ul>
+<li><a href="https://git-scm.com/downloads">Git</a></li>
+<li><a href="https://docs.docker.com/docker-for-mac/install/">Docker (Stable)</a></li>
+</ul>
+<div class="pilwrap" id="clone-the-codebase">
+  <h3>
+    <a href="#clone-the-codebase" name="clone-the-codebase" class="pilcrow"></a>
+Clone the Codebase.
+  </h3>
+</div>
+<pre><code>git clone git@github.com:reactivepixel/Max-Bot.git
+</code></pre>
+<div class="pilwrap" id="env-vars">
+  <h3>
+    <a href="#env-vars" name="env-vars" class="pilcrow"></a>
+ENV Vars
+  </h3>
+</div>
+<p>Create an <code>.env</code> file with the following sensitive information. Replace the &quot;xxx&quot;'s with some unique information for your local Environment.</p>
+<pre><code>NODE_ENV=development
+DEBUG_MODE=3
+
+MYSQL_ROOT_PASSWORD=xxx
+MYSQL_USER=xxx
+MYSQL_PASS=xxx
+MYSQL_DATABASE=max
+MYSQL_HOST=mysql
+DB_PORT_HOST=3306
+DB_PORT_GUEST=3306
+
+DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
+
+BOT_PORT_HOST=80
+BOT_PORT_GUEST=3000
+
+EMAIL_USERNAME=xxx
+EMAIL_PASS=xxx
+</code></pre>
+<blockquote>
+<p>Update <code>DISCORD_BOT_TOKEN</code> with the token you receive from the next step.</p>
+</blockquote>
+<div class="pilwrap" id="bot-token">
+  <h3>
+    <a href="#bot-token" name="bot-token" class="pilcrow"></a>
+Bot Token
+  </h3>
+</div>
+<p>Add a new App and create a Bot User then obtain the <a href="https://discordapp.com/developers/applications/me">Discord App Bot Token</a> from the created Bot User or contact a Release Manager for Max's Dev Bot token.</p>
+<p>Update the <code>DISCORD_BOT_TOKEN</code> in the .env file with the token provided to you.</p>
+<p>Run <code>$ gulp pm2</code> to create a max.config.js file within your root directory.</p>
+<div class="pilwrap" id="adding-the-bot-to-a-server">
+  <h3>
+    <a href="#adding-the-bot-to-a-server" name="adding-the-bot-to-a-server" class="pilcrow"></a>
+Adding the Bot to a Server
+  </h3>
+</div>
+<p>As an authorized user of the bot you will need to add it to a server.</p>
+<ol>
+<li>Go to the Discord developer pages (login if you haven't).</li>
+<li>Go to the application with the bot you want to add to your channel.</li>
+<li>Copy the Client/Application ID.</li>
+<li>Go to https://discordapp.com/oauth2/authorize?client_id=<code>CLIENT_ID_GOES_HERE</code>&amp;scope=bot&amp;permissions=0</li>
+<li>Select server and click authorize.</li>
+</ol>
+<blockquote>
+<p><a href="https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api">Source</a></p>
+</blockquote>
+<div class="pilwrap" id="configure-email-functionality">
+  <h3>
+    <a href="#configure-email-functionality" name="configure-email-functionality" class="pilcrow"></a>
+Configure Email Functionality
+  </h3>
+</div>
+<p>Max uses <a href="https://nodemailer.com/about/">Nodemailer</a> to send verification emails to users joining the Armada server. to work proper locally please follow these steps to create a new gmail account to locally test with:</p>
+<ol>
+<li>Create a new gmail.com account</li>
+<li>Once logged in with this account enable <a href="https://myaccount.google.com/u/1/lesssecureapps?pageId=none&amp;pli=1">less secure application access</a>.</li>
+<li>fill in the <code>EMAIL_USERNAME</code> &amp; <code>EMAIL_PASS</code> values on the <code>.env</code> file with this new gmail account's info.</li>
+</ol>
+<div class="pilwrap" id="running-the-bot">
+  <h1>
+    <a href="#running-the-bot" name="running-the-bot" class="pilcrow"></a>
+Running the Bot
+  </h1>
+</div>
+<div class="pilwrap" id="local">
+  <h2>
+    <a href="#local" name="local" class="pilcrow"></a>
+Local
+  </h2>
+</div>
+<p>To run the bot locally ensure that you have followed the installation instructions above and have docker running.</p>
+<p>Use docker-compose to start the container with the bot client.</p>
+<pre><code>docker-compose up
+</code></pre>
+<p>If all went well, and your <strong>DEBUG_MODE</strong> is set properly you will see a logged message of <code>Bot Online and Ready!:</code></p>
+<p>Hop onto your discord server and find a room with the bot and run the command <code>!help</code> to see a display of optional commands.</p>
+<div class="pilwrap" id="style-guide">
+  <h1>
+    <a href="#style-guide" name="style-guide" class="pilcrow"></a>
+Style Guide
+  </h1>
+</div>
+<p>The AirBnB javascript style guide has been put in place and will be enforced through active and passive linting.</p>
+<p>Ensure your local IDE has the ability to add eslint plugins. <a href="https://atom.io">Atom</a> is recommended.</p>
+<blockquote>
+<p><a href="https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb#eslint-config-airbnb-1">Source</a></p>
+</blockquote>
+<div class="pilwrap" id="atom-configuration">
+  <h3>
+    <a href="#atom-configuration" name="atom-configuration" class="pilcrow"></a>
+Atom Configuration
+  </h3>
+</div>
+<p>Install the linter-eslint package for Atom.</p>
+<pre><code>apm install linter-eslint
+</code></pre>
+<div class="pilwrap" id="confirm-linting-works">
+  <h2>
+    <a href="#confirm-linting-works" name="confirm-linting-works" class="pilcrow"></a>
+Confirm Linting Works
+  </h2>
+</div>
+<p>Removing a semi-colon from any line of Javascript will trigger the linter to automatically flag the edited line.</p>
+<div class="pilwrap" id="debug-tool-documentation">
+  <h1>
+    <a href="#debug-tool-documentation" name="debug-tool-documentation" class="pilcrow"></a>
+Debug Tool Documentation
+  </h1>
+</div>
+<div class="pilwrap" id="example-of-usage">
+  <h2>
+    <a href="#example-of-usage" name="example-of-usage" class="pilcrow"></a>
+Example of Usage
+  </h2>
+</div>
+<p>Instead of console.log() require the tool.js file
+and call the .debug() method passing in three arguments
+(title, output, level)</p>
+<p>[code] to call a debug()
+[code] to activate debug_mode</p>
+<div class="pilwrap" id="title-string">
+  <h3>
+    <a href="#title-string" name="title-string" class="pilcrow"></a>
+title: String
+  </h3>
+</div>
+<p>Should be a string that will prefix the output
+argument in the resulting console.log()</p>
+<div class="pilwrap" id="output-object">
+  <h3>
+    <a href="#output-object" name="output-object" class="pilcrow"></a>
+output: Object
+  </h3>
+</div>
+<p>Any object that will be suffixed onto the title
+argument in the resulting console.log()</p>
+<div class="pilwrap" id="level-integer">
+  <h3>
+    <a href="#level-integer" name="level-integer" class="pilcrow"></a>
+level: Integer
+  </h3>
+</div>
+<p>A number that indicates how fine grained the output
+of this particular output should be. Reference the <strong>Debug Level Chart</strong></p>
+<div class="pilwrap" id="debug-level-chart">
+  <h2>
+    <a href="#debug-level-chart" name="debug-level-chart" class="pilcrow"></a>
+Debug Level Chart
+  </h2>
+</div>
+<ol start="0">
+<li>Production Environment Level Output</li>
+<li>Staging Environment Level Output</li>
+<li>General Debug Information for Development</li>
+<li>Very Detailed and in-depth Output.</li>
+<li>Highly Fine Grained Detailed and in-depth Output.</li>
+</ol>
+<div class="pilwrap" id="modules-and-integrations">
+  <h1>
+    <a href="#modules-and-integrations" name="modules-and-integrations" class="pilcrow"></a>
+Modules &amp; integrations
+  </h1>
+</div>
+<div class="pilwrap" id="database">
+  <h2>
+    <a href="#database" name="database" class="pilcrow"></a>
+Database
+  </h2>
+</div>
+<div class="pilwrap" id="how-to-connect-using-sequel-pro">
+  <h3>
+    <a href="#how-to-connect-using-sequel-pro" name="how-to-connect-using-sequel-pro" class="pilcrow"></a>
+How to connect using Sequel Pro
+  </h3>
+</div>
+<p>You can find more information about the config file <code>db/config/config.json</code></p>
+<p><img src="https://preview.ibb.co/d07YOG/Screen_Shot_2017_11_10_at_2_49_46_PM.png" alt=""></p>
+<div class="pilwrap" id="container-information">
+  <h1>
+    <a href="#container-information" name="container-information" class="pilcrow"></a>
+Container Information
+  </h1>
+</div>
+<div class="pilwrap" id="node-container">
+  <h2>
+    <a href="#node-container" name="node-container" class="pilcrow"></a>
+Node Container
+  </h2>
+</div>
+<p><a href="https://hub.docker.com/_/node/">Official Node</a> Container used.</p>
+<div class="pilwrap" id="other-information">
+  <h1>
+    <a href="#other-information" name="other-information" class="pilcrow"></a>
+Other Information
+  </h1>
+</div>
+<div class="pilwrap" id="change-log">
+  <h2>
+    <a href="#change-log" name="change-log" class="pilcrow"></a>
+<a href="changelog.md.html">Change Log</a>
+  </h2>
+</div>
+</div>
+  </div>
+</body>
+</html>

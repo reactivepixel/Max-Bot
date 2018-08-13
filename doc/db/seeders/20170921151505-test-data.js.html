@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>20170921151505-test-data.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "db/seeders/20170921151505-test-data.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>20170921151505-test-data.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-meta">'use strict'</span>;
+
+<span class="hljs-keyword">const</span> uuidv4 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uuid/v4'</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">up</span>: <span class="hljs-function">(<span class="hljs-params">queryInterface, Sequelize</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> queryInterface.bulkInsert(<span class="hljs-string">'Members'</span>, [{
+      <span class="hljs-attr">discorduser</span>: <span class="hljs-string">'226894986262740993'</span>,
+      <span class="hljs-attr">email</span>: <span class="hljs-string">'chapman@apextion.com'</span>,
+      <span class="hljs-attr">uuid</span>: uuidv4(),
+      <span class="hljs-attr">verified</span>: <span class="hljs-number">0</span>,
+    }], {});
+  },
+
+  <span class="hljs-attr">down</span>: <span class="hljs-function">(<span class="hljs-params">queryInterface, Sequelize</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> queryInterface.bulkDelete(<span class="hljs-string">'Members'</span>, <span class="hljs-literal">null</span>, {});
+  }
+};
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

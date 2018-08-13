@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>verify.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "bot/controllers/verify.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>verify.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> BaseController = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../baseController.js'</span>);
+<span class="hljs-keyword">const</span> Command = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../baseCommand.js'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'apex-util'</span>);
+<span class="hljs-keyword">const</span> models = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../db/models'</span>);
+<span class="hljs-keyword">const</span> uuidv4 = <span class="hljs-built_in">require</span>(<span class="hljs-string">'uuid/v4'</span>);
+<span class="hljs-keyword">const</span> nodemailer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'nodemailer'</span>);
+<span class="hljs-keyword">const</span> { generateCode } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../botUtils.js'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">VerifyController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseController</span> </span>{
+  <span class="hljs-keyword">constructor</span>(message) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Call BaseController constructor</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">super</span>(message);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Aliasing 'this' as controller to allow for binding in actions</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">const</span> controller = <span class="hljs-keyword">this</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Array of all commands, see baseCommand.js for prototype</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">this</span>.commands = [
+      <span class="hljs-keyword">new</span> Command(
+        <span class="hljs-string">'!verify'</span>,
+        <span class="hljs-string">'!verify &lt;email_address&gt;'</span>,
+        <span class="hljs-string">'Verify Email Address'</span>,
+        <span class="hljs-string">'Verify your Full Sail email address. Must be @student.fullsail.edu or @fullsail.com.'</span>,
+        <span class="hljs-keyword">this</span>.verifyAction.bind(controller),
+      ),
+    ];
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Verifies Full Sail email addresses</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  verifyAction() {
+    <span class="hljs-keyword">const</span> { message } = <span class="hljs-keyword">this</span>;
+    <span class="hljs-keyword">const</span> targetVerifiedRoleName = <span class="hljs-string">'Crew'</span>;
+    <span class="hljs-keyword">const</span> validDomains = [<span class="hljs-string">'student.fullsail.edu'</span>, <span class="hljs-string">'fullsail.edu'</span>, <span class="hljs-string">'fullsail.com'</span>];
+    <span class="hljs-keyword">const</span> timeoutInMiliseconds = <span class="hljs-number">600000</span>;
+    <span class="hljs-keyword">const</span> email = message.parsed[<span class="hljs-number">1</span>].toLowerCase();
+    <span class="hljs-keyword">const</span> emailDomain = email.split(<span class="hljs-string">'@'</span>).pop();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>We can set <code>codeLength</code> to whatever length we want the verif code to be.
+Recommend ngt 8 digits.</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (validDomains.includes(emailDomain)) {
+      <span class="hljs-keyword">const</span> codeLength = <span class="hljs-number">6</span>;
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>code to equal value generated</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">const</span> code = generateCode(codeLength);
+
+      util.log(<span class="hljs-string">'code'</span>, code, <span class="hljs-number">3</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>TODO: Set <code>time</code> prop to 600000 (10min)</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">const</span> collector = message.channel.createMessageCollector(
+        <span class="hljs-function"><span class="hljs-params">m</span> =&gt;</span> m.content.includes(code),
+        { <span class="hljs-attr">time</span>: timeoutInMiliseconds });
+      collector.on(<span class="hljs-string">'collect'</span>, (m) =&gt; {
+        <span class="hljs-keyword">const</span> verifyUser = <span class="hljs-string">'Welcome aboard, Crewmate!'</span>;
+        <span class="hljs-keyword">const</span> userAlredyOnSystem = <span class="hljs-string">'This email has already been verified to a discord user.'</span>;
+        models.Member.findOne({ <span class="hljs-attr">where</span>: { email } }).then(<span class="hljs-function">(<span class="hljs-params">matchedUserData</span>) =&gt;</span> {
+          <span class="hljs-keyword">if</span> (matchedUserData === <span class="hljs-literal">null</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>no existing record found</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">            models.Member.create({
+              <span class="hljs-attr">discorduser</span>: m.author.id,
+              email,
+              <span class="hljs-attr">uuid</span>: uuidv4(),
+              <span class="hljs-attr">verified</span>: <span class="hljs-number">1</span>,
+            });
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>mapping guild roles to find the crew role id</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">            <span class="hljs-keyword">const</span> targetRole = message.guild.roles.find(<span class="hljs-string">'name'</span>, targetVerifiedRoleName);
+            message.member.addRole(targetRole).catch(util.log);
+            message.reply(verifyUser);
+          } <span class="hljs-keyword">else</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>existing record found</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">            message.reply(userAlredyOnSystem);
+          }
+        });
+        util.log(<span class="hljs-string">'Collected'</span>, m.content, <span class="hljs-number">3</span>);
+      });
+      collector.on(<span class="hljs-string">'end'</span>, (collected) =&gt; {
+        <span class="hljs-keyword">const</span> verificationTimeout = <span class="hljs-string">`!verify timeout. Clap <span class="hljs-subst">${collected.author.username}</span> in irons!  Let's see how well they dance on the plank!`</span>;
+        util.log(<span class="hljs-string">'Items'</span>, collected.size, <span class="hljs-number">3</span>);
+        <span class="hljs-keyword">if</span> (collected.size === <span class="hljs-number">0</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>TODO: ping admin team on verification fail</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          message.reply(verificationTimeout);
+        }
+      });
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>Set up Nodemailer to send emails through gmail</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">const</span> sendVerifyCode = nodemailer.createTransport({
+        <span class="hljs-attr">service</span>: <span class="hljs-string">'gmail'</span>,
+        <span class="hljs-attr">auth</span>: {
+          <span class="hljs-attr">user</span>: process.env.EMAIL_USERNAME,
+          <span class="hljs-attr">pass</span>: process.env.EMAIL_PASS,
+        },
+      });
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Nodemailer email recipient &amp; message
+TODO: Build email template</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">const</span> mailOptions = {
+        <span class="hljs-attr">from</span>: process.env.EMAIL_USERNAME,
+        <span class="hljs-attr">to</span>: email,
+        <span class="hljs-attr">subject</span>: <span class="hljs-string">'Armada Verification Code'</span>,
+        <span class="hljs-attr">html</span>: <span class="hljs-string">`&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;p&gt;Enter the code below into Discord, in the same channel on the Armada Server. Verification will timeout after <span class="hljs-subst">${(timeoutInMiliseconds <span class="hljs-regexp">/ 1000) /</span> <span class="hljs-number">60</span>}</span> minutes from first entering the !verify command.&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;h2&gt;Verification Code: <span class="hljs-subst">${code}</span>&lt;/h2&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;`</span>,
+      };
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Call sendMail on sendVerifyCode
+Pass mailOptions &amp; callback function</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      sendVerifyCode.sendMail(mailOptions, (err, info) =&gt; {
+        <span class="hljs-keyword">const</span> errorMsg = <span class="hljs-string">'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.'</span>;
+        <span class="hljs-keyword">if</span> (err) {
+          message.reply(errorMsg);
+          util.log(<span class="hljs-string">'Email not sent'</span>, err, <span class="hljs-number">3</span>);
+        } <span class="hljs-keyword">else</span> {
+          util.log(<span class="hljs-string">'Email details'</span>, info, <span class="hljs-number">3</span>);
+        }
+      });
+
+      util.log(<span class="hljs-string">'Code'</span>, code, <span class="hljs-number">3</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-string">`...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within <span class="hljs-subst">${(timeoutInMiliseconds <span class="hljs-regexp">/ 1000) /</span> <span class="hljs-number">60</span>}</span> minutes, with the code, and I won't treat you like a scurvy cur!`</span>;
+    } <span class="hljs-keyword">else</span> {
+      <span class="hljs-keyword">return</span> <span class="hljs-string">'Sorry, I can only verify Full Sail University email addresses.'</span>;
+    }
+  }
+}
+
+<span class="hljs-built_in">module</span>.exports = VerifyController;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

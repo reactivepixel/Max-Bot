@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>usage.md</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="doc-style.css" />
+  <script src="doc-filelist.js"></script>
+  <script>
+    var relativeDir = "";
+    var thisFile = "usage.md";
+    var defaultSidebar = true;
+  </script>
+  <script src="doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+      <div class="heading h1">
+        <a href="#using-max">Using Max</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#commands">Commands</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#help">!help</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#verify">!verify</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#roles">!roles</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#addrole">!addRole</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#addroles">!addRoles</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#removerole">!removeRole</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#addallroles">!addAllRoles</a>
+      </div>
+
+      <div class="heading h3">
+        <a href="#removeallroles">!removeAllRoles</a>
+      </div>
+
+      <div class="heading h2">
+        <a href="#administrative-commands">Administrative commands</a>
+      </div>
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="docs markdown"><div class="pilwrap" id="using-max">
+  <h1>
+    <a href="#using-max" name="using-max" class="pilcrow"></a>
+Using Max
+  </h1>
+</div>
+<p>As the official bot of the Full Sail Armada, Max offers simple but powerful automated user management tools that empower Armada members to verify membership eligibility and set roles for themselves within the server, freeing up admins, moderators, and officers for more important tasks.</p>
+<div class="pilwrap" id="commands">
+  <h2>
+    <a href="#commands" name="commands" class="pilcrow"></a>
+Commands
+  </h2>
+</div>
+<p>Each of the commands that Max offers can be invoked from inside a text channel by using an exclamation point followed by the command keyword (like <code>!command</code>). Individual commands are not case-sensitive, but some of the information needed for each command may be.</p>
+<div class="pilwrap" id="help">
+  <h3>
+    <a href="#help" name="help" class="pilcrow"></a>
+!help
+  </h3>
+</div>
+<p>Example: <code>!help</code></p>
+<p>Displays all of Max's available commands.</p>
+<div class="pilwrap" id="verify">
+  <h3>
+    <a href="#verify" name="verify" class="pilcrow"></a>
+!verify
+  </h3>
+</div>
+<p>Example: <code>!verify &lt;email_address&gt;</code></p>
+<p>Verifies that the user has a valid Full Sail University email address and adds the user to the Discord server. This command also adds the user's username and FS email address to the Armada database so Armada officers can match users to real-life students.</p>
+<div class="pilwrap" id="roles">
+  <h3>
+    <a href="#roles" name="roles" class="pilcrow"></a>
+!roles
+  </h3>
+</div>
+<p>Example: <code>!roles</code></p>
+<p>Sends a DM to the user with a list of all available Armada roles.</p>
+<div class="pilwrap" id="addrole">
+  <h3>
+    <a href="#addrole" name="addrole" class="pilcrow"></a>
+!addRole
+  </h3>
+</div>
+<p>Example: <code>!addRole &lt;role_name&gt;</code></p>
+<p>Adds the specified role to the user. Role names <em>are</em> case-sensitive. Note that not all roles can be added this way—no promoting yourself to Fleet Officer, for example.</p>
+<div class="pilwrap" id="addroles">
+  <h3>
+    <a href="#addroles" name="addroles" class="pilcrow"></a>
+!addRoles
+  </h3>
+</div>
+<p>Example: <code>!addRoles &lt;role_name&gt;,&lt;role_name&gt;,&lt;role_name&gt;</code></p>
+<p>Adds multiple specified roles to the user all at once. The same caveat as above applies.</p>
+<div class="pilwrap" id="removerole">
+  <h3>
+    <a href="#removerole" name="removerole" class="pilcrow"></a>
+!removeRole
+  </h3>
+</div>
+<p>Example: <code>!removeRole &lt;role_name&gt;</code></p>
+<p>Removes a single specified role from the user.</p>
+<div class="pilwrap" id="addallroles">
+  <h3>
+    <a href="#addallroles" name="addallroles" class="pilcrow"></a>
+!addAllRoles
+  </h3>
+</div>
+<p>Example: <code>!addAllRoles</code></p>
+<p>Adds all available Armada roles to the user. Suitable for masochists and chat room junkies.</p>
+<div class="pilwrap" id="removeallroles">
+  <h3>
+    <a href="#removeallroles" name="removeallroles" class="pilcrow"></a>
+!removeAllRoles
+  </h3>
+</div>
+<p>Example: <code>!removeAllRoles</code></p>
+<p>Removes all roles from the user. <em>Tabula rasa</em>, baby.</p>
+<div class="pilwrap" id="administrative-commands">
+  <h2>
+    <a href="#administrative-commands" name="administrative-commands" class="pilcrow"></a>
+Administrative commands
+  </h2>
+</div>
+<p>Max also includes a couple of special commands just for Officers and above for making announcements to multiple channels.</p>
+</div>
+  </div>
+</body>
+</html>

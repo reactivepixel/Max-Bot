@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>botUtils.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "bot/botUtils.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>botUtils.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">exports.generateCode = <span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Workaround method for Math.pow() and ** operator</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-keyword">const</span> pow = <span class="hljs-function">(<span class="hljs-params">base, exp</span>) =&gt;</span> {
+    <span class="hljs-keyword">let</span> result = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; exp; i += <span class="hljs-number">1</span>) {
+      result *= base;
+    }
+    <span class="hljs-keyword">return</span> result;
+  };
+  <span class="hljs-keyword">const</span> add = <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">let</span> max = <span class="hljs-number">12</span> - add;
+  <span class="hljs-keyword">let</span> min = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">if</span> (n &gt; max) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.generateCode(max) + <span class="hljs-keyword">this</span>.generateCode(n - max);
+  }
+  max = pow(<span class="hljs-number">10</span>, n + add);
+  min = max / <span class="hljs-number">10</span>;
+  <span class="hljs-keyword">const</span> number = <span class="hljs-built_in">Math</span>.floor(<span class="hljs-built_in">Math</span>.random() * (max - (min + <span class="hljs-number">1</span>))) + min;
+  <span class="hljs-keyword">return</span> (<span class="hljs-string">''</span> + number).substring(add);
+};
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Checks if person is an admin user, use GuildMember object</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">exports.isAdmin = <span class="hljs-function">(<span class="hljs-params">member</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> adminRoles = [
+    <span class="hljs-string">'Admin'</span>, <span class="hljs-string">'Armada Officers'</span>, <span class="hljs-string">'Armada Officer'</span>, <span class="hljs-string">'Fleet Officer'</span>,
+    <span class="hljs-string">'Moderator'</span>, <span class="hljs-string">'Tester'</span>,
+  ];
+  <span class="hljs-keyword">if</span> (adminRoles.some(<span class="hljs-function"><span class="hljs-params">role</span> =&gt;</span> member.roles.find(<span class="hljs-string">'name'</span>, role))) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+};
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

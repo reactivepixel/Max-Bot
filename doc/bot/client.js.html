@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>client.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "bot/client.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>client.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> Discord = <span class="hljs-built_in">require</span>(<span class="hljs-string">'discord.js'</span>);
+<span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'apex-util'</span>);
+<span class="hljs-keyword">const</span> { isAdmin } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./botUtils.js'</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>If production server, set default debug mode to production setting</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">if</span> (process.env.NODE_ENV === <span class="hljs-string">'production'</span> &amp;&amp; !process.env.DEBUG_MODE) process.env.DEBUG_MODE = <span class="hljs-number">0</span>;
+
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Discord.Client();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Pre-load controllers</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> controllers = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controllers'</span>)();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Alert when ready</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">client.on(<span class="hljs-string">'ready'</span>, () =&gt; {
+  util.log(<span class="hljs-string">'Bot Online and Ready'</span>, <span class="hljs-number">0</span>);
+});
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Listen for messages</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">client.on(<span class="hljs-string">'message'</span>, (message) =&gt; {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Check for ! prefix on message to ensure it is a command</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-keyword">if</span> (message.content.charAt(<span class="hljs-number">0</span>) === <span class="hljs-string">'!'</span>) {
+    util.log(<span class="hljs-string">'Command message received'</span>, message.content, <span class="hljs-number">0</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Build basic help string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">let</span> helpString = <span class="hljs-string">'v1.4.0 Discovered Commands:\n\n\t**&lt;&gt; - Required Item\t\t[] - Optional Item**'</span>;
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Process message against every controller</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-built_in">Object</span>.keys(controllers).forEach(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Instantiate the controller</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">const</span> controllerInstance = <span class="hljs-keyword">new</span> controllers[key](message);
+      util.log(<span class="hljs-string">'Controller instance'</span>, controllerInstance, <span class="hljs-number">5</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Runs commands after constructor is called</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      controllerInstance.run();
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>Loop through commands if help command and add to string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (message.content.toLowerCase() === <span class="hljs-string">'!help'</span>) {
+        <span class="hljs-built_in">Object</span>.keys(controllerInstance.commands).forEach(<span class="hljs-function">(<span class="hljs-params">commandKey</span>) =&gt;</span> {
+          <span class="hljs-keyword">const</span> commandInstance = controllerInstance.commands[commandKey];
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>Check if command should be shown in help menu</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">          <span class="hljs-keyword">if</span> (commandInstance.showWithHelp) {
+            <span class="hljs-keyword">if</span> (commandInstance.adminOnly &amp;&amp; isAdmin(message.member)) {
+              helpString += <span class="hljs-string">`\n\n \`<span class="hljs-subst">${commandInstance.example}</span>\` **- Admin Only** \n\t <span class="hljs-subst">${commandInstance.description}</span>`</span>;
+            } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (commandInstance.adminOnly &amp;&amp; !isAdmin(message.member)) {
+              helpString += <span class="hljs-string">''</span>;
+            } <span class="hljs-keyword">else</span> {
+              helpString += <span class="hljs-string">`\n\n \`<span class="hljs-subst">${commandInstance.example}</span>\` \n\t <span class="hljs-subst">${commandInstance.description}</span>`</span>;
+            }
+          }
+        });
+      }
+    });
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>If help command called, display string</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">if</span> (message.content.toLowerCase() === <span class="hljs-string">'!help'</span>) {
+      message.reply(helpString);
+    }
+  }
+});
+
+client.login(process.env.TOKEN);
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

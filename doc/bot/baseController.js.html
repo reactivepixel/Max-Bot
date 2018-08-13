@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>baseController.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "bot/baseController.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>baseController.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-keyword">const</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'apex-util'</span>);
+<span class="hljs-keyword">const</span> { isAdmin } = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./botUtils.js'</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseController</span> </span>{
+  <span class="hljs-keyword">constructor</span>(message) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<p>Add middleware to saved message</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">this</span>.message = BaseController.messageMiddleware(message);
+    <span class="hljs-keyword">this</span>.commands = [];
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-3" id="section-3"></a>
+</div>
+<p>Add extra information to message object</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  <span class="hljs-keyword">static</span> messageMiddleware(message) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-4" id="section-4"></a>
+</div>
+<p>Creates an empty object container</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">const</span> messageContainer = {};
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-5" id="section-5"></a>
+</div>
+<p>Tokenizes the message by space characters, adds to container</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    messageContainer.parsed = message.content.split(<span class="hljs-string">' '</span>);
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-6" id="section-6"></a>
+</div>
+<p>Adds message object to container</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.assign(message, messageContainer);
+  }
+
+  onSuccess(commandResponse, command) {
+    <span class="hljs-keyword">if</span> (commandResponse !== <span class="hljs-literal">null</span>) {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-7" id="section-7"></a>
+</div>
+<p>Determine how to respond to message</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (command.responseType === <span class="hljs-string">'reply'</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.reply(commandResponse);
+      } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (command.responseType === <span class="hljs-string">'dm'</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.author.send(commandResponse);
+      }
+    }
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-8" id="section-8"></a>
+</div>
+<p>Fail safe</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+  }
+
+  onError(errorMessage = <span class="hljs-string">'I Broke... Beep...Boop...Beep'</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.reply(errorMessage);
+  }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-9" id="section-9"></a>
+</div>
+<p>Execute the command's functionality</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">  run() {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-10" id="section-10"></a>
+</div>
+<p>Loop through each command and map to key</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">    util.log(<span class="hljs-string">'Looping through controller commands'</span>, <span class="hljs-number">0</span>);
+    <span class="hljs-built_in">Object</span>.keys(<span class="hljs-keyword">this</span>.commands).map(<span class="hljs-function">(<span class="hljs-params">key</span>) =&gt;</span> {
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-11" id="section-11"></a>
+</div>
+<p>If command matches message</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.message.parsed[<span class="hljs-number">0</span>].toLowerCase() === <span class="hljs-keyword">this</span>.commands[key].command.toLowerCase()) {
+        util.log(<span class="hljs-string">'Matching command found'</span>, <span class="hljs-keyword">this</span>.commands[key].command, <span class="hljs-number">2</span>);
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-12" id="section-12"></a>
+</div>
+<p>If user messages the bot a channel-only command</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.commands[key].allowInDM &amp;&amp; !<span class="hljs-keyword">this</span>.message.guild) {
+          <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.onError(<span class="hljs-string">'Please don\'t use this command directly. Instead use it in a channel on a server. :beers:'</span>);
+        }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-13" id="section-13"></a>
+</div>
+<p>If non-admin enters admin command</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.commands[key].adminOnly &amp;&amp; !isAdmin(<span class="hljs-keyword">this</span>.message.member)) {
+          <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.onError(<span class="hljs-string">'You don\'t have permissions to run this command.'</span>);
+        }
+
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-14" id="section-14"></a>
+</div>
+<p>Execute command's action</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">const</span> commandResponse = <span class="hljs-keyword">this</span>.commands[key].action();
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-15" id="section-15"></a>
+</div>
+<p>Handle if command responds or breaks</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">        <span class="hljs-keyword">if</span> (commandResponse) {
+          <span class="hljs-keyword">this</span>.onSuccess(commandResponse, <span class="hljs-keyword">this</span>.commands[key]);
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">this</span>.onError();
+        }
+      }
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.commands[key];
+    });
+  }
+}
+<span class="hljs-built_in">module</span>.exports = BaseController;
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>
