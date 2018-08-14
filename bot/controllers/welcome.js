@@ -5,7 +5,7 @@ class WelcomeController extends BaseController {
   constructor(message) {
     super(message);
     const controller = this;
-    this commands = [
+    this.commands = [
       new Command(
         '!resendWelcome',
         '!resendWelcome',

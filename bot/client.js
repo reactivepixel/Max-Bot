@@ -58,16 +58,16 @@ client.on('message', (message) => {
 });
 
 client.on('guildMemberAdd', (guildMember) => {
-  const channel = member.guild.channels.find('name', 'general');
-  if (!channel){
+  const channel = guildMember.guild.channels.find('name', 'general');
+  if (!channel) {
     util.log('Channel Not Found', channel, 3);
   } else {
     // Announce new member in channel
-    channel.send(`Attention everyone! ${member.user.username} has just joined the Armada!`);
+    channel.send(`Attention everyone! ${guildMember.user.username} has just joined the Armada!`);
 
     // Send a welcome message to the user with terms of service
-    member.send(`Welcome to the server ${member.user.username}!\r\nYou can view our terms of service here!`)
+    guildMember.send(`Welcome to the server ${guildMember.user.username}!\r\nYou can view our terms of service here!`);
   }
-})
+});
 
 client.login(process.env.TOKEN);
