@@ -57,7 +57,7 @@ client.on('message', (message) => {
   }
 });
 
-client.on('addGuildMember', (guildMember) => {
+client.on('guildMemberAdd', (guildMember) => {
   const channel = member.guild.channels.find('name', 'general');
   if (!channel){
     util.log('Channel Not Found', channel, 3);
