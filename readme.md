@@ -3,7 +3,7 @@
 
 Interested in learning how to use Max? See the [Usage documentation here](usage.md).
 
-# Installation
+# Installation(s)
 
 ### Prerequisites
 * [Git](https://git-scm.com/downloads)
