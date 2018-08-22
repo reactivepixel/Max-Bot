@@ -24,7 +24,7 @@ client.on('guildMemberAdd', (memberAddEvent) => {
 });
 
 client.on('guildMemberRemove', (memberRemoveEvent) => {
-  util.log('~A user has disappeared into the vapor.', true, 0);
+  util.log('~A user has disappeared into the vapor.', memberRemoveEvent.user, 0);
 });
 
 // Listen for messages
