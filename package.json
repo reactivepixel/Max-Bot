@@ -1,6 +1,6 @@
 {
   "name": "max",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "",
   "main": "bot/client.js",
   "engines": {
@@ -16,7 +16,7 @@
   "dependencies": {
     "apex-util": "^2.0.3",
     "chai": "^4.1.1",
-    "discord.js": "^11.1.0",
+    "discord.js": "11.4.0",
     "dotenv": "^4.0.0",
     "eslint": "^4.3.1",
     "eslint-config-airbnb": "^15.1.0",
