@@ -1,7 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
-let request = require('request');
+const request = require('request');
 
 class JokeController extends BaseController {
   constructor(message) {
@@ -20,16 +20,20 @@ class JokeController extends BaseController {
 
   // Makes a request to joke API and outputs the joke
   jokeAction() {
-    var options = {
-      url: 'https://geek-jokes.sameerkumar.website/api',
-      method: 'GET'
-    }
+    const { message } = this;
 
-    request(options, (err, response, body) => {
-      if(!err && response.statusCode == 200) {
-        util.log(body);
-      }
-    });
+    if (message) {
+      const options = {
+        url: 'https://geek-jokes.sameerkumar.website/api',
+        method: 'GET',
+      };
+
+      request(options, (err, response, body) => {
+        if (!err && response.statusCode === 200) {
+          util.log(body);
+        }
+      });
+    }
   }
 }
 
