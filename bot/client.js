@@ -69,4 +69,12 @@ client.on('message', (message) => {
   }
 });
 
+// Listen for Guild Member Add event
+client.on('guildMemberAdd', (member) => {
+  // Inform guild member a new member has joined the server on the general chat channel
+  member.guild.channels.find('name', 'general').send(`${member.user.username} has joined ${member.guild}. Make them feel welcome and say hello!`);
+  // Send a direct message to the new member upon joining the server
+  member.send(`Welcome to ${member.guild}, ${member.user.username}! You joined our guild on ${member.joinedAt}.`);
+});
+
 client.login(process.env.TOKEN);
