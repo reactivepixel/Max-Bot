@@ -23,7 +23,7 @@ exports.generateCode = (n) => {
 exports.isAdmin = (member) => {
   const adminRoles = [
     'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
-    'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff',
+    'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff', 'Privateers',
     'Team Liaison', 'Armada Athlete', '@everyone', 'Crew',
     'Overwatch_V', 'Overwatch_JV',
     'CS:GO_V', 'CS:GO_JV',
