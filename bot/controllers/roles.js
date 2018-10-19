@@ -96,7 +96,7 @@ class RoleController extends BaseController {
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
       return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-    } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+    } else if (disallowedRoles.includes(targetRole.name)) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You are not worthy of the role ' + message.parsed[1] + '.';
     } else {
@@ -113,7 +113,7 @@ class RoleController extends BaseController {
     util.log('Multiple Roles Parsing', roles, 4);
 
     roles.map((role) => {
-      if (!disallowedRoles.includes(role.toLowerCase())) {
+      if (!disallowedRoles.includes(role)) {
         const targetRole = message.guild.roles.find('name', role);
         util.log('Asking API for Role', targetRole, 4);
 
@@ -136,7 +136,7 @@ class RoleController extends BaseController {
       util.log('No role matched', message.parsed[1], 2);
       return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
     }
-    if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+    if (disallowedRoles.includes(targetRole.name)) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You have not the power or the will to control this power.';
     }
@@ -150,7 +150,7 @@ class RoleController extends BaseController {
   addAllRolesAction() {
     const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name)) {
         return message.member.addRole(role).catch(util.log);
       }
       return role.name;
@@ -163,7 +163,7 @@ class RoleController extends BaseController {
   removeAllRolesAction() {
     const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name)) {
         return message.member.removeRole(role).catch(util.log);
       }
       return role.name;
