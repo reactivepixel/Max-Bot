@@ -49,12 +49,12 @@ class VerifyController extends BaseController {
         { time: timeoutInMiliseconds });
       collector.on('collect', (m) => {
         const verifyUser = 'Welcome aboard, Crewmate!';
-        const userAlredyOnSystem = 'This email has already been verified to a discord user.';
+        const userAlreadyOnSystem = 'This email has already been verified to a discord user.';
         models.Member.findOne({ where: { email } }).then((matchedUserData) => {
           if (matchedUserData === null) {
             // no existing record found
             models.Member.create({
-              discorduser: m.author.id,
+              discorduser: m.author.username,
               email,
               uuid: uuidv4(),
               verified: 1,
@@ -65,7 +65,7 @@ class VerifyController extends BaseController {
             message.reply(verifyUser);
           } else {
             // existing record found
-            message.reply(userAlredyOnSystem);
+            message.reply(userAlreadyOnSystem);
           }
         });
         util.log('Collected', m.content, 3);
