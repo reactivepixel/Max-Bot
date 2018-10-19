@@ -81,7 +81,7 @@ class RoleController extends BaseController {
     const { message, disallowedRoles } = this;
     const roles = [];
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name)) {
         return roles.push(role.name);
       }
       return role.name;
