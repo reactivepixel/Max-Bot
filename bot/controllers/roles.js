@@ -59,9 +59,20 @@ class RoleController extends BaseController {
 
     // User roles commands cannot change
     this.disallowedRoles = [
-      'admin', 'armada officers', 'armada officer',
-      'moderator', 'privateers', 'privateer',
-      'tester', 'crew', 'fleet officer', '@everyone',
+      'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
+      'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff',
+      'Team Liaison', 'Armada Athlete',
+      'Overwatch_V', 'Overwatch_JV',
+      'CS:GO_V', 'CS:GO_JV',
+      'Smite_V', 'Smite_JV',
+      'Fortnite_V', 'Fortnite_JV',
+      'Madden_V', 'Madden_JV',
+      'LoL_V', 'LoL_JV',
+      'SuperSmashBros_V', 'SuperSmashBros_JV',
+      'HerosOfTheStorm_V', 'HerosOfTheStorm_JV',
+      'RocketLeague_V', 'RocketLeague_JV',
+      'DragonBall_V', 'DragonBall_JV',
+      'Hearthstone_V', 'Hearthstone_JV',
     ];
   }
 
