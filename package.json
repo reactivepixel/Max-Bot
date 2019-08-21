@@ -8,7 +8,7 @@
     "npm": "6.9.0"
   },
   "scripts": {
-    "start": "pm2 start max.config.js --no-daemon",
+    "start": "node bot/client.js",
     "test": "mocha"
   },
   "keywords": [],
