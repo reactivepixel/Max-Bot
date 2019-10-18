@@ -71,7 +71,7 @@ class VerifyController extends BaseController {
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
-        const verificationTimeout = `!verify timeout. Clap ${collected.author.username} in irons!  Let's see how well they dance on the plank!`;
+        const verificationTimeout = `[!verify timeout] Clap them in irons!  Let's see how well they dance on the plank!`;
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
