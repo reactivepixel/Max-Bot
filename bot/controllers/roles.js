@@ -59,9 +59,20 @@ class RoleController extends BaseController {
 
     // User roles commands cannot change
     this.disallowedRoles = [
-      'admin', 'armada officers', 'armada officer',
-      'moderator', 'privateers', 'privateer',
-      'tester', 'crew', 'fleet officer', '@everyone',
+      'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
+      'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff', 'Privateers',
+      'Team Liaison', 'Armada Athlete', '@everyone', 'Crew',
+      'Overwatch_V', 'Overwatch_JV',
+      'CS:GO_V', 'CS:GO_JV',
+      'Smite_V', 'Smite_JV',
+      'Fortnite_V', 'Fortnite_JV',
+      'Madden_V', 'Madden_JV',
+      'LoL_V', 'LoL_JV',
+      'SuperSmashBros_V', 'SuperSmashBros_JV',
+      'HeroesOfTheStorm_V', 'HeroesOfTheStorm_JV',
+      'RocketLeague_V', 'RocketLeague_JV',
+      'DragonBall_V', 'DragonBall_JV',
+      'Hearthstone_V', 'Hearthstone_JV',
     ];
   }
 
@@ -70,7 +81,7 @@ class RoleController extends BaseController {
     const { message, disallowedRoles } = this;
     const roles = [];
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name)) {
         return roles.push(role.name);
       }
       return role.name;
@@ -85,7 +96,7 @@ class RoleController extends BaseController {
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
       return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-    } else if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+    } else if (disallowedRoles.includes(targetRole.name)) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You are not worthy of the role ' + message.parsed[1] + '.';
     } else {
@@ -102,7 +113,7 @@ class RoleController extends BaseController {
     util.log('Multiple Roles Parsing', roles, 4);
 
     roles.map((role) => {
-      if (!disallowedRoles.includes(role.toLowerCase())) {
+      if (!disallowedRoles.includes(role)) {
         const targetRole = message.guild.roles.find('name', role);
         util.log('Asking API for Role', targetRole, 4);
 
@@ -125,7 +136,7 @@ class RoleController extends BaseController {
       util.log('No role matched', message.parsed[1], 2);
       return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
     }
-    if (disallowedRoles.includes(targetRole.name.toLowerCase())) {
+    if (disallowedRoles.includes(targetRole.name)) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You have not the power or the will to control this power.';
     }
@@ -139,7 +150,7 @@ class RoleController extends BaseController {
   addAllRolesAction() {
     const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name)) {
         return message.member.addRole(role).catch(util.log);
       }
       return role.name;
@@ -152,7 +163,7 @@ class RoleController extends BaseController {
   removeAllRolesAction() {
     const { message, disallowedRoles } = this;
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name.toLowerCase())) {
+      if (!disallowedRoles.includes(role.name)) {
         return message.member.removeRole(role).catch(util.log);
       }
       return role.name;
