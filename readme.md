@@ -6,8 +6,7 @@ Interested in learning how to use Max? See the [Usage documentation here](usage.
 # Installation
 
 ### Prerequisites
-* [Git](https://git-scm.com/downloads
-)
+* [Git](https://git-scm.com/downloads)
 * [Docker (Stable)](https://docs.docker.com/docker-for-mac/install/)
 
 ### Clone the Codebase.
@@ -22,32 +21,40 @@ git clone git@github.com:reactivepixel/Max-Bot.git
 Create an ```.env``` file with the following sensitive information. Replace the "xxx"'s with some unique information for your local Environment.
 
 ```
+NODE_ENV=development
+DEBUG_MODE=3
+
 MYSQL_ROOT_PASSWORD=xxx
 MYSQL_USER=xxx
 MYSQL_PASS=xxx
 MYSQL_DATABASE=max
-DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
-NODE_ENV=development
+MYSQL_HOST=mysql
 DB_PORT_HOST=3306
 DB_PORT_GUEST=3306
+
+DISCORD_BOT_TOKEN=xxx_bot_token_from_next_step_xxx
+
 BOT_PORT_HOST=80
 BOT_PORT_GUEST=3000
-BOT_PORT_HOST=80
-BOT_PORT_GUEST=3000
+
 EMAIL_USERNAME=xxx
 EMAIL_PASS=xxx
 ```
 
-> Update ```DiscordBotToken``` with the token you receive from the next step.
+> Update ```DISCORD_BOT_TOKEN``` with the token you receive from the next step.
 
 
 
 
 ### Bot Token
 
-Obtain a [Discord App Bot Token](https://discordapp.com/developers/applications/me) from your registered app (or register a new one) to proceed or contact a Release Manager for Max's Dev Bot token.
+Add a new App and create a Bot User then obtain the [Discord App Bot Token](https://discordapp.com/developers/applications/me) from the created Bot User or contact a Release Manager for Max's Dev Bot token.
 
-Replace the ```{DiscordBotToken}``` within the ```max.config.js``` file with the token provided to you.
+
+
+Update the ```DISCORD_BOT_TOKEN``` in the .env file with the token provided to you.
+
+Run ``$ gulp pm2`` to create a max.config.js file within your root directory.
 
 ### Adding the Bot to a Server
 
@@ -56,7 +63,7 @@ As an authorized user of the bot you will need to add it to a server.
 1. Go to the Discord developer pages (login if you haven't).
 1. Go to the application with the bot you want to add to your channel.
 1. Copy the Client/Application ID.
-1. Go to https://discordapp.com/aboutoauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
+1. Go to https://discordapp.com/oauth2/authorize?client_id=```CLIENT_ID_GOES_HERE```&scope=bot&permissions=0
 1. Select server and click authorize.
 
 > [Source](https://stackoverflow.com/questions/37689289/joining-a-server-with-the-discord-python-api)
@@ -73,7 +80,7 @@ Max uses [Nodemailer](https://nodemailer.com/about/) to send verification emails
 
 ## Local
 
-To run the bot locally ensure that you have followed the installation instructions above.
+To run the bot locally ensure that you have followed the installation instructions above and have docker running.
 
 Use docker-compose to start the container with the bot client.
 

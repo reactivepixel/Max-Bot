@@ -8,3 +8,4 @@ node_modules
 db/config/config.json
 package-lock.json
 *.bk
+.idea
