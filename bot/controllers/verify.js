@@ -100,7 +100,7 @@ class VerifyController extends BaseController {
         const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
         if (err) {
           message.reply(errorMsg);
-          util.log('Email not sent', err, 3);
+          util.log('Email not sent', err, 0);
         } else {
           util.log('Email details', info, 3);
         }
