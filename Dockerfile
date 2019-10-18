@@ -1,4 +1,4 @@
-FROM node:8.8.1
+FROM node:10.16.3
 
 MAINTAINER Chapman@Apextion.com
 

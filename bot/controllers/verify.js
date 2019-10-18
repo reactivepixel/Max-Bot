@@ -30,7 +30,7 @@ class VerifyController extends BaseController {
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
+    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com', 'alumni.fullsail.edu', 'staff.fullsail.com', 'staff.fullsail.edu'];
     const timeoutInMiliseconds = 600000;
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
@@ -71,7 +71,7 @@ class VerifyController extends BaseController {
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
-        const verificationTimeout = `!verify timeout. Clap ${collected.author.username} in irons!  Let's see how well they dance on the plank!`;
+        const verificationTimeout = `You failed to enter the !verify code in time... Prepare to be clapped in irons!  Let's see how well you dance on the plank!`;
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
@@ -81,6 +81,13 @@ class VerifyController extends BaseController {
       // Set up Nodemailer to send emails through gmail
       const sendVerifyCode = nodemailer.createTransport({
         service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        tls: {
+          // do not fail on invalid certs
+          rejectUnauthorized: false
+        },
         auth: {
           user: process.env.EMAIL_USERNAME,
           pass: process.env.EMAIL_PASS,
@@ -97,17 +104,17 @@ class VerifyController extends BaseController {
       // Call sendMail on sendVerifyCode
       // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
-        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
+        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify or email `FSArmada@fullsail.com` directly from your student account.';
         if (err) {
           message.reply(errorMsg);
-          util.log('Email not sent', err, 3);
+          util.log('Email not sent', err, 0);
         } else {
           util.log('Email details', info, 3);
         }
       });
 
       util.log('Code', code, 3);
-      return `...What's the passcode? \n\n *eyes you suspicously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
+      return `...What's the passcode? \n\n *eyes you suspiciously*\n\n I just sent it to your email, just respond back to this channel within ${(timeoutInMiliseconds / 1000) / 60} minutes, with the code, and I won't treat you like a scurvy cur!`;
     } else {
       return 'Sorry, I can only verify Full Sail University email addresses.';
     }
