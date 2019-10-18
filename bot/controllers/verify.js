@@ -30,7 +30,7 @@ class VerifyController extends BaseController {
   verifyAction() {
     const { message } = this;
     const targetVerifiedRoleName = 'Crew';
-    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com'];
+    const validDomains = ['student.fullsail.edu', 'fullsail.edu', 'fullsail.com', 'alumni.fullsail.edu', 'staff.fullsail.com', 'staff.fullsail.edu'];
     const timeoutInMiliseconds = 600000;
     const email = message.parsed[1].toLowerCase();
     const emailDomain = email.split('@').pop();
