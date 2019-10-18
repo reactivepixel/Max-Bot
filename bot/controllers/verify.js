@@ -71,7 +71,7 @@ class VerifyController extends BaseController {
         util.log('Collected', m.content, 3);
       });
       collector.on('end', (collected) => {
-        const verificationTimeout = `[!verify timeout] Clap them in irons!  Let's see how well they dance on the plank!`;
+        const verificationTimeout = `You failed to enter the !verify code in time... Prepare to be clapped in irons!  Let's see how well you dance on the plank!`;
         util.log('Items', collected.size, 3);
         if (collected.size === 0) {
           // TODO: ping admin team on verification fail
@@ -104,7 +104,7 @@ class VerifyController extends BaseController {
       // Call sendMail on sendVerifyCode
       // Pass mailOptions & callback function
       sendVerifyCode.sendMail(mailOptions, (err, info) => {
-        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify.';
+        const errorMsg = 'Oops, looks like the email can not be sent. It\'s not you, it\'s me. Please reach out to a moderator to help you verify or email `FSArmada@fullsail.com` directly from your student account.';
         if (err) {
           message.reply(errorMsg);
           util.log('Email not sent', err, 0);
