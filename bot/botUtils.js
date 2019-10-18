@@ -23,9 +23,8 @@ exports.generateCode = (n) => {
 exports.isAdmin = (member) => {
   const adminRoles = [
     'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
-    'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff', 
-    'Team Liaison', 'Armada Athlete',
-
+    'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff', 'Privateers',
+    'Team Liaison', 'Armada Athlete', '@everyone', 'Crew',
     'Overwatch_V', 'Overwatch_JV',
     'CS:GO_V', 'CS:GO_JV',
     'Smite_V', 'Smite_JV',
@@ -33,7 +32,7 @@ exports.isAdmin = (member) => {
     'Madden_V', 'Madden_JV',
     'LoL_V', 'LoL_JV',
     'SuperSmashBros_V', 'SuperSmashBros_JV',
-    'HerosOfTheStorm_V', 'HerosOfTheStorm_JV',
+    'HeroesOfTheStorm_V', 'HeroesOfTheStorm_JV',
     'RocketLeague_V', 'RocketLeague_JV',
     'DragonBall_V', 'DragonBall_JV',
     'Hearthstone_V', 'Hearthstone_JV',
