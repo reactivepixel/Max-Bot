@@ -82,15 +82,16 @@ class VerifyController extends BaseController {
       const sendVerifyCode = nodemailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
-        port: 465,
+        port: 587,
         secure: true,
+        protocol: 'tls',
         tls: {
           // do not fail on invalid certs
           rejectUnauthorized: false
         },
         auth: {
           user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASS,
+          pass: process.env.GOOGLE_APP_PASSWORD,
         },
       });
       // Nodemailer email recipient & message
