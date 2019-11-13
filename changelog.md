@@ -1,3 +1,7 @@
+## [v1.7.0](https://github.com/reactivepixel/Max-Bot/releases/tag/v1.7.0)
+
+* Roles are now dynamically blocked by the role `MAX_SELF_ASSIGN_ROLE`. Only roles below this are valid for self assignment.
+
 ## [v1.6.0](https://github.com/reactivepixel/Max-Bot/releases/tag/v1.6.0)
 
 Max has been moved from a VPS on Digital Ocean running on Docker and a Docker Maria DB Container onto Heroku using a JawsMariaDB resource. Additional enhancements have been made to the fs.armada.bot@gmail.com gmail account to enable 2-factor Auth and a bypass key for Max has been generated.
