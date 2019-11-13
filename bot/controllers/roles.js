@@ -59,20 +59,7 @@ class RoleController extends BaseController {
 
     // User roles commands cannot change
     this.disallowedRoles = [
-      'Admin', 'Armada Officers', 'Armada Officer', 'Fleet Officer',
-      'Moderator', 'Tester', 'Team Captain', 'Full Sail Staff', 'Privateers',
-      'Team Liaison', 'Armada Athlete', '@everyone', 'Crew',
-      'Overwatch_V', 'Overwatch_JV',
-      'CS:GO_V', 'CS:GO_JV',
-      'Smite_V', 'Smite_JV',
-      'Fortnite_V', 'Fortnite_JV',
-      'Madden_V', 'Madden_JV',
-      'LoL_V', 'LoL_JV',
-      'SuperSmashBros_V', 'SuperSmashBros_JV',
-      'HeroesOfTheStorm_V', 'HeroesOfTheStorm_JV',
-      'RocketLeague_V', 'RocketLeague_JV',
-      'DragonBall_V', 'DragonBall_JV',
-      'Hearthstone_V', 'Hearthstone_JV',
+      'Admin', '@everyone',
     ];
   }
 
@@ -80,10 +67,13 @@ class RoleController extends BaseController {
   rolesAction() {
     const { message, disallowedRoles } = this;
     const roles = [];
+
+
+    const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
+    const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name)) {
+      if(role.position < maxRole.position && !disallowedRoles.includes(role.name))
         return roles.push(role.name);
-      }
       return role.name;
     });
     return 'List of all Armada Roles: \n\n' + roles.join('\n');
@@ -92,11 +82,14 @@ class RoleController extends BaseController {
   // Adds a role to the user
   addRoleAction() {
     const { message, disallowedRoles } = this;
+
+    const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
+    const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
       return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
-    } else if (disallowedRoles.includes(targetRole.name)) {
+    } else if (disallowedRoles.includes(targetRole.name) || targetRole.position >= maxRole.position) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You are not worthy of the role ' + message.parsed[1] + '.';
     } else {
@@ -109,6 +102,9 @@ class RoleController extends BaseController {
   // Adds multiple roles to the user
   addRolesAction() {
     const { message, disallowedRoles } = this;
+
+    const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
+    const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     const roles = message.parsed[1].split(',');
     util.log('Multiple Roles Parsing', roles, 4);
 
@@ -116,8 +112,8 @@ class RoleController extends BaseController {
       if (!disallowedRoles.includes(role)) {
         const targetRole = message.guild.roles.find('name', role);
         util.log('Asking API for Role', targetRole, 4);
-
-        if (targetRole === null) {
+        
+        if (targetRole === null || targetRole.position >= maxRole.position) {
           return '"' + role + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
         }
         return message.member.addRole(targetRole).catch(util.log);
@@ -131,12 +127,14 @@ class RoleController extends BaseController {
   // Removes role from user
   removeRoleAction() {
     const { message, disallowedRoles } = this;
+    const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
+    const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
     if (targetRole === null) {
       util.log('No role matched', message.parsed[1], 2);
       return '"' + message.parsed[1] + '" is not a known role. Try `!roles` to get a list of all Roles (They are case-sensitive)';
     }
-    if (disallowedRoles.includes(targetRole.name)) {
+    if (disallowedRoles.includes(targetRole.name) || targetRole.position >= maxRole.position) {
       util.log('User Tried to add a restricted/dissalowed role', targetRole.name, 2);
       return 'You have not the power or the will to control this power.';
     }
@@ -149,8 +147,11 @@ class RoleController extends BaseController {
   // Adds all roles to user
   addAllRolesAction() {
     const { message, disallowedRoles } = this;
+    const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
+    const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
+
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name)) {
+      if (!disallowedRoles.includes(role.name) && role.position < maxRole.position) {
         return message.member.addRole(role).catch(util.log);
       }
       return role.name;
@@ -162,8 +163,10 @@ class RoleController extends BaseController {
   // Removes all roles from user
   removeAllRolesAction() {
     const { message, disallowedRoles } = this;
+    const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
+    const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     message.guild.roles.map((role) => {
-      if (!disallowedRoles.includes(role.name)) {
+      if (!disallowedRoles.includes(role.name) && role.position < maxRole.position) {
         return message.member.removeRole(role).catch(util.log);
       }
       return role.name;
