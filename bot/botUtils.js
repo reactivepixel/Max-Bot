@@ -42,3 +42,13 @@ exports.isAdmin = (member) => {
   }
   return false;
 };
+
+exports.isCrew = (member) => {
+  const verifiedRoles = [
+    'Crew',
+  ];
+  if (verifiedRoles.some(role => member.roles.find('name', role))) {
+    return true;
+  }
+  return false;
+};

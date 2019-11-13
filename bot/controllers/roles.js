@@ -1,6 +1,7 @@
 const BaseController = require('../baseController.js');
 const Command = require('../baseCommand.js');
 const util = require('apex-util');
+const botUtil = require('../botUtils');
 
 class RoleController extends BaseController {
   constructor(message) {
@@ -66,8 +67,9 @@ class RoleController extends BaseController {
   // Lists all roles
   rolesAction() {
     const { message, disallowedRoles } = this;
-    const roles = [];
+    if (!botUtil.isCrew(message.member)) return 'You are not `VERIFIED` yet. Action not allowed. Checkout out `!help` for more info.'
 
+    const roles = [];
 
     const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
     const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
@@ -82,6 +84,8 @@ class RoleController extends BaseController {
   // Adds a role to the user
   addRoleAction() {
     const { message, disallowedRoles } = this;
+    // console.log(message);
+    if (!botUtil.isCrew(message.member)) return 'You are not `VERIFIED` yet. Action not allowed. Checkout out `!help` for more info.'
 
     const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
     const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
@@ -102,6 +106,7 @@ class RoleController extends BaseController {
   // Adds multiple roles to the user
   addRolesAction() {
     const { message, disallowedRoles } = this;
+    if (!botUtil.isCrew(message.member)) return 'You are not `VERIFIED` yet. Action not allowed. Checkout out `!help` for more info.'
 
     const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
     const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
@@ -127,6 +132,8 @@ class RoleController extends BaseController {
   // Removes role from user
   removeRoleAction() {
     const { message, disallowedRoles } = this;
+    if (!botUtil.isCrew(message.member)) return 'You are not `VERIFIED` yet. Action not allowed. Checkout out `!help` for more info.'
+    
     const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
     const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     const targetRole = message.guild.roles.find('name', message.parsed[1]);
@@ -147,6 +154,8 @@ class RoleController extends BaseController {
   // Adds all roles to user
   addAllRolesAction() {
     const { message, disallowedRoles } = this;
+    if (!botUtil.isCrew(message.member)) return 'You are not `VERIFIED` yet. Action not allowed. Checkout out `!help` for more info.'
+
     const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
     const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
 
@@ -163,6 +172,8 @@ class RoleController extends BaseController {
   // Removes all roles from user
   removeAllRolesAction() {
     const { message, disallowedRoles } = this;
+    if (!botUtil.isCrew(message.member)) return 'You are not `VERIFIED` yet. Action not allowed. Checkout out `!help` for more info.'
+
     const dividerRoleName = 'MAX_SELF_ASSIGN_ROLE';
     const maxRole = message.guild.roles.find(role => role.name === dividerRoleName);
     message.guild.roles.map((role) => {
