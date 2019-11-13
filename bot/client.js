@@ -34,7 +34,7 @@ client.on('message', (message) => {
     util.log('Command message received', message.content, 0);
 
     // Build basic help string
-    let helpString = 'v1.6.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
+    let helpString = 'v1.7.0 Discovered Commands:\n\n\t**<> - Required Item\t\t[] - Optional Item**';
 
     // Process message against every controller
     Object.keys(controllers).forEach((key) => {
