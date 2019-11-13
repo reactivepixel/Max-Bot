@@ -1,3 +1,7 @@
+## [v1.6.0](https://github.com/reactivepixel/Max-Bot/releases/tag/v1.6.0)
+
+Max has been moved from a VPS on Digital Ocean running on Docker and a Docker Maria DB Container onto Heroku using a JawsMariaDB resource. Additional enhancements have been made to the fs.armada.bot@gmail.com gmail account to enable 2-factor Auth and a bypass key for Max has been generated.
+
 ## [v1.2.2](https://github.com/reactivepixel/Max-Bot/releases/tag/v1.2.2)
 
 Initial feedback from Crewmates prompted some quality of life features to be released early.
