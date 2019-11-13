@@ -31,7 +31,7 @@ class RoleController extends BaseController {
         '!addRoles',
         '!addRoles <role_name>,[role_name]',
         'Add Multiple Roles',
-        'Add multiple roles to yourself. Rolea are case-sensitive.',
+        'Add multiple roles to yourself. Roles are case-sensitive.',
         this.addRolesAction.bind(controller),
       ),
       new Command(
